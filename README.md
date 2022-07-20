@@ -13,8 +13,6 @@
 
 - 存储设施：MySQL、Redis、RabbitMQ、MinIO、MongoDB。
 
-## 系统设计
-
 ## 代码结构
 
 ## 前端编译
