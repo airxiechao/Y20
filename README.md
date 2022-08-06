@@ -42,7 +42,7 @@
 - biz：REST接口实现、RPC接口实现、业务操作接口实现、数据库操作接口实现
 - boot：微服务的启动模块，启动REST服务、RPC服务
 
-微服务的基于 [axcboot](https://github.com/airxiechao/axcboot) 开发。
+微服务基于 [axcboot](https://github.com/airxiechao/axcboot) 开发。
 
 ## 前端代码
 
