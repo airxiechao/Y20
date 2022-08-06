@@ -13,7 +13,38 @@
 
 - 存储设施：MySQL、Redis、RabbitMQ、MinIO、MongoDB。
 
-## 代码结构
+## 后端代码
+后端按微服务划分模块：
+- activity 项目动态
+- agent 节点程序
+- artifact 制品库
+- atuh 用户认证
+- common 公共基础
+- cron 定时任务
+- email 邮件发送
+- ip IP归属地
+- log 流水线日志
+- manmachinetest 人机测试
+- monitor 监控
+- pay 支付
+- pipeline 流水线
+- project 项目
+- quota 配额
+- sms 发短信
+- sql 数据库维护
+- template 模板
+- test 测试
+- tool 工具
+- util 辅助类
+
+每个微服务模块又划分成3个子模块：
+- api：声明各种普通对象、常量、配置对象、数据库对象、REST接口、RPC接口、业务操作接口、数据库操作接口
+- biz：REST接口实现、RPC接口实现、业务操作接口实现、数据库操作接口实现
+- boot：微服务的启动模块，启动REST服务、RPC服务
+
+微服务的基于 [axcboot](https://github.com/airxiechao/axcboot) 开发。
+
+## 前端代码
 
 ## 前端编译
 
