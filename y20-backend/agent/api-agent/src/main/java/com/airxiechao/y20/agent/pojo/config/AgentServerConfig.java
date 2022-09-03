@@ -8,10 +8,6 @@ public class AgentServerConfig {
     private String name;
     private int port;
     private int rpcPort;
-    private String serverJks;
-    private String serverJksPassword;
-    private String trustJks;
-    private String trustJksPassword;
 
     public String getName() {
         return name;
@@ -37,35 +33,4 @@ public class AgentServerConfig {
         this.rpcPort = rpcPort;
     }
 
-    public String getServerJks() {
-        return serverJks;
-    }
-
-    public void setServerJks(String serverJks) {
-        this.serverJks = serverJks;
-    }
-
-    public String getServerJksPassword() {
-        return serverJksPassword;
-    }
-
-    public void setServerJksPassword(String serverJksPassword) {
-        this.serverJksPassword = serverJksPassword;
-    }
-
-    public String getTrustJks() {
-        return trustJks;
-    }
-
-    public void setTrustJks(String trustJks) {
-        this.trustJks = trustJks;
-    }
-
-    public String getTrustJksPassword() {
-        return trustJksPassword;
-    }
-
-    public void setTrustJksPassword(String trustJksPassword) {
-        this.trustJksPassword = trustJksPassword;
-    }
 }

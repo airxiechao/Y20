@@ -13,6 +13,7 @@ import com.airxiechao.axcboot.util.UuidUtil;
 import com.airxiechao.y20.agent.db.record.AgentRecord;
 import com.airxiechao.y20.agent.biz.api.IAgentBiz;
 import com.airxiechao.y20.agent.pojo.config.AgentServerConfig;
+import com.airxiechao.y20.agent.pojo.config.AgentServerJksConfig;
 import com.airxiechao.y20.agent.pojo.constant.EnumAgentInjectName;
 import com.airxiechao.y20.agent.rpc.api.server.IAgentRpcServer;
 import com.airxiechao.y20.common.pojo.constant.meta.Meta;
@@ -36,6 +37,7 @@ public class AgentRpcServer extends RpcServer implements IAgentRpcServer, IAgent
     private static final Logger logger = LoggerFactory.getLogger(AgentRpcServer.class);
 
     private static final AgentServerConfig config = ConfigFactory.get(AgentServerConfig.class);
+    private static final AgentServerJksConfig jksConfig = ConfigFactory.get(AgentServerJksConfig.class);
     public static final int PORT = config.getRpcPort();
 
     private static AgentRpcServer instance;
@@ -74,8 +76,8 @@ public class AgentRpcServer extends RpcServer implements IAgentRpcServer, IAgent
         try{
             logger.info("config agent server to use ssl");
             this.useSsl(
-                    SslUtil.buildKeyManagerFactory(new JavaResourceFs(), config.getServerJks(), config.getServerJksPassword()),
-                    SslUtil.buildReloadableTrustManager(new JavaResourceFs(), config.getTrustJks(), config.getTrustJksPassword()));
+                    SslUtil.buildKeyManagerFactory(new JavaResourceFs(), jksConfig.getServerJks(), jksConfig.getServerJksPassword()),
+                    SslUtil.buildReloadableTrustManager(new JavaResourceFs(), jksConfig.getTrustJks(), jksConfig.getTrustJksPassword()));
         }catch (Exception e){
             throw new RuntimeException(e);
         }

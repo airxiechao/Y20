@@ -4,7 +4,3 @@ serverHost: 127.0.0.1
 serverRpcPort: 9100
 serverRestUseSsl: false
 dataDir: D:/data/y20-agent-client-data
-clientJks: cert/agent-client-key.jks
-clientJksPassword: 
-trustJks: cert/agent-client-trust.jks
-trustJksPassword: 
