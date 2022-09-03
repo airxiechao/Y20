@@ -45,6 +45,21 @@
 微服务基于 [axcboot](https://github.com/airxiechao/axcboot) 开发。
 
 ## 后端编译
+1. 编译 [axcboot](https://github.com/airxiechao/axcboot) 
+```
+git clone https://github.com/airxiechao/axcboot.git
+
+cd axcboot
+mvn install -DskipTests
+```
+2. 编译 Y20 后端项目
+```
+https://github.com/airxiechao/Y20.git
+
+cd Y20/y20-backend
+mvn install -DskipTests
+```
+3. 各个模块启动项目的输出是相应target文件夹里的lib文件夹和jar文件
 
 ## 前端代码
 前端划分模块：
