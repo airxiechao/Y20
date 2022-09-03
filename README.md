@@ -113,8 +113,34 @@ java -jar sql-migrate.jar
 前端基于 vue/vue-router/vuex 开发。
 
 ## 前端编译
+1. 编译前端模块
+```
+cd Y20/y20-frontend
+yarn install
+yarn workspaces run build
+```
+2. 编译文档
+```
+cd Y20/y20-frontend/docs
 
-## 配置文件
+yarn install
+yarn build
+```
 
-## 
+## 网关配置
+Openresty网关提供前端服务并通过查询Consul转发后端请求到相应服务，配置在 `Y20/y20-gateway/conf`
+
+## 系统部署
+- 安装 Openresty
+- 安装 Consul
+- 安装 Redis
+- 安装 RabbitMQ
+- 安装 MySQL
+- 安装 MongoDB
+- 安装 MinIO
+- 部署前端程序
+- 部署后端配置
+- 数据库初始化
+- 部署后端服务
+- 打包节点agent
 
