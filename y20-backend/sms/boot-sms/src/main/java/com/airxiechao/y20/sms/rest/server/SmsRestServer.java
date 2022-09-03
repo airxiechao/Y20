@@ -1,0 +1,40 @@
+package com.airxiechao.y20.sms.rest.server;
+
+import com.airxiechao.axcboot.communication.rest.server.RestServer;
+import com.airxiechao.axcboot.config.factory.ConfigFactory;
+import com.airxiechao.y20.common.pojo.constant.meta.Meta;
+import com.airxiechao.y20.common.core.rest.EnhancedRestUtil;
+import com.airxiechao.y20.common.core.rest.Rest;
+import com.airxiechao.y20.sms.pojo.config.SmsConfig;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+public class SmsRestServer extends RestServer {
+
+    private static final Logger logger = LoggerFactory.getLogger(SmsRestServer.class);
+
+    public static final String NAME = ConfigFactory.get(SmsConfig.class).getName();;
+    public static final int PORT = ConfigFactory.get(SmsConfig.class).getPort();
+
+    private static final SmsRestServer instance = new SmsRestServer();
+    public static SmsRestServer getInstance() {
+        return instance;
+    }
+
+    private SmsRestServer() {
+        super(NAME);
+
+        this.config("0.0.0.0", PORT, null, null, null,
+                EnhancedRestUtil::validateAccessToken);
+
+        // consul
+        this.registerConsul(10, "y20-backend-");
+
+        // rest and ws
+        Rest rest = new Rest(Meta.getModulePackageName(this.getClass()), this);
+        rest.registerHandlerIfExists();
+        rest.registerWsIfExists();
+
+    }
+
+}

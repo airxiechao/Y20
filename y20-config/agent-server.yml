@@ -1,0 +1,7 @@
+name: agent-server
+port: 8014
+rpcPort: 9100
+serverJks: cert/agent-server-key.jks
+serverJksPassword: 
+trustJks: cert/agent-server-trust.jks
+trustJksPassword: 

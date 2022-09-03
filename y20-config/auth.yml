@@ -1,0 +1,4 @@
+name: auth
+port: 8001
+accessTokenEncryptKey:
+numMinuteOfUserAccessToken: 120

@@ -1,0 +1,32 @@
+{
+  "name": "workspace-project",
+  "version": "1.0.0",
+  "license": "MIT",
+  "scripts": {
+    "serve": "yarn link common && webpack serve --mode development",
+    "build": "yarn link common && webpack --mode production"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.13.8",
+    "@intlify/vue-i18n-loader": "^2.1.2",
+    "@vue/compiler-sfc": "~3.1.0",
+    "babel-loader": "^8.2.2",
+    "clean-webpack-plugin": "^4.0.0-alpha.0",
+    "consul": "^0.40.0",
+    "css-loader": "^5.1.0",
+    "file-loader": "^6.2.0",
+    "git-revision-webpack-plugin": "^5.0.0",
+    "mini-css-extract-plugin": "^1.3.9",
+    "sass": "^1.35.2",
+    "sass-loader": "^11.0.1",
+    "url-loader": "^4.1.1",
+    "vue-loader": "^16.0.0",
+    "webpack": "^5.24.2",
+    "webpack-cli": "^4.5.0",
+    "webpack-dev-server": "^3.11.2"
+  },
+  "dependencies": {
+    "js-cookie": "^2.2.1",
+    "vue": "~3.1.0"
+  }
+}

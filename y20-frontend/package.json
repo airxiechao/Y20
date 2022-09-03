@@ -1,0 +1,22 @@
+{
+  "private": true,
+  "workspaces": [
+    "common",
+    "nav",
+    "signup",
+    "login",
+    "workspace-project",
+    "project-pipeline",
+    "project-monitor",
+    "project-variable",
+    "project-file",
+    "workspace-agent",
+    "workspace-template",
+    "user-account",
+    "user-session",
+    "user-token",
+    "user-billing",
+    "user-team",
+    "home"
+  ]
+}

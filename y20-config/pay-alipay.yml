@@ -1,0 +1,8 @@
+alipayGateway: https://openapi.alipay.com/gateway.do
+appId: 
+format: json
+charset: UTF-8
+signType: RSA2
+merchantPrivateKey: 
+alipayPublicKey: 
+notifyUrlPrefix: https://y20.work

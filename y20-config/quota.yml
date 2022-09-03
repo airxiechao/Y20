@@ -1,0 +1,6 @@
+name: quota
+port: 8008
+
+freeQuotaNumAgent: 3
+freeQuotaNumPipelineRun: 20
+freeQuotaDays: 31

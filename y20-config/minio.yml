@@ -1,0 +1,7 @@
+endpoint: http://127.0.0.1:9000
+accessKey: 
+secretKey: 
+bucket: y20-artifact
+threadPoolCoreSize: 5
+threadPoolMaxSize: 10
+threadPoolQueueSize: 10

@@ -1,0 +1,11 @@
+**/.idea
+**/.gradle
+**/.VSCodeCounter
+**/files-*
+**/*.iml
+**/*.log
+**/target
+**/logs
+**/node_modules
+**/dist
+**/tmp

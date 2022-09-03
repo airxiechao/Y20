@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>Y-20</artifactId>
+        <groupId>com.airxiechao.y20</groupId>
+        <version>1.0</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>agent</artifactId>
+    <packaging>pom</packaging>
+    <modules>
+        <module>api-agent</module>
+        <module>biz-agent</module>
+        <module>boot-agent-server</module>
+        <module>boot-agent-client</module>
+        <module>boot-agent-caller</module>
+        <module>boot-agent-callee</module>
+        <module>biz-agent-server</module>
+        <module>boot-agent</module>
+        <module>biz-agent-client</module>
+    </modules>
+
+</project>

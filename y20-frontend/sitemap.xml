@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+  <!-- Created By http://www.zhetao.com/sitemapcreator,  URLs: 25 Generated at: 2022-02-24 16:38:16 -->
+
+  <url>
+    <loc>https://y20.work/</loc>
+    <priority>1.00</priority>
+  </url>
+
+  <url>
+    <loc>https://y20.work/docs</loc>
+    <priority>1.00</priority>
+  </url>
+
+  <url>
+    <loc>https://y20.work/nav/login</loc>
+    <priority>1.00</priority>
+  </url>
+
+  <url>
+    <loc>https://y20.work/nav/signup</loc>
+    <priority>1.00</priority>
+  </url>
+
+  <url>
+    <loc>https://y20.work/docs/terms-of-service.html</loc>
+    <priority>1.00</priority>
+  </url>
+
+  <url>
+    <loc>https://y20.work/docs/</loc>
+    <priority>1.00</priority>
+  </url>
+
+  <url>
+    <loc>https://y20.work/docs/quick-start.html</loc>
+    <priority>1.00</priority>
+  </url>
+
+  <url>
+    <loc>https://y20.work/docs/basic/agent.html</loc>
+    <priority>1.00</priority>
+  </url>
+
+  <url>
+    <loc>https://y20.work/docs/basic/pipeline.html</loc>
+    <priority>1.00</priority>
+  </url>
+
+  <url>
+    <loc>https://y20.work/docs/guide/agent-join.html</loc>
+    <priority>1.00</priority>
+  </url>
+
+  <url>
+    <loc>https://y20.work/docs/guide/pipeline-edit.html</loc>
+    <priority>1.00</priority>
+  </url>
+
+  <url>
+    <loc>https://y20.work/docs/guide/pipeline-run.html</loc>
+    <priority>1.00</priority>
+  </url>
+
+  <url>
+    <loc>https://y20.work/docs/basic/step.html</loc>
+    <priority>1.00</priority>
+  </url>
+
+  <url>
+    <loc>https://y20.work/docs/basic/variable.html</loc>
+    <priority>1.00</priority>
+  </url>
+
+  <url>
+    <loc>https://y20.work/docs/basic/file.html</loc>
+    <priority>1.00</priority>
+  </url>
+
+</urlset>

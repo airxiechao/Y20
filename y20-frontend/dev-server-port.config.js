@@ -1,0 +1,18 @@
+module.exports = {
+  'nav': 8100,
+  'signup': 8101,
+  'login': 8102,
+  'workspace-project': 8103,
+  'project-pipeline': 8104,
+  'project-variable': 8105,
+  'project-file': 8106,
+  'workspace-agent': 8107,
+  'user-account': 8108,
+  'user-session': 8109,
+  'user-token': 8110,
+  'home': 8111,
+  'user-billing': 8112,
+  'workspace-template': 8113,
+  'user-team': 8114,
+  'project-monitor': 8115,
+}

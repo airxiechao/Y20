@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>Y-20</artifactId>
+        <groupId>com.airxiechao.y20</groupId>
+        <version>1.0</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>test</artifactId>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.airxiechao.y20</groupId>
+            <artifactId>biz-common</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.airxiechao.y20</groupId>
+            <artifactId>biz-auth</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.airxiechao.y20</groupId>
+            <artifactId>biz-agent</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.airxiechao.y20</groupId>
+            <artifactId>biz-pipeline</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.airxiechao.y20</groupId>
+            <artifactId>biz-email</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.airxiechao.y20</groupId>
+            <artifactId>biz-pay</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.airxiechao.y20</groupId>
+            <artifactId>boot-pipeline</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+    </dependencies>
+</project>

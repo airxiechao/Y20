@@ -1,0 +1,634 @@
+<template>
+  <div class="page-home">
+    <div class="support z-top fixed-bottom-right" :style="{
+      'right': $q.screen.gt.sm ? '50px' : '30px',
+      'bottom': $q.screen.gt.sm ? '100px' : '30px',
+    }">
+      <q-btn round :size="$q.screen.gt.sm ? 'lg' : 'md'" class="text-grey-7" icon="support_agent">
+        <q-popup-proxy anchor="center start" self="center right" :offset="[20, 0]">
+          <q-card class="q-pa-md">
+            <q-img
+              alt="qr-xiechao"
+              :src="`/${FRONTEND_SERVICE_NAME}/static/img/qr-xiechao.png`"
+              style="height: 150px; width: 150px"
+            />
+            <div class="q-mt-sm text-center text-grey-7">
+              请微信扫码添加客服
+            </div>
+          </q-card>
+        </q-popup-proxy>
+      </q-btn>
+    </div>
+    <q-toolbar class="page-home-toolbar">
+      <q-toolbar-title class="text-h5">
+        <q-icon class="q-mr-sm vertical-middle" size="lg" :name="`img:/${FRONTEND_SERVICE_NAME}/static/img/icon-logo.png`" />
+        <span class="vertical-middle text-white">鲲擎流水线</span>
+      </q-toolbar-title>
+      <div class="gt-xs">
+        <q-btn style="padding: 0 20px;" class="q-mx-md text-white" rounded size="lg" type="a" href="/nav/workspace/template" flat label="应用" />
+        <q-btn style="padding: 0 20px;" class="q-mx-md text-white" rounded size="lg" type="a" href="/docs" flat label="文档" />
+        <q-btn style="padding: 0 20px;" class="q-mx-md text-white" rounded size="lg" type="a" target="_blank" href="https://www.zhihu.com/column/c_1500492490684149761" flat label="博客" />
+      </div>
+      <div class="gt-xs">
+        <q-btn style="padding: 0 20px;" class="q-mx-md text-white" rounded type="a" href="/nav/login" size="lg" flat label="登录" />
+        <q-btn style="background: #e9f7fe; padding: 0 20px;" class="q-ml-md text-weight-bold text-dark" rounded size="lg" type="a" href="/nav/signup" unelevated label="注册" />
+      </div>
+      <div class="lt-sm">
+        <q-btn class="text-white" size="lg" flat dense round icon="more_vert">
+          <q-menu anchor="bottom right" self="top right">
+            <q-list>
+              <q-item class="text-dark" clickable v-close-popup tag="a" href="/nav/workspace/template">
+                <q-item-section>应用</q-item-section>
+              </q-item>
+              <q-item class="text-dark" clickable v-close-popup tag="a" href="/docs">
+                <q-item-section>文档</q-item-section>
+              </q-item>
+              <q-item class="text-dark" clickable v-close-popup tag="a" target="_blank" href="https://www.zhihu.com/column/c_1500492490684149761">
+                <q-item-section>博客</q-item-section>
+              </q-item>
+              <q-separator />
+              <q-item class="text-dark" clickable v-close-popup tag="a" href="/nav/login">
+                <q-item-section>登录</q-item-section>
+              </q-item>
+              <q-item class="text-dark" clickable v-close-popup tag="a" href="/nav/signup">
+                <q-item-section>注册</q-item-section>
+              </q-item>
+            </q-list>
+          </q-menu>
+        </q-btn>
+      </div>
+    </q-toolbar>
+    
+    <div class="page-home-content absolute-top">
+
+      <div class="sec top" :style="{
+        'padding-top': $q.screen.gt.sm ? '150px' : '120px',
+      }">
+        <div class="row middle">
+          <div class="col-12">
+            <div :class="{
+              'text-h3': $q.screen.gt.sm,
+              'text-h4': $q.screen.lt.md, 
+              'text-weight-bold': true,
+              'text-center': true,
+              'text-white': true,
+            }">针对分布式系统的自动化流水线</div>
+            <div class="q-py-md q-mt-md text-grey-5 text-center" style="font-size: 16px; line-height: 36px;">
+              <span class="vertical-middle">
+                通过编排流水线实现流程的标准化、自动化！
+                <a href="https://github.com/airxiechao/Y20" target="_blank">
+                  <img class="vertical-middle" alt="icon-github" :src="`/${FRONTEND_SERVICE_NAME}/static/img/icon-github-light.png`"/>
+                </a>
+              </span>
+            </div>
+            <div :class="{
+              'q-mt-lg': true,
+              'q-mb-xl': true, 
+              'text-center': true
+            }">
+              <q-btn class="q-px-lg q-ma-sm bg-primary text-white" size="lg" label="开始使用" @click="onClickStart"/>
+              <q-btn flat class="q-px-lg q-ma-sm bg-white text-dark" size="lg" label="入门指南" type="a" href="/docs" />
+            </div>
+            <!-- <div class="text-center">
+              <img style="max-width: 100%;" alt="fig-home" :src="`/${FRONTEND_SERVICE_NAME}/static/img/fig-screen-home.png`"/>
+            </div> -->
+          </div>
+        </div>
+      </div>
+
+      <div class="sec tab">
+        <div class="column middle">
+          <div class="col row">
+            <div class="col q-pa-md self-center text-center text-h5 text-bold text-italic"> 
+              <div class="text-primary text-subtitle2">我们的愿景</div>
+              <div>满足复杂的流水线需求</div>
+            </div>
+          </div>
+          <div class="col row q-pa-md content-center" style="border-top: 1px solid #eee;">
+            <div class="col-4 col-sm-2">
+              <q-list>
+                <q-item>
+                  <q-item-section class="content-center">
+                    <q-avatar round class="text-white" style="background: #ff3366;" icon="all_inclusive" size="70px" />
+                  </q-item-section>
+                </q-item>
+                <q-item>
+                  <q-item-section class="q-pa-sm text-center">
+                    <q-item-label class="text-h6 q-mb-xs">流水线</q-item-label>
+                    <q-item-label caption>可配置步骤、变量、文件、触发、队列、定时等等</q-item-label>
+                  </q-item-section>
+                </q-item>
+              </q-list>
+            </div>
+            <div class="col-4 col-sm-2">
+              <q-list>
+                <q-item>
+                  <q-item-section class="content-center">
+                    <q-avatar round class="text-white" style="background: #00cc99;" icon="computer" size="70px" />
+                  </q-item-section>
+                </q-item>
+                <q-item>
+                   <q-item-section class="q-pa-sm text-center">
+                    <q-item-label class="text-h6 q-mb-xs">节点</q-item-label>
+                    <q-item-label caption>支持Windows、Linux，自动生成接入脚本，连接加密</q-item-label>
+                  </q-item-section>
+                </q-item>
+              </q-list>
+            </div>
+            <div class="col-4 col-sm-2">
+              <q-list>
+                <q-item>
+                  <q-item-section class="content-center">
+                    <q-avatar round class="text-white" style="background: #3366ff;" icon="superscript" size="70px" />
+                  </q-item-section>
+                </q-item>
+                <q-item>
+                  <q-item-section class="q-pa-sm text-center">
+                    <q-item-label class="text-h6 q-mb-xs">变量</q-item-label>
+                    <q-item-label caption>提供文本、文件、节点、输入等类型变量</q-item-label>
+                  </q-item-section>
+                </q-item>
+              </q-list>
+            </div>
+            <div class="col-4 col-sm-2">
+              <q-list>
+                <q-item>
+                  <q-item-section class="content-center">
+                    <q-avatar round class="text-white" style="background: #6633ff;" icon="folder" size="70px" />
+                  </q-item-section>
+                </q-item>
+                <q-item>
+                  <q-item-section class="q-pa-sm text-center">
+                    <q-item-label class="text-h6 q-mb-xs">文件</q-item-label>
+                    <q-item-label caption>可存储到项目、流水线、步骤、运行实例</q-item-label>
+                  </q-item-section>
+                </q-item>
+              </q-list>
+            </div>
+            <div class="col-4 col-sm-2">
+              <q-list>
+                <q-item>
+                  <q-item-section class="content-center">
+                    <q-avatar round class="text-white" style="background: #ffcc33;" icon="skip_next" size="70px" />
+                  </q-item-section>
+                </q-item>
+                <q-item>
+                  <q-item-section class="q-pa-sm text-center">
+                    <q-item-label class="text-h6 q-mb-xs">调试</q-item-label>
+                    <q-item-label caption>支持单步运行，可打开远程终端和文件浏览器</q-item-label>
+                  </q-item-section>
+                </q-item>
+              </q-list>
+            </div>
+            <div class="col-4 col-sm-2">
+              <q-list>
+                <q-item>
+                  <q-item-section class="content-center">
+                    <q-avatar round class="text-white" style="background: #003399;" icon="monitor" size="70px" />
+                  </q-item-section>
+                </q-item>
+                <q-item>
+                  <q-item-section class="q-pa-sm text-center">
+                    <q-item-label class="text-h6 q-mb-xs">监视</q-item-label>
+                    <q-item-label caption>支持对节点的进程和服务进行监视</q-item-label>
+                  </q-item-section>
+                </q-item>
+              </q-list>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sec">
+        <div class="row middle">
+          <div class="sec-col col-12 col-sm-6 self-center">
+            <div class="text">
+              <div class="text-primary">
+                <q-icon name="settings" class="vertical-middle q-mr-sm" />
+                <span class="vertical-middle">编排</span>
+              </div>
+              <div class="text-h5 text-weight-bold">
+                <span class="vertical-middle">灵活编排</span>
+              </div>
+              <div :class="{
+                'q-mt-md': true, 
+                'q-gutter-sm': true,
+              }" style="">
+                <div>
+                  <q-icon name="check_circle" color="primary" class="vertical-middle q-mr-sm" />
+                  <span class="vertical-middle">支持预定义变量和输入变量，方便存储凭证和配置启动参数。</span>
+                </div>
+                <div>
+                  <q-icon name="check_circle" color="primary" class="vertical-middle q-mr-sm" />
+                  <span class="vertical-middle">支持文件，可以为项目和流水线预上传文件，或者启动时进行上传。</span>
+                </div>
+                <div>
+                  <q-icon name="check_circle" color="primary" class="vertical-middle q-mr-sm" />
+                  <span class="vertical-middle">节点支持Windows和Linux系统，连接加密，自动生成接入脚本。</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="sec-col col-12 col-sm-6 self-center">
+            <div class="text">
+              <div class="text-primary">
+                <q-icon name="restart_alt" class="vertical-middle q-mr-sm" />
+                <span class="vertical-middle">运行</span>
+              </div>
+              <div class="text-h5 text-weight-bold">
+                <span class="vertical-middle">实时观测</span>
+              </div>
+              <div :class="{
+                'q-mt-md': true, 
+                'q-gutter-sm': true,
+              }">
+                <div>
+                  <q-icon name="check_circle" color="primary" class="vertical-middle q-mr-sm" />
+                  <span class="vertical-middle">流水线启动后，可以实时观测流水线执行状态变化和日志输出。</span>
+                </div>
+                <div>
+                  <q-icon name="check_circle" color="primary" class="vertical-middle q-mr-sm" />
+                  <span class="vertical-middle">中途退出页面不会中断执行，再次进入可以继续观测。</span>
+                </div>
+                <div>
+                  <q-icon name="check_circle" color="primary" class="vertical-middle q-mr-sm" />
+                  <span class="vertical-middle">流水线结束后，可查询执行结果和历史日志。</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sec">
+        <div class="row middle q-col-gutter-xs">
+          <div class="sec-col col-12 col-sm-6 self-center">
+            <div class="text">
+              <div class="text-primary">
+                <q-icon name="skip_next" class="vertical-middle q-mr-sm" />
+                <span class="vertical-middle">调试</span>
+              </div>
+              <div class="text-h5 text-weight-bold">
+                <span class="vertical-middle">轻松调试</span>
+              </div>
+              <div :class="{
+                'q-mt-md': true, 
+                'q-gutter-sm': true,
+              }">
+                <div>
+                  <q-icon name="check_circle" color="primary" class="vertical-middle q-mr-sm" />
+                  <span class="vertical-middle">支持流水线的调试，流水线可以单步运行，和调试程序一样。</span>
+                </div>
+                <div>
+                  <q-icon name="check_circle" color="primary" class="vertical-middle q-mr-sm" />
+                  <span class="vertical-middle">当以调试模式启动，每个步骤需手动触发，结束后进入等待状态。</span>
+                </div>
+                <div>
+                  <q-icon name="check_circle" color="primary" class="vertical-middle q-mr-sm" />
+                  <span class="vertical-middle">执行中途，可以打开当前节点的远程终端和文件浏览器，进行远程操作。</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="sec-col col-12 col-sm-6 self-center">
+            <div class="text">
+              <div class="text-primary">
+                <q-icon name="more_vert" class="vertical-middle q-mr-sm" />
+                <span class="vertical-middle">更多</span>
+              </div>
+              <div class="text-h5 text-weight-bold">
+                <span class="vertical-middle">了解更多</span>
+              </div>
+              <div :class="{
+                'q-mt-md': true, 
+                'q-gutter-sm': true,
+              }">
+                <div>
+                  <q-icon name="check_circle" color="primary" class="vertical-middle q-mr-sm" />
+                  <span class="vertical-middle">支持实时监测部署在节点的进程和服务的运行状态。</span>
+                </div>
+                <div>
+                  <q-icon name="check_circle" color="primary" class="vertical-middle q-mr-sm" />
+                  <span class="vertical-middle">流水线可以通过Git仓库远程触发。如果只允许运行一个实例，则进入等待队列。</span>
+                </div>
+                <div>
+                  <q-icon name="check_circle" color="primary" class="vertical-middle q-mr-sm" />
+                  <span class="vertical-middle">支持加入团队，团队内的成员可以访问团队创建者工作空间的所有资源。</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sec price">
+        <div class="middle">
+          <div class="row justify-center">
+            <div class="text-h5 text-bold text-center q-pb-lg">
+              <div class="text-primary text-subtitle2">配额 & 价格</div>
+              <div>每月提供免费配额，更多配额可按需购买</div>
+            </div>
+          </div>
+          <div class="row q-py-lg">
+            <template v-if="saleLoading">
+              <div :class="{
+                'col-12': true, 
+                'col-sm-4': true, 
+                'q-pa-md': i != 1,
+                'q-pa-sm': i == 1,
+              }" v-for="(_, i) in [1,2,3]" :key="i">
+                <div :class="{
+                  'price-card': true, 
+                  'q-pa-md': true,
+                  'q-py-lg': i == 1,
+                }">
+                  <q-skeleton type="text" width="25%" />
+                  <q-skeleton type="text" class="q-mt-sm" width="50%" />
+                  <q-skeleton type="text" width="12%" />
+                  <q-separator class="q-my-md" />
+                  <q-skeleton type="text" />
+                  <q-skeleton type="text" />
+                </div>
+              </div>
+            </template>
+            <template v-else>
+              <div :class="{
+                'col-12': true, 
+                'col-sm-4': true, 
+                'q-pa-md': i != 1,
+                'q-pa-sm': i == 1,
+              }" v-for="(sale, i) in sales" :key="i">
+                <div :class="{
+                  'price-card': true, 
+                  'q-pa-md': true,
+                  'q-py-lg': i == 1,
+                }">
+                  <div :class="{
+                    'name': true,
+                    'text-green': sale.name == '免费',
+                  }">{{sale.name}}</div>
+                  <div class="q-mt-md">￥ <span class="text-h5">{{(sale.price/100).toFixed(1)}}</span></div>
+                  <div class="text-grey">每月</div>
+                  <q-badge class="q-mr-xs" v-for="discount in sale.discounts" :key="discount.id" :label="discountText(discount)" />
+                  <q-separator class="q-my-md" />
+                  <div v-for="(item, ii) in sale.items" :key="ii">
+                    <q-icon class="vertical-middle q-mr-xs" name="check_circle" color="primary" />
+                    <span class="vertical-middle">{{item}}</span>
+                  </div>
+                </div>
+              </div>
+            </template>
+
+          </div>
+          <div class="row justify-center text-grey">
+            <div>
+              <q-icon class="vertical-middle q-mr-xs" name="help" />
+              <span class="vertical-middle">私有部署请联系客服</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sec" style="background: #003399;">
+        <div class="q-pt-lg text-center text-h5 text-bold text-white"> 
+          开始编排流水线
+        </div>
+        <div class="q-py-lg text-center">
+          <q-btn flat class="q-px-lg q-mr-md bg-orange text-white" size="lg" type="a" href="/nav/signup" label="注册" />
+          <q-btn flat class="q-px-lg bg-primary text-white" size="lg" type="a" href="/nav/login" label="登录" />
+        </div>
+      </div>
+
+      <div class="footer q-pa-sm bg-grey-3 text-grey">
+        <div class="info">
+          <div class="row q-pa-md">
+            <div class="col-12 col-md-3 q-pa-md">
+              <div class="q-pb-sm">© 2022 成都鲲擎软件科技有限公司</div>
+              <div><a class="q-mr-sm" style="color: inherit;" target="_blank" href="https://beian.miit.gov.cn">蜀ICP备20023213号-2</a></div>
+              <div>
+                <a class="q-mr-sm" style="color: inherit;" target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=51019002004441">
+                  <img class="vertical-middle" alt="icon-gongan" :src="`/${FRONTEND_SERVICE_NAME}/static/img/icon-gongan.png`"/>
+                  川公网安备 51019002004441号
+                </a>
+              </div>
+            </div>
+            <div class="col-12 col-md-3 q-pa-md">
+              <div class="q-pb-sm">产品</div>
+              <div>
+                <a style="color: inherit;" target="_blank" href="https://y20.work">鲲擎流水线</a>
+              </div>
+              <!-- <div>
+                更新：{{LASTCOMMITDATETIME}}
+              </div>
+              <div>
+                版本：{{VERSION}}
+              </div> -->
+            </div>
+            <div class="col-12 col-md-3 q-pa-md">
+              <div class="q-pb-sm">条款</div>
+              <div>
+                <a style="color: inherit;" target="_blank" href="/docs/terms-of-service.html">服务条款</a>
+              </div>
+            </div>
+            <div class="col-12 col-md-3 q-pa-md">
+              <div class="q-pb-sm">联系方式</div>
+              <div>
+                QQ群：923851253
+              </div>
+              <div>
+                微信公众号：Y20持续部署
+              </div>
+              <div>
+                邮箱：xiechao@y20.work
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+</template>
+
+<style lang="scss" scoped>
+@import '@/assets/scss/reset';
+@import '@/assets/scss/style';
+@import '@/assets/scss/var';
+
+$--max-width: 1280px !default;
+
+.page-home{
+
+  .support{
+    background: #fff;
+    border-radius: 50%;
+  }
+
+  &-toolbar{
+    background-color: #003399;
+    padding: 15px 20px;
+    z-index: 999;
+  }
+
+  &-content{
+    height: 100%;
+
+    .sec{
+      padding: 25px;
+
+      &.observation, &.price{
+        background: #fbfcff;
+      }
+
+      .middle{
+        max-width: $--max-width;
+        margin: 0 auto;
+      }
+
+      .sec-col {
+        word-break: break-all;
+        padding: 15px;
+      }
+
+      .text{
+        padding: 20px 40px;
+        box-shadow: 0 0 25px #ddd;
+        background: #fff;
+        border-radius: 8px;
+      }
+
+      .fig{
+        img {
+          max-width: 100%;
+          max-height: 480px;
+        }
+      }
+    }
+
+    .top{
+      background: linear-gradient(180deg, #003399, #003399 95%, #ecf4f9 95%, #ecf4f9 100%)
+    }
+    
+    .tab{
+      background: linear-gradient(180deg, #ecf4f9, #fff 55%);
+
+      .middle{
+        box-shadow: 0 0 25px #ddd;
+        background: #fff;
+        border-radius: 8px;
+      }
+    }
+    
+    .price{
+
+      &-card{
+        border-radius: 8px;
+        box-shadow: 0 0 25px #ddd;
+        background: #fff;
+
+        .name{
+          
+        }
+      }
+    }
+
+    .footer{
+      
+      .info{
+        line-height: 25px;
+        max-width: $--max-width;
+        margin: 0 auto;
+      }
+    }
+  }
+  
+}
+</style>
+
+
+<script>
+import { ref, onMounted } from 'vue'
+import { useStore } from 'vuex'
+import { useQuasar } from 'quasar'
+
+import payApi from '@/api/pay.api'
+import quotaApi from '@/api/quota.api'
+
+export default {
+  components: {
+  },
+  setup (props, context) {
+    const $q = useQuasar()
+    const store = useStore()
+    const sales = ref([])
+    const saleLoading = ref(false)
+
+    onMounted(() => {
+      saleLoading.value = true
+      quotaApi.getFreeQuota().then(resp => {
+        const { freeQuotaNumAgent, freeQuotaNumPipelineRun } = resp.data
+        sales.value.push({
+          name: '免费',
+          price: 0,
+          items: [
+            `${freeQuotaNumAgent} 个可接入节点`,
+            `${freeQuotaNumPipelineRun} 次流水线运行`,
+            '共享服务器资源',
+          ],
+        })
+
+        payApi.getQuotaPrice().then(resp => {
+          const { basic, pro, basicDiscounts, proDiscounts} = resp.data
+          sales.value.push({
+            name: basic.billingPlan,
+            price: basic.price,
+            discounts: basicDiscounts || [],
+            items: [
+              `${basic.numAgent} 个可接入节点`,
+              `${basic.numPipelineRun} 次流水线运行`,
+              '共享服务器资源',
+            ],
+          })
+          sales.value.push({
+            name: pro.billingPlan,
+            price: pro.price,
+            discounts: proDiscounts || [],
+            items: [
+              `${pro.numAgent} 个可接入节点`,
+              `${pro.numPipelineRun} 次流水线运行`,
+              '共享服务器资源',
+            ],
+          })
+
+          saleLoading.value = false
+        })
+      })
+
+      
+    })
+
+    return {
+      VERSION: VERSION,
+      LASTCOMMITDATETIME: LASTCOMMITDATETIME,
+      FRONTEND_SERVICE_NAME: FRONTEND_SERVICE_NAME,
+
+      $q,
+      sales,
+      saleLoading,
+
+      discountText(discount){
+        return `${discount.numMin}个月${(discount.rate*10).toFixed(1)}折`
+      },
+
+      onClickStart(){
+        if(store.getters.accessToken){
+          window.location.href  = '/nav/workspace/project'
+        }else{
+          window.location.href  = '/nav/login'
+        }
+      },
+    }
+  }
+};
+</script>
+

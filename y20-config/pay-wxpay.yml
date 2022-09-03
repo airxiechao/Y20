@@ -1,0 +1,6 @@
+appId: 
+mchId: 
+mchSerialNo: 
+mchPrivateKeyPath: wxpay/apiclient_key.pem
+apiV3Key: 
+notifyUrlPrefix: 
