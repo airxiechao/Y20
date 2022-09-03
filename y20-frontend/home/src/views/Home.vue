@@ -22,7 +22,7 @@
     <q-toolbar class="page-home-toolbar">
       <q-toolbar-title class="text-h5">
         <q-icon class="q-mr-sm vertical-middle" size="lg" :name="`img:/${FRONTEND_SERVICE_NAME}/static/img/icon-logo.png`" />
-        <span class="vertical-middle text-white">鲲擎流水线</span>
+        <span class="vertical-middle text-white">鲲擎流水线（Y20）</span>
       </q-toolbar-title>
       <div class="gt-xs">
         <q-btn style="padding: 0 20px;" class="q-mx-md text-white" rounded size="lg" type="a" href="/nav/workspace/template" flat label="应用" />
