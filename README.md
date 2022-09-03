@@ -47,6 +47,30 @@
 ## 后端编译
 
 ## 前端代码
+前端划分模块：
+- common 公共依赖
+- docs 文档
+- home 首页
+- login 登录
+- nav 入口
+- project-file 项目文件
+- project-monitor 项目监视
+- project-pipeline 项目流水线
+- project-variable 项目变量
+- signup 注册
+- user-account 用户帐户
+- user-billing 用户配额
+- user-team 用户团队
+- user-token 用户令牌
+- workspace-agent 节点
+- workspace-project 项目
+- workspace-template 应用
+
+入口项目是nav，提供入口html，并在运行时根据路径加载其他模块的js和css。
+
+其他模块都是一个项目，提供相应模块的route和store。在编译的时候，会自动将该模块的js和css的文件名写入到 `modules_bundle.json` 文件，以供nav模块查询。
+
+前端基于 vue/vue-router/vuex 开发。
 
 ## 前端编译
 
