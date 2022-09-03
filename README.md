@@ -11,7 +11,7 @@
 
 - 前端模块：前端分模块，每个模块有独立的js、css文件，通过Openresty提供前端服务。首先会加载nav模块（含index.html），然后nav模块再根据Url路径动态加载其他前端模块。
 
-- 存储设施：MySQL、Redis、RabbitMQ、MinIO、MongoDB。
+- 存储：MySQL、Redis、RabbitMQ、MinIO、MongoDB。
 
 ## 后端代码
 后端按微服务划分模块：
