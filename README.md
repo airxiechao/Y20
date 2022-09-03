@@ -61,6 +61,27 @@ mvn install -DskipTests
 ```
 3. 各个模块启动项目的输出是相应target文件夹里的lib文件夹和jar文件
 
+## 数据库的初始化和变更
+1. 数据库结构通过代码自动提取并初始化
+```
+cd Y20/y20-backend/sql
+mvn clean install -P sql-initialize
+
+cd target
+java -jar sql-initialize.jar
+```
+2. 数据库结构变动也通过代码自动比对并变更
+```
+cd Y20/y20-backend/sql
+mvn clean install -P sql-migrate
+
+cd target
+java -jar sql-migrate.jar
+```
+
+## 后端配置
+后端配置文件包括全局通用配置、各个服务的配置、各个服务的数据库配置
+
 ## 前端代码
 前端划分模块：
 - common 公共依赖
@@ -89,5 +110,7 @@ mvn install -DskipTests
 
 ## 前端编译
 
-## 系统部署
+## 配置文件
+
+## 
 
