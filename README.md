@@ -86,6 +86,9 @@ java -jar sql-migrate.jar
 - 每个服务的数据库配置 mybatis-y20-服务名.xml
 - 日志配置 log4j2.xml
 
+## 节点agent的安装包和更新包
+节点agent编译好后，需要和 `Y20/y20-support-files/y20-agent-client` 相关内容打包在一起，形成安装包和更新包。
+
 ## 前端代码
 前端划分模块：
 - common 公共依赖
@@ -131,16 +134,52 @@ yarn build
 Openresty网关提供前端服务并通过查询Consul转发后端请求到相应服务，配置在 `Y20/y20-gateway/conf`
 
 ## 系统部署
-- 安装 Openresty
-- 安装 Consul
-- 安装 Redis
-- 安装 RabbitMQ
-- 安装 MySQL
-- 安装 MongoDB
-- 安装 MinIO
-- 部署前端程序
-- 部署后端配置
-- 数据库初始化
-- 部署后端服务
-- 打包节点agent
+
+1. 目录规划
+
+y20 （主目录）
+  - y20-fontend
+    - home
+    - ...
+    - （前端各个子项目）
+  - y20-backend
+    - project
+    - ...
+    - （后端各个微服务—）
+  - y20-config 后端微服务配置
+  - y20-gateway
+    - conf Openresty的conf文件夹（通过符号链接引用）
+
+1. 安装 Openresty
+
+安装Openresty，用 `Y20/y20-gateway/conf` 作为Openresty的 `conf` 文件夹。
+
+在 `conf/cert` 中，放入HTTPS证书，修改 `conf/server.conf` 中对应的 `ssl_certificate` 和 `ssl_certificate_key` 配置。
+
+在 `conf/lua/init.lua` 中，修改 `static_dir` 为前端编译后的文件夹。
+
+2. 安装 Consul、Redis、RabbitMQ、MySQL、MongoDB、MinIO
+
+拷贝 `Y20/y20-config` 到部署目录， 修改各个配置文件的相关内容。
+
+3. 初始化数据库
+
+- 创建MySQL数据库：执行后端sql项目的 `com.airxiechao.y20.sql.CreateSqlMain`
+- 初始化MySQL数据：执行后端sql项目的 `com.airxiechao.y20.sql.InitializeDataSqlMain`
+- 创建MongoDB数据库：执行后端sql项目的 `com.airxiechao.y20.sql.CreateMongoDdMain`
+
+4. 拷贝程序并启动
+
+- 前端程序拷贝到 `y20-frontend`
+- 后端程序拷贝到 `y20-backend`
+- 启动后端各个微服务，比如
+
+  ```
+  cd y20/y20-backend/project
+  nohup java -jar boot-project.jar > /dev/null 2>&1 &
+  ```
+
+5. 发布节点agent版本
+
+- 在MySQL的 `y20_agent` 数据库的 `agent_version` 表中，添加一行数据，包含节点agent程序的版本、安装程序地址、更新程序地址
 
