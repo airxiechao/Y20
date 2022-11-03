@@ -86,9 +86,6 @@ java -jar sql-migrate.jar
 - 每个服务的数据库配置 mybatis-y20-服务名.xml
 - 日志配置 log4j2.xml
 
-## 节点agent的安装包和更新包
-节点agent编译好后，需要和 `Y20/y20-support-files/y20-agent-client` 相关内容打包在一起，形成安装包和更新包。
-
 ## 前端代码
 前端划分模块：
 - common 公共依赖
