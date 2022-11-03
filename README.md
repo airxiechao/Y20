@@ -61,6 +61,8 @@ mvn install -DskipTests
 ```
 3. 各个模块启动项目的输出是相应target文件夹里的lib文件夹和jar文件
 
+4. 节点agent编译好后，需要和 `Y20/y20-support-files/y20-agent-client` 相关内容打包在一起，形成安装包和更新包
+
 ## 数据库的初始化和变更
 1. 数据库结构通过代码自动提取并初始化
 ```
