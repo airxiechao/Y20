@@ -160,7 +160,7 @@ y20 （主目录）
     - 在 `conf/lua/init.lua` 中，修改 `static_dir` 为前端编译后的文件夹。
 
 3. 安装 Consul、Redis、RabbitMQ、MySQL、MongoDB、MinIO
-  - 拷贝 `Y20/y20-config` 到部署目录， 修改各个配置文件的相关内容。
+    - 拷贝 `Y20/y20-config` 到部署目录， 修改各个配置文件的相关内容。
 
 4. 初始化数据库
     - 创建MySQL数据库：执行后端sql项目的 `com.airxiechao.y20.sql.CreateSqlMain`
@@ -171,7 +171,7 @@ y20 （主目录）
     - 前端程序拷贝到 `y20-frontend`
     - 后端程序拷贝到 `y20-backend`
     - 启动后端各个微服务，比如
-
+    
       ```
       cd y20/y20-backend/project
       nohup java -jar boot-project.jar > /dev/null 2>&1 &
