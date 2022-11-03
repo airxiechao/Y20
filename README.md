@@ -137,7 +137,7 @@ Openresty网关提供前端服务并通过查询Consul转发后端请求到相�
 ## 系统部署
 
 1. 目录规划
-
+```
 y20 （主目录）
   - y20-fontend
     - home
@@ -150,18 +150,18 @@ y20 （主目录）
   - y20-config 后端微服务配置
   - y20-gateway
     - conf Openresty的conf文件夹（通过符号链接引用）
-
+```
 1. 安装 Openresty
 
-安装Openresty，用 `Y20/y20-gateway/conf` 作为Openresty的 `conf` 文件夹。
+- 安装Openresty，用 `Y20/y20-gateway/conf` 作为Openresty的 `conf` 文件夹。
 
-在 `conf/cert` 中，放入HTTPS证书，修改 `conf/server.conf` 中对应的 `ssl_certificate` 和 `ssl_certificate_key` 配置。
+- 在 `conf/cert` 中，放入HTTPS证书，修改 `conf/server.conf` 中对应的 `ssl_certificate` 和 `ssl_certificate_key` 配置。
 
-在 `conf/lua/init.lua` 中，修改 `static_dir` 为前端编译后的文件夹。
+- 在 `conf/lua/init.lua` 中，修改 `static_dir` 为前端编译后的文件夹。
 
 2. 安装 Consul、Redis、RabbitMQ、MySQL、MongoDB、MinIO
 
-拷贝 `Y20/y20-config` 到部署目录， 修改各个配置文件的相关内容。
+- 拷贝 `Y20/y20-config` 到部署目录， 修改各个配置文件的相关内容。
 
 3. 初始化数据库
 
