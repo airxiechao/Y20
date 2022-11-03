@@ -177,6 +177,6 @@ y20 （主目录）
       nohup java -jar boot-project.jar > /dev/null 2>&1 &
       ```
 
-6. 发布节点agent版本
+6. 发布节点 agent 版本
     - 在MySQL的 *y20_agent* 数据库的 *agent_version* 表中，添加一行数据，录入节点agent程序的版本、安装程序地址、更新程序地址
 
