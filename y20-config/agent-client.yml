@@ -1,6 +1,0 @@
-agentId: 
-accessToken: 
-serverHost: 127.0.0.1
-serverRpcPort: 9100
-serverRestUseSsl: false
-dataDir: D:/data/y20-agent-client-data

@@ -1,13 +1,13 @@
 redis:
   host: 127.0.0.1
   port: 6379
-  password: 
+  password: 123456
   maxPoolSize: 5
 
 
 rabbitmq:
   host: 127.0.0.1
   port: 5672
-  username: 
-  password: 
+  username: admin
+  password: 123456
   virtualHost: /

@@ -1,4 +1,4 @@
 name: auth
 port: 8001
-accessTokenEncryptKey:
+accessTokenEncryptKey: 123456
 numMinuteOfUserAccessToken: 120
