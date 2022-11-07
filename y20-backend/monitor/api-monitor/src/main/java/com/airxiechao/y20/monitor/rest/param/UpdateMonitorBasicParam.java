@@ -10,6 +10,8 @@ public class UpdateMonitorBasicParam {
     @Required private String agentId;
     @Required private String type;
     @Required private Object target;
+    @Required private String actionType;
+    private Object actionParam;
 
     public Long getUserId() {
         return userId;
@@ -65,5 +67,21 @@ public class UpdateMonitorBasicParam {
 
     public void setTarget(Object target) {
         this.target = target;
+    }
+
+    public String getActionType() {
+        return actionType;
+    }
+
+    public void setActionType(String actionType) {
+        this.actionType = actionType;
+    }
+
+    public Object getActionParam() {
+        return actionParam;
+    }
+
+    public void setActionParam(Object actionParam) {
+        this.actionParam = actionParam;
     }
 }

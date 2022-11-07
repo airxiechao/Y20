@@ -2,7 +2,7 @@
   <LayoutTwoColumn class="quota-add">
     <template v-slot:center>
       <q-dialog persistent v-model="flagShowPayDialog">
-        <q-card flat bordered class="full-width">
+        <q-card flat class="full-width">
           <q-card-section>
             <div v-if="payType == 'WXPAY'" class="text-h6 text-center">微信支付</div>
             <div v-else-if="payType == 'ALIPAY'" class="text-h6 text-center">支付宝</div>
@@ -36,7 +36,7 @@
       </q-dialog>
 
       <q-dialog persistent v-model="flagShowPayedDialog">
-        <q-card flat bordered class="full-width">
+        <q-card flat class="full-width">
           <q-card-section>
             <div class="text-center text-green">
               <div>
@@ -57,14 +57,14 @@
             <q-btn unelevated rounded flat color="primary" icon="keyboard_backspace" label="配额" to="/user/billing/quota" />
           </q-toolbar>
         </div>
-        <div class="q-pa-md page-content">
-          <q-card flat bordered class="q-pa-md bg-white">
+        <div class="q-pa-sm page-content">
+          <q-card flat class="q-pa-md bg-white">
             <div class="q-pb-md">购买配额</div>
             <div>
               <div class="row q-col-gutter-md">
                 <template v-if="priceLoading">
                   <div class="col-12 col-sm-6" v-for="(_, i) in [1,2]" :key="i">
-                    <q-card flat bordered class="q-pa-md">
+                    <q-card flat class="q-pa-md">
                       <q-skeleton type="text" width="25%" />
                       <q-skeleton type="text" class="q-mt-sm" width="50%" />
                       <q-skeleton type="text" width="12%" />
@@ -76,7 +76,7 @@
                 </template>
                 <template v-else>
                   <div class="col-12 col-sm-6" v-for="(sale, i) in sales" :key="i">
-                    <q-card 
+                    <q-card
                       :flat="billingPlan != sale.name"
                       :bordered="billingPlan != sale.name" 
                       class="q-pa-md cursor-pointer" @click="onClickBillingPlan(sale.name, sale.price, sale.discounts)">

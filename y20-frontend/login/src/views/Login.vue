@@ -29,7 +29,7 @@
 <style lang="scss">
 .page-login {
   height: 100%;
-  background-color: #f5f6fa;
+  background-color: #f5f5f5;
   background-repeat: no-repeat;
   background-position-x: 20%;
   background-position-y: 200px;
@@ -43,9 +43,9 @@
     max-width: 360px;
     margin: 0 auto;
     background-color: #fff;
-    border-radius: 48px;
+    border-radius: 8px;
     padding: 30px;
-    box-shadow: 0 0px 25px #ddd;
+    box-shadow: 0 5px 10px #ddd;
 
     .tab{
       padding: 20px 0px 0px 0px;

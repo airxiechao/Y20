@@ -1,5 +1,5 @@
 <template>
-  <div class="join-agent-manual q-pa-md">
+  <div class="join-agent-manual">
     <q-timeline color="primary">
       <q-timeline-entry
         title="1. 下载 y20-agent-client.zip，解压到安装目录"
@@ -37,7 +37,7 @@
           <q-item>
             <q-item-section>
               <q-item-label>serverHost</q-item-label>
-              <q-item-label caption lines="2">必填，节点服务器地址：y20.work</q-item-label>
+              <q-item-label caption lines="2">必填，节点服务器地址：{{window.location.hostname}}</q-item-label>
             </q-item-section>
           </q-item>
 
@@ -138,6 +138,7 @@ export default {
     })
 
     return {
+      window: window,
       dayjs,
 
       latestVersion,

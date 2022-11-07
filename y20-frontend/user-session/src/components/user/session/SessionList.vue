@@ -7,8 +7,9 @@
             <div class="page-heading">会话</div>
           </q-toolbar>
         </div>
-        <div class="q-pa-md page-content">
+        <div class="q-pa-sm page-content">
           <q-table
+            flat
             class="session-list-table"
             :rows="sessions"
             :columns="columns"

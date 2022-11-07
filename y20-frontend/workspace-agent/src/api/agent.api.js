@@ -31,6 +31,9 @@ export default {
       config
     })
   },
+  getAgentAccessToken({ agentAccessToken }){
+    return request().get(`${API_AGENT_PREFIX}/agent/access/token/get?agentAccessToken=${encodeURIComponent(agentAccessToken)}`)
+  },
   restart({ agentId }){
     return request().post(`${API_AGENT_PREFIX}/agent/restart`, {
       agentId,

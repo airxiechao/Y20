@@ -13,6 +13,8 @@ public class Monitor  {
     private String agentId;
     private String type;
     private Object target;
+    private String actionType;
+    private Object actionParam;
     private String status;
     private Date createTime;
     private Date lastUpdateTime;
@@ -26,6 +28,8 @@ public class Monitor  {
         record.setAgentId(agentId);
         record.setType(type);
         record.setTarget(JSON.toJSONString(target));
+        record.setActionType(actionType);
+        record.setActionParam(JSON.toJSONString(actionParam));
         record.setStatus(status);
         record.setCreateTime(createTime);
         record.setLastUpdateTime(lastUpdateTime);
@@ -87,6 +91,22 @@ public class Monitor  {
 
     public void setTarget(Object target) {
         this.target = target;
+    }
+
+    public String getActionType() {
+        return actionType;
+    }
+
+    public void setActionType(String actionType) {
+        this.actionType = actionType;
+    }
+
+    public Object getActionParam() {
+        return actionParam;
+    }
+
+    public void setActionParam(Object actionParam) {
+        this.actionParam = actionParam;
     }
 
     public String getStatus() {

@@ -7,15 +7,19 @@ import com.airxiechao.axcboot.communication.rest.annotation.Post;
 import com.airxiechao.axcboot.core.annotation.IRest;
 import com.airxiechao.y20.common.pojo.constant.auth.EnumAccessScope;
 import com.airxiechao.y20.pipeline.pojo.vo.PipelineBasicPageVo;
+import com.airxiechao.y20.pipeline.pojo.vo.PipelineBasicVo;
 import com.airxiechao.y20.pipeline.pojo.vo.PipelineCountVo;
 import com.airxiechao.y20.pipeline.pojo.vo.PipelineRunDetailVo;
 
-import java.util.List;
 import java.util.Set;
 
 
 @IRest
 public interface IServicePipelineRest {
+
+    @Get("/service/pipeline/basic/get")
+    @Auth(scope = EnumAccessScope.SERVICE)
+    Response<PipelineBasicVo> getPipelineBasic(Object exc);
 
     @Get("/service/pipeline/count")
     @Auth(scope = EnumAccessScope.SERVICE)

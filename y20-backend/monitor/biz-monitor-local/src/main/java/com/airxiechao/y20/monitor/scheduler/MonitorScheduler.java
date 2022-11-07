@@ -2,6 +2,8 @@ package com.airxiechao.y20.monitor.scheduler;
 
 import com.airxiechao.axcboot.task.ITaskScheduler;
 import com.airxiechao.axcboot.task.TaskSchedulerManager;
+import com.airxiechao.axcboot.task.quartz.annotation.Quartz;
+import com.airxiechao.axcboot.util.AnnotationUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,11 +22,15 @@ public class MonitorScheduler implements IMonitorScheduler {
     }
     private MonitorScheduler(){}
 
-    private ITaskScheduler taskScheduler = TaskSchedulerManager.getInstance().getQuartzScheduler();
+    private ITaskScheduler taskScheduler;
 
     @Override
     public void schedule() {
         logger.info("schedule monitor task every [{}] secs", INTERVAL_SECS);
+
+        Quartz quartz = AnnotationUtil.getClassAnnotation(this.getClass(), Quartz.class);
+
+        taskScheduler = TaskSchedulerManager.getInstance().getQuartzScheduler(quartz.value());
 
         ScheduledFuture future = taskScheduler.schedulePeriodAfter(
                 INTERVAL_SECS, INTERVAL_SECS, TimeUnit.SECONDS, new MonitorJob());

@@ -23,9 +23,9 @@ public interface IMonitorBiz {
 
     long count(Long userId, Long projectId, String agentId, String name);
 
-    MonitorRecord create(Long userId, Long projectId, String agentId, String name, String type, Object target);
+    MonitorRecord create(Long userId, Long projectId, String agentId, String name, String type, Object target, String actionType, Object actionParam);
 
-    boolean updateBasic(Long userId, Long projectId, Long monitorId, String agentId, String name, String type, Object target);
+    boolean updateBasic(Long userId, Long projectId, Long monitorId, String agentId, String name, String type, Object target, String actionType, Object actionParam);
     boolean updateStatus(Long userId, Long projectId, Long monitorId, String status);
 
     boolean deleteById(Long userId, Long projectId, Long monitorId);

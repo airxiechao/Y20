@@ -9,8 +9,8 @@
           </q-toolbar>
         </div>
 
-        <div class="q-pa-md page-content" style="position:relative;">
-          <q-card class="q-pa-md">
+        <div class="q-pa-sm page-content" style="position:relative;">
+          <q-card flat class="q-pa-md">
             <div class="q-pb-md">
               <div>
                 步骤类型 <span v-if="stepTypeName">- {{ stepTypeName }}</span>

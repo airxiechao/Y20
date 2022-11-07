@@ -8,9 +8,6 @@
             <q-breadcrumbs-el :label="`第 ${parseInt(stepPosition)+1} 步`" />
           </q-breadcrumbs>
         </div>
-        <div>
-          <q-btn flat class="bg-blue-1" icon="subdirectory_arrow_left" color="primary" label="返回" @click="onClickBack" />
-        </div>
       </div>
       <q-form class="q-gutter-md">
         <q-input readonly outlined label="名称 *" v-model="step.name" :rules="[val => !!val]" />
@@ -52,6 +49,10 @@
             </q-item-section>
           </q-item>
         </q-list>
+      
+        <div class="q-pt-sm">
+          <q-btn unelevated color="primary" label="返回" @click="onClickBack" />
+        </div>
       </q-form>
     </div>
     <!-- <q-inner-loading :showing="loading">

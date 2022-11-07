@@ -14,9 +14,10 @@
             </q-input>
           </q-toolbar>
         </div>
-        <div class="q-pa-md page-content">
+        <div class="q-pa-sm page-content">
           <div class="page-heading">令牌</div>
           <q-table
+            flat
             class="token-list-table q-mt-sm"
             :rows="tokens"
             :columns="columns"
@@ -38,7 +39,8 @@
               <q-td :props="props">
                 <div>
                   <span class="vertical-middle">{{ dayjs(props.value).format('YYYY-MM-DD HH:mm:ss') }}</span>
-                  <q-badge v-if="props.value < new Date().getTime()" class="vertical-middle q-ml-xs" color="warning">已过期</q-badge>
+                  <q-badge v-if="props.value <= new Date().getTime()" class="vertical-middle q-ml-xs" color="warning">已过期</q-badge>
+                  <q-badge v-else-if="props.value - new Date().getTime() < 30*24*60*60*1000" class="vertical-middle q-ml-xs" color="warning">即将过期</q-badge>
                 </div>
               </q-td>
             </template>

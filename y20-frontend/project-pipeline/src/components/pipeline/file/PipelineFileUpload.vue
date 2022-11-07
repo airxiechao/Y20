@@ -12,6 +12,7 @@
       </div>
       <div>
         <q-uploader
+          flat bordered
           :label="`本地文件 -> 流水线目录：${dir || '.'}`"
           :url="uploadPipelineFileUrl"
           :headers="uploadPipelineFileHeaders"
@@ -19,8 +20,7 @@
           fieldName="file"
         />
         <div class="q-mt-md"> 
-          <q-btn unelevated label="完成" color="primary" :to="`/project/${projectId}/pipeline/${pipelineId}/file`" />
-          <q-btn flat class="q-ml-sm" label="返回" @click="onClickCancel" :to="`/project/${projectId}/pipeline/${pipelineId}/file`" />
+          <q-btn unelevated label="返回" color="primary" :to="`/project/${projectId}/pipeline/${pipelineId}/file`" />
         </div>
       </div>
     </div>

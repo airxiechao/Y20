@@ -12,16 +12,18 @@ function install(app, options){
       notifyError(text){
         $q.notify({
           color: 'red-5',
+          position: 'top-right',
           textColor: 'white',
-          icon: 'warning',
+          icon: 'error',
           message: text
         })
       },
       notifySuccess(text){
         $q.notify({
           color: 'green-5',
+          position: 'top-right',
           textColor: 'white',
-          icon: 'cloud_done',
+          icon: 'done',
           message: text
         })
       }

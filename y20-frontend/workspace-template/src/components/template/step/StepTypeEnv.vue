@@ -7,17 +7,13 @@
           <q-breadcrumbs-el :label="`第 ${parseInt(stepPosition)+1} 步`" />
         </q-breadcrumbs>
       </div>
-      <div>
-        <q-btn flat class="bg-blue-1" icon="subdirectory_arrow_left" color="primary" label="返回" @click="onClickBack" />
-      </div>
     </div>
     <q-form
       class="q-gutter-md"
     >
       <q-input readonly outlined label="名称 *" v-model="step.name" :rules="[val => !!val]" />
-      <div class="text-primary text-bold">参数</div>
-      <q-card flat bordered>
-        <q-tabs dense narrow-indicator align="justify" v-model="tab" active-color="primary">
+      <q-card flat>
+        <q-tabs narrow-indicator align="justify" v-model="tab" active-color="primary">
           <q-tab name="agent" label="节点容器" />
           <q-tab name="variable" label="环境变量" />
           <q-tab name="file" label="文件目录" />
@@ -37,6 +33,10 @@
           </q-tab-panel>
         </q-tab-panels>
       </q-card>
+      
+      <div class="q-pt-sm">
+        <q-btn unelevated color="primary" label="返回" @click="onClickBack" />
+      </div>
     </q-form>
   </div>
 </template>

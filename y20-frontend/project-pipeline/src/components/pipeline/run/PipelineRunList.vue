@@ -13,10 +13,8 @@
       @request="onTableSearch"
     >
       <template v-slot:body-cell-name="props">
-        <q-td :props="props">
-          <span class="cursor-pointer" @click="onClickDetailPipelineRun(props.row.pipelineRunId)">
-            <span>{{ props.row.name }}</span>
-          </span>
+        <q-td :props="props" class="cursor-pointer" @click="onClickDetailPipelineRun(props.row.pipelineRunId)">
+          <span>{{ props.row.name }}</span>
         </q-td>
       </template>
       <template v-slot:body-cell-status="props">

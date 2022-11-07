@@ -48,6 +48,10 @@ public interface IUserAgentRest {
     @Auth(scope = EnumAccessScope.USER)
     Response readAgentConfig(Object exc);
 
+    @Get("/user/agent/access/token/get")
+    @Auth(scope = EnumAccessScope.USER)
+    Response getAgentAccessToken(Object exc);
+
     @Post("/user/agent/config/save")
     @Auth(scope = EnumAccessScope.USER)
     Response saveAgentConfig(Object exc);

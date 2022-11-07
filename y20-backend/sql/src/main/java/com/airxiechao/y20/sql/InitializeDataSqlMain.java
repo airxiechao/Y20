@@ -7,6 +7,9 @@ import com.airxiechao.axcboot.storage.db.sql.DbManager;
 import com.airxiechao.axcboot.storage.fs.JavaResourceFs;
 import com.airxiechao.axcboot.util.ClsUtil;
 import com.airxiechao.axcboot.util.StringUtil;
+import com.airxiechao.y20.auth.db.api.IUserDb;
+import com.airxiechao.y20.auth.db.record.UserRecord;
+import com.airxiechao.y20.auth.util.AuthUtil;
 import com.airxiechao.y20.common.pojo.constant.meta.Meta;
 import com.airxiechao.y20.pay.db.api.IPayDb;
 import com.airxiechao.y20.pay.db.record.PayPriceRecord;
@@ -45,7 +48,6 @@ public class InitializeDataSqlMain {
         payDbManager.insert(agentQuotaPriceRecord);
         payDbManager.insert(pipelineRunQuotaPriceRecord);
     }
-
 
     public static void initStepType(){
         String pipelineDbConfigFile = IPipelineDb.class.getAnnotation(IDb.class).value();

@@ -13,5 +13,6 @@ public class CreateSqlMain {
         DbManager dbManager = new DbManager(new JavaResourceFs(), "mybatis-no-database.xml");
 
         SqlTool.createDb(dbManager, false, true, true);
+        SqlTool.createAdminUser();
     }
 }

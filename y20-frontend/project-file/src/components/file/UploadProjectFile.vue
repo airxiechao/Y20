@@ -7,8 +7,8 @@
             <q-btn unelevated rounded flat color="primary" icon="keyboard_backspace" label="文件" :to="`/project/${projectId}/file`" />
           </q-toolbar>
         </div>
-        <div class="q-pa-md page-content">
-          <q-card class="q-pa-md">
+        <div class="q-pa-sm page-content">
+          <q-card flat class="q-pa-md">
             <div class="q-pb-md">上传文件</div>
             <div class="q-gutter-md">
               <div>
@@ -19,6 +19,7 @@
               </div>
               <div>
                 <q-uploader
+                  flat bordered
                   :label="`本地文件 -> 项目目录：${dir||'.'}`"
                   :url="uploadProjectFileUrl"
                   :headers="uploadProjectFileHeaders"

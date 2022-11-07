@@ -5,12 +5,12 @@
     overflow: auto;
   }
   .q-table__bottom{
-    padding: 4px 8px;
+    padding: 4px;
   }
 }
 
 .q-drawer{
-  background: $--color-drawer-bg !important;
+  background: $--color-page-bg !important;
 
   .q-drawer__content{
     overflow: hidden;
@@ -18,22 +18,21 @@
 }
 
 .q-drawer--left{
-  background: #333752 !important;
-  color: #EAECF5;
-  padding: 8px;
+  background: $--color-drawer-bg !important;
+  border-right: 1px solid #0000001f;
 
   .q-list{
 
     .q-item{
-      margin: 8px;
-      border-radius: 4px;
+      background: #fff;
+      border-bottom: 1px solid #0000001f;
     }
   }
 
 }
 
 .q-drawer--right{
-  padding: 83px 16px 16px 16px;
+  padding: 80px 16px 16px 16px;
 }
 
 .q-uploader{
@@ -59,32 +58,42 @@
 
   .page-heading{
     color: #131523;
-    line-height: 40px;
     font-weight: bold;
+    line-height: 35px;
   }
 
   .page-toolbar{
-    padding: 14px 16px;
+    padding: 8px;
 
     &.q-toolbar, & .q-toolbar{
       padding-left: 4px;
       padding-right: 4px;
       background: #fff;
       border-radius: 4px;
-      box-shadow: 0 1px 4px #ccc;
+      border: 1px solid #0000001f;
+
+      .q-field--outlined .q-field__control:before{
+        border: 1px solid #fff;
+      }
 
       .q-toolbar__title{
         font-size: 18px;
       }
 
       .page-heading{
-        padding-left: 8px;
+        padding-left: 10px !important;
+        padding-right: 10px !important;
       }
     }
   }
 
   .page-content{
     padding-top: 0;
+
+    > .page-heading{
+      padding-left: 10px !important;
+      padding-right: 10px !important;
+    }
   }
 
 }
@@ -109,6 +118,6 @@
 }
 
 .drawer-menu-active{
-  background: #F5F6FA;
-  color: #131523 !important;
+  background: #EBF0FD !important;
+  color: $--color-primary !important;
 }

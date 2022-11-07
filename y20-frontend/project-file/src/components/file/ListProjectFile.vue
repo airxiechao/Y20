@@ -9,8 +9,8 @@
           <q-btn unelevated color="primary" label="上传文件" icon="upload" @click="onClickUpload" />
           </q-toolbar>
         </div>
-        <div class="q-pa-md page-content">
-          <q-card class="list-project-file-card q-pa-md">
+        <div class="q-pa-sm page-content">
+          <q-card flat class="list-project-file-card q-pa-md">
             <div class="page-heading q-pb-md">项目全局文件</div>
             <div>
               <FsViewer

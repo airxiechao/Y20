@@ -12,7 +12,7 @@
             </div>
           </q-toolbar>
         </div>
-        <div class="q-pa-md page-content">
+        <div class="q-pa-sm page-content">
           <div class="q-pb-md">
             <q-chip square>
               <q-avatar icon="data_usage" color="green" text-color="white" />
@@ -21,7 +21,7 @@
               <span v-else>{{freeQuotaNumAgent}}个节点，{{freeQuotaNumPipelineRun}}次流水线运行/月</span>
             </q-chip>
           </div>
-          <q-card class="quota-detail-card">
+          <q-card flat class="quota-detail-card">
             <q-list padding dense>
               <q-item-label header>节点接入数</q-item-label>
               
@@ -43,15 +43,16 @@
                 </q-item-section>
                 <q-item-section side>
                   <q-skeleton v-if="loadingCurrent" type="text" width="20px" />
-                  <q-badge v-else :color="numAgent > maxAgent ? 'warning' : 'grey'">
+                  <span v-else>
                     {{numAgent}}
                     <q-icon
                       v-if="numAgent > maxAgent"
                       name="warning"
+                      color="warning"
                       size="14px"
                       class="q-ml-xs"
                     />
-                  </q-badge>
+                  </span>
                 </q-item-section>
               </q-item>
 
@@ -80,23 +81,25 @@
 
                 <q-item-section side>
                   <q-skeleton v-if="loadingCurrent" type="text" width="20px" />
-                  <q-badge v-else :color="numPipelineRun >= maxPipelineRun ? 'warning' : 'grey'">
+                  <span v-else>
                     {{numPipelineRun}}
                     <q-icon
                       v-if="numPipelineRun >= maxPipelineRun"
                       name="warning"
+                      color="warning"
                       size="14px"
                       class="q-ml-xs"
                     />
-                  </q-badge>
+                  </span>
                 </q-item-section>
               </q-item>
               
             </q-list>
           </q-card>
 
-          <div class="page-heading q-mt-lg">购买记录</div>
+          <div class="page-heading q-mt-md">购买记录</div>
           <q-table
+            flat
             class="quota-table q-mt-sm"
             :rows="quotas"
             :columns="columns"

@@ -31,6 +31,32 @@ public class ServicePipelineRestHandler implements IServicePipelineRest {
     private IPipelineBiz pipelineBiz = Biz.get(IPipelineBiz.class);
 
     @Override
+    public Response<PipelineBasicVo> getPipelineBasic(Object exc) {
+        HttpServerExchange exchange = (HttpServerExchange)exc;
+
+        ServiceGetPipelineBasicParam param;
+        try {
+            param = RestUtil.queryData(exchange, ServiceGetPipelineBasicParam.class);
+        } catch (Exception e) {
+            return new Response().error(e.getMessage());
+        }
+
+        PipelineRecord record = pipelineBiz.get(
+                param.getUserId(),
+                param.getProjectId(),
+                param.getPipelineId()
+        );
+
+        if(null == record){
+            return new Response().error("no pipeline");
+        }
+
+        PipelineBasicVo basicVo = new PipelineBasicVo(record);
+
+        return new Response().data(basicVo);
+    }
+
+    @Override
     public Response<PipelineCountVo> countPipeline(Object exc) {
         HttpServerExchange exchange = (HttpServerExchange)exc;
 

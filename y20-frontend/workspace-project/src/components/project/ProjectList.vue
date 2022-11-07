@@ -14,13 +14,10 @@
             </q-input>
           </q-toolbar>
         </div>
-        <div class="q-pa-md page-content">
+        <div class="q-pa-xs page-content">
           
           <NewbieGuide v-if="flagGuide" @stepTo="onGuideStepTo" @close="onGuideClose"/>
-          
-          <div class="page-heading q-px-sm">
-            项目
-          </div>
+
           <q-table
             grid
             :hide-bottom="projectLoading"
@@ -39,7 +36,7 @@
               <div class="full-width">
                 <div class="row q-mt-xs">
                   <div class="col-12 col-md-6 col-lg-3">
-                    <q-card class="project-card q-pa-sm">
+                    <q-card flat class="project-card q-pa-xs">
                       <q-item>
                         <q-item-section avatar>
                           <q-avatar icon="bar_chart" class="q-mr-sm text-grey" size="lg" style="background: #ECF2FF;" />
@@ -59,8 +56,8 @@
             </template>
             <template v-slot:loading>
               <div class="row">
-                <div class="q-pa-sm col-12 col-md-6 col-lg-3" v-for="i in [1,2,3,4]" :key="i">
-                  <q-card class="project-card q-pa-sm">
+                <div class="q-pa-xs col-12 col-md-6 col-lg-3" v-for="i in [1,2,3,4]" :key="i">
+                  <q-card flat class="project-card q-pa-xs">
                     <q-item>
                       <q-item-section avatar>
                         <q-skeleton type="QAvatar" animation="fade" size="38px" />
@@ -80,8 +77,8 @@
               </div>
             </template>
             <template v-slot:item="props">
-              <div class="q-pa-sm col-12 col-md-6 col-lg-3">
-                <q-card class="project-card q-pa-sm" >
+              <div class="q-pa-xs col-12 col-md-6 col-lg-3">
+                <q-card flat class="project-card q-pa-xs" >
                   <q-item>
                     <q-item-section avatar class="cursor-pointer" @click="onClickProject(props.row.projectId)">
                       <q-avatar icon="bar_chart" class="q-mr-sm text-primary" size="lg" style="background: #ECF2FF;" />
@@ -129,7 +126,7 @@
             </template>
           </q-table>
 
-          <q-card class="q-mx-sm q-mt-md">
+          <q-card flat class="q-mx-xs q-mt-xs">
             <div class="page-heading q-px-md q-pt-xs">
               <span class="vertical-middle">项目动态</span>
             </div>
@@ -206,7 +203,7 @@
             </div>
           </q-card>
 
-          <q-card class="q-mx-sm q-mt-md">
+          <q-card flat class="q-mx-xs q-mt-sm q-mb-xs">
             <div class="page-heading q-px-md q-pt-xs">
               <span class="vertical-middle">监视状态</span>
             </div>
@@ -280,6 +277,10 @@
       position: absolute;
       top: -5px;
       left: 3px;
+    }
+
+    .q-item {
+      padding: 8px;
     }
   }
 
@@ -551,7 +552,7 @@ export default {
           projectId,
           bookmarked: bookmarked,
         }).then(resp => {
-          searchProject()
+          searchProject(true)
         }, resp => {
           qUtil.notifyError(resp.message)
         })
@@ -560,7 +561,7 @@ export default {
       onGuideStepTo(step){
         switch(step){
           case 2:
-            searchProject()
+            searchProject(true)
             break;
         }
       },

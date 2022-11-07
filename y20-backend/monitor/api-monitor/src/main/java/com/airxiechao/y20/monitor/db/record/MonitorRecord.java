@@ -19,6 +19,8 @@ public class MonitorRecord {
     @Column(length = 100) private String agentId;
     @Column(length = 50) private String type;
     @Column(type = "text") private String target;
+    @Column(length = 50) private String actionType;
+    @Column(type = "text") private String actionParam;
     private String status;
     private Date createTime;
     private Date lastUpdateTime;
@@ -32,6 +34,8 @@ public class MonitorRecord {
         monitor.setAgentId(agentId);
         monitor.setType(type);
         monitor.setTarget(JSON.parseObject(target));
+        monitor.setActionType(actionType);
+        monitor.setActionParam(JSON.parseObject(actionParam));
         monitor.setStatus(status);
         monitor.setCreateTime(createTime);
         monitor.setLastUpdateTime(lastUpdateTime);
@@ -93,6 +97,22 @@ public class MonitorRecord {
 
     public void setTarget(String target) {
         this.target = target;
+    }
+
+    public String getActionType() {
+        return actionType;
+    }
+
+    public void setActionType(String actionType) {
+        this.actionType = actionType;
+    }
+
+    public String getActionParam() {
+        return actionParam;
+    }
+
+    public void setActionParam(String actionParam) {
+        this.actionParam = actionParam;
     }
 
     public String getStatus() {

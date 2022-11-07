@@ -9,8 +9,8 @@
           </q-toolbar>
         </div>
         
-        <div class="q-pa-md page-content">
-          <q-card class="q-pa-md">
+        <div class="q-pa-sm page-content">
+          <q-card flat class="q-pa-md">
             <div class="q-pb-md">
               <div>步骤类型 - 准备环境</div>
               <q-skeleton v-if="!pipelineName" type="text" animation="fade" style="max-width: 150px;" />
@@ -31,8 +31,7 @@
                   (val) => val.length <= 100 || '名称长度不超过100个字符',
                 ]"
               />
-              <div class="text-primary text-bold">参数</div>
-              <q-card flat bordered>
+              <q-card flat>
                 <q-tabs
                   align="justify" 
                   v-model="tab" 

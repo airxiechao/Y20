@@ -6,113 +6,115 @@
         <q-btn flat class="bg-blue-1" icon="add" color="primary" label="添加步骤" @click="onClickAddStep(steps.length)" />
       </div>
     </div>
-    <q-list bordered separator class="relative-position">
-      <template v-if="loading">
-        <q-item class="q-pa-md" v-for="si in [1,2]" :key="si">
-          <q-item-section avatar>
-            <q-skeleton type="QAvatar" animation="fade" size="38px" />
-          </q-item-section>
+    <q-card flat>
+      <q-list separator class="relative-position">
+        <template v-if="loading">
+          <q-item class="q-pa-md" v-for="si in [1]" :key="si">
+            <q-item-section avatar>
+              <q-skeleton type="QAvatar" animation="fade" size="38px" />
+            </q-item-section>
 
-          <q-item-section>
-            <q-item-label>
-              <q-skeleton type="text" animation="fade" />
-            </q-item-label>
-            <q-item-label caption>
-              <q-skeleton type="text" animation="fade" style="width: 25%;" />
-            </q-item-label>
-          </q-item-section>
-        </q-item>
-      </template>
-      <template v-else-if="!steps || steps.length == 0">
-        <q-item class="q-py-md">
-          <q-item-section avatar style="min-width:35px; padding-right:0;">
-            <q-icon name="warning" />
-          </q-item-section>
-          <q-item-section>
-            <div>
-              <span class="vertical-middle">没有步骤？</span>
-              <q-btn class="vertical-middle" color="primary" dense flat label="添加一个步骤" @click="onClickAddStep(steps.length)" />
-              <span class="vertical-middle">。第一个步骤的类型应该是“准备环境”或“调用流水线”</span>
-            </div>
-          </q-item-section>
-        </q-item>
-      </template>
-      <template v-else v-for="(step, i) in steps" :key="i">
-        <q-item class="q-py-md" :style="{
-          'border-left': `4px solid ${getGroupColor(i)}`
-        }">
-          <q-item-section avatar class="gt-xs">
-            <q-icon 
-              :name="step.type == 'remote-prepare-env' ? 'computer' : 'account_tree'" 
-              :color="step.disabled ? 'grey' : 'black'"
-              size="34px" 
-            />
-          </q-item-section>
+            <q-item-section>
+              <q-item-label>
+                <q-skeleton type="text" animation="fade" />
+              </q-item-label>
+              <q-item-label caption>
+                <q-skeleton type="text" animation="fade" style="width: 25%;" />
+              </q-item-label>
+            </q-item-section>
+          </q-item>
+        </template>
+        <template v-else-if="!steps || steps.length == 0">
+          <q-item class="q-py-md">
+            <q-item-section avatar style="min-width:35px; padding-right:0;">
+              <q-icon name="warning" />
+            </q-item-section>
+            <q-item-section>
+              <div>
+                <span class="vertical-middle">没有步骤？</span>
+                <q-btn class="vertical-middle" color="primary" dense flat label="添加一个步骤" @click="onClickAddStep(steps.length)" />
+                <span class="vertical-middle">。第一个步骤的类型应该是“准备环境”或“调用流水线”</span>
+              </div>
+            </q-item-section>
+          </q-item>
+        </template>
+        <template v-else v-for="(step, i) in steps" :key="i">
+          <q-item clickable class="q-py-md" :style="{
+            //'border-left': `4px solid ${getGroupColor(i)}`
+          }" @click="onClickStep(i)">
+            <q-item-section avatar class="gt-xs">
+              <q-icon 
+                :name="step.type == 'remote-prepare-env' ? 'computer' : 'account_tree'" 
+                :color="step.disabled ? 'grey' : 'black'"
+                size="34px" 
+              />
+            </q-item-section>
 
-          <q-item-section>
-            <q-item-label :class="{
-              'cursor-pointer': true,
-              'text-grey': step.disabled,
-            }" :style="{
-              'text-decoration': step.disabled ? 'line-through' : 'unset',
-            }" @click="onClickStep(i)">
-              <span class="q-mr-sm vertical-middle">步骤 {{i+1}}</span>
-              <span class="vertical-middle">{{ step.name }}</span>
-            </q-item-label>
-            <q-item-label caption>
-              {{ step.typeName }}
-            </q-item-label>
-          </q-item-section>
+            <q-item-section>
+              <q-item-label :class="{
+                'cursor-pointer': true,
+                'text-grey': step.disabled,
+              }" :style="{
+                'text-decoration': step.disabled ? 'line-through' : 'unset',
+              }">
+                <span class="q-mr-sm vertical-middle">步骤 {{i+1}}</span>
+                <span class="vertical-middle">{{ step.name }}</span>
+              </q-item-label>
+              <q-item-label caption>
+                {{ step.typeName }}
+              </q-item-label>
+            </q-item-section>
 
-          <q-item-section top side>
-            <div class="text-grey-8 q-gutter-xs">
-              <q-toggle :modelValue="!step.disabled" :icon="step.condition ? 'visibility' : undefined" @update:modelValue="onToggleStepDisabled(i, !$event)" />
-              <q-btn flat dense round icon="more_vert">
-                <q-menu>
-                  <q-list style="min-width: 100px">
-                    <q-item clickable v-close-popup @click="onClickStep(i)">
-                      <q-item-section>编辑</q-item-section>
-                    </q-item>
-                    <q-item clickable v-close-popup @click="onClickStepCondition(i)">
-                      <q-item-section>设置执行条件</q-item-section>
-                    </q-item>
-                    <q-separator />
-                    <q-item clickable v-close-popup @click="onClickAddStep(i)">
-                      <q-item-section>添加步骤到之前</q-item-section>
-                    </q-item>
-                    <q-item clickable v-close-popup @click="onClickAddStep(i+1)">
-                      <q-item-section>添加步骤到之后</q-item-section>
-                    </q-item>
-                    <q-separator />
-                    <q-item clickable v-close-popup @click="onClickCopyStep(i, i)">
-                      <q-item-section>复制步骤到之前</q-item-section>
-                    </q-item>
-                    <q-item clickable v-close-popup @click="onClickCopyStep(i, i+1)">
-                      <q-item-section>复制步骤到之后</q-item-section>
-                    </q-item>
-                    <q-separator />
-                    <q-item clickable v-close-popup @click="onClickCopyStepTo(i)">
-                      <q-item-section>复制到...</q-item-section>
-                    </q-item>
-                    <q-item clickable v-close-popup @click="onClickMoveStepTo(i)">
-                      <q-item-section>移动到...</q-item-section>
-                    </q-item>
-                    <q-separator />
-                    <q-item clickable v-close-popup>
-                      <q-item-section class="text-negative" @click="onClickDeleteStep(i)">删除</q-item-section>
-                    </q-item>
-                  </q-list>
-                </q-menu>
-              </q-btn>
-            </div>
-          </q-item-section>
-        </q-item>
-      </template>
+            <q-item-section top side>
+              <div class="text-grey-8 q-gutter-xs">
+                <q-toggle size="sm" :modelValue="!step.disabled" :icon="step.condition ? 'visibility' : undefined" @update:modelValue="onToggleStepDisabled(i, !$event)" />
+                <q-btn flat dense round icon="more_vert" @click.stop>
+                  <q-menu>
+                    <q-list style="min-width: 100px">
+                      <q-item clickable v-close-popup @click="onClickStep(i)">
+                        <q-item-section>编辑</q-item-section>
+                      </q-item>
+                      <q-item clickable v-close-popup @click="onClickStepCondition(i)">
+                        <q-item-section>设置执行条件</q-item-section>
+                      </q-item>
+                      <q-separator />
+                      <q-item clickable v-close-popup @click="onClickAddStep(i)">
+                        <q-item-section>添加步骤到之前</q-item-section>
+                      </q-item>
+                      <q-item clickable v-close-popup @click="onClickAddStep(i+1)">
+                        <q-item-section>添加步骤到之后</q-item-section>
+                      </q-item>
+                      <q-separator />
+                      <q-item clickable v-close-popup @click="onClickCopyStep(i, i)">
+                        <q-item-section>复制步骤到之前</q-item-section>
+                      </q-item>
+                      <q-item clickable v-close-popup @click="onClickCopyStep(i, i+1)">
+                        <q-item-section>复制步骤到之后</q-item-section>
+                      </q-item>
+                      <q-separator />
+                      <q-item clickable v-close-popup @click="onClickCopyStepTo(i)">
+                        <q-item-section>复制到...</q-item-section>
+                      </q-item>
+                      <q-item clickable v-close-popup @click="onClickMoveStepTo(i)">
+                        <q-item-section>移动到...</q-item-section>
+                      </q-item>
+                      <q-separator />
+                      <q-item clickable v-close-popup>
+                        <q-item-section class="text-negative" @click="onClickDeleteStep(i)">删除</q-item-section>
+                      </q-item>
+                    </q-list>
+                  </q-menu>
+                </q-btn>
+              </div>
+            </q-item-section>
+          </q-item>
+        </template>
 
-      <!-- <q-inner-loading :showing="loading">
-        <q-spinner-gears size="30px" color="primary" />
-      </q-inner-loading> -->
-    </q-list>
+        <!-- <q-inner-loading :showing="loading">
+          <q-spinner-gears size="30px" color="primary" />
+        </q-inner-loading> -->
+      </q-list>
+    </q-card>
   </div>
 </template>
 

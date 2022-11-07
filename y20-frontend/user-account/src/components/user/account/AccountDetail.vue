@@ -7,8 +7,8 @@
             <div class="page-heading">账号</div>
           </q-toolbar>
         </div>
-        <div class="q-pa-md page-content">
-          <q-card class="account-detail-card">
+        <div class="q-pa-sm page-content">
+          <q-card flat class="account-detail-card">
             <q-list padding>
               <q-item>
                 <q-item-section avatar>

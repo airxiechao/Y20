@@ -10,8 +10,7 @@
             </a>
           </div>
 
-          <div class="text-center text-h6"><router-link class="text-dark" to="/signup" style="text-decoration: none;">新用户注册</router-link></div>
-          <div class="text-center text-subtitle text-grey q-mb-md">开始使用</div>
+          <div class="text-center text-h6"><router-link class="text-dark" to="/signup" style="text-decoration: none;">新用户注册</router-link></div>          
           
           <router-view />
 
@@ -27,7 +26,7 @@
 <style lang="scss" scoped>
 .page-signup{
   height: 100%;
-  background-color: #f5f6fa;
+  background-color: #f5f5f5;
   background-repeat: no-repeat;
   background-position-x: 20%;
   background-position-y: 180px;
@@ -37,8 +36,8 @@
     max-width: 450px;
     margin: 0 auto;
     background-color: #fff;
-    border-radius: 48px;
-    box-shadow: 0 0px 25px #ddd;
+    border-radius: 8px;
+    box-shadow: 0 5px 10px #ddd;
     padding: 30px;
   }
 }

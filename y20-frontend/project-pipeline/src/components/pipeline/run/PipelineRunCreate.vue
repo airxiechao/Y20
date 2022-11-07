@@ -7,8 +7,8 @@
             <q-btn unelevated rounded flat color="primary" icon="keyboard_backspace" label="返回" @click="onClickBack" />
           </q-toolbar>
         </div>
-        <div class="q-pa-md page-content">
-          <q-card class="q-pa-md">
+        <div class="q-pa-sm page-content">
+          <q-card flat class="q-pa-md">
             <div class="q-pb-md">
               <div>启动流水线</div>
               <q-skeleton v-if="!pipelineName" type="text" animation="fade" style="max-width: 150px;" />

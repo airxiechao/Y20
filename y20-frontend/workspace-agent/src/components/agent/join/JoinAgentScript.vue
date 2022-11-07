@@ -1,5 +1,5 @@
 <template>
-  <div class="join-agent-script q-pa-md">
+  <div class="join-agent-script">
     <div class="q-mb-lg">
       <div>
         <div class="text-primary q-pb-md">操作系统</div>
@@ -57,7 +57,7 @@
         outlined
         v-model="serverHost"
         label="服务器地址 *"
-        hint="serverHost（必填），节点服务器地址：y20.work"
+        :hint="`serverHost（必填），节点服务器地址：${window.location.hostname}`"
         lazy-rules
         :rules="[ val => val && val.length > 0 || '请输入节点服务器地址']"
       />
@@ -162,7 +162,7 @@ export default {
     const script = ref('')
     const agentId = ref('')
     const accessToken = ref('')
-    const serverHost = ref('y20.work')
+    const serverHost = ref(window.location.hostname)
     const serverRpcPort = ref(9100)
     const serverRestUseSsl = ref(true)
     const dataDir = ref('.')
@@ -191,6 +191,7 @@ export default {
     })
 
     return {
+      window: window,
       latestVersion,
       releaseTime,
       downloadWinUrl,

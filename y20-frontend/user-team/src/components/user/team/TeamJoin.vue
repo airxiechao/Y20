@@ -7,12 +7,9 @@
             <q-btn unelevated rounded icon="keyboard_backspace" class="bg-grey-3 text-dark" label="团队" to="/user/team" />
           </q-toolbar>
         </div>
-        <div class="q-pa-md page-content">
-          <q-card class="q-pa-md bg-white">
-            <div class="page-heading">
-              <q-icon class="vertical-middle q-mr-xs" name="campaign" />
-              <span class="vertical-middle">邀请加入团队</span>
-            </div>
+        <div class="q-pa-sm page-content">
+          <q-card flat class="q-pa-md bg-white">
+            <div class="page-heading">邀请加入团队</div>
             <template v-if="tokenLoading">
               <q-skeleton type="text" animation="fade" />
               <q-skeleton type="text" animation="fade" width="30%" />

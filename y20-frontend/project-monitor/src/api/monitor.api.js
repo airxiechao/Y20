@@ -8,21 +8,25 @@ export default {
   get({ monitorId }){
     return request().get(`${API_PROJECT_PREFIX}/monitor/get?monitorId=${monitorId}`)
   },
-  create({ name, agentId, type, target }){
+  create({ name, agentId, type, target, actionType, actionParam }){
     return request().post(`${API_PROJECT_PREFIX}/monitor/create`, {
       name,
       agentId,
       type,
       target,
+      actionType,
+      actionParam,
     })
   },
-  updateBasic({ monitorId, name, agentId, type, target }){
+  updateBasic({ monitorId, name, agentId, type, target, actionType, actionParam }){
     return request().post(`${API_PROJECT_PREFIX}/monitor/basic/update`, {
       monitorId,
       name,
       agentId,
       type,
       target,
+      actionType,
+      actionParam,
     })
   },
   delete({ monitorId }){

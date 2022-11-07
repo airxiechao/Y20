@@ -7,8 +7,8 @@
             <q-btn unelevated rounded flat color="primary" icon="keyboard_backspace" label="节点" to="/workspace/agent" />
           </q-toolbar>
         </div>
-        <div class="q-pa-md page-content">
-          <q-card flat bordered class="bg-white q-pa-md">
+        <div class="q-pa-sm page-content">
+          <q-card flat class="bg-white q-pa-md">
             <div class="q-pb-md">配置节点 - {{agentId}}</div>
             <template v-if="readLoading">
               <div v-for="i in [1,2]" :key="i" :class="{'q-mb-md': i < 2}">
@@ -47,6 +47,14 @@
                     />
                   </template>
                 </q-input>
+                <q-badge v-if="configAccessTokenName" color="grey">
+                  令牌名称：{{configAccessTokenName}}
+                </q-badge>
+                <q-badge v-if="configAccessTokenEndTime" color="grey">
+                  令牌过期时间：{{dayjs(configAccessTokenEndTime).format('YYYY-MM-DD HH:mm:ss')}}
+                </q-badge>
+                <q-badge v-if="configAccessTokenEndTime && configAccessTokenEndTime <= new Date().getTime()" color="warning">令牌过期</q-badge>
+                <q-badge v-else-if="configAccessTokenEndTime && configAccessTokenEndTime - new Date().getTime() < 30*24*60*60*1000" color="warning">即将过期</q-badge>
 
                 <q-input
                   outlined
@@ -148,6 +156,8 @@ export default {
 
     const configAgentId = ref(null)
     const configAccessToken = ref(null)
+    const configAccessTokenName = ref(null)
+    const configAccessTokenEndTime = ref(null)
     const configServerHost = ref(null)
     const configServerRpcPort = ref(null)
     const configServerRestUseSsl = ref(null)
@@ -189,6 +199,14 @@ export default {
         configDataDir.value = extractConfigValue('dataDir')
 
         readLoading.value = false
+
+        agentApi.getAgentAccessToken({
+          agentAccessToken: configAccessToken.value
+        }).then(resp => {
+          const accessTokenData = resp.data
+          configAccessTokenName.value = accessTokenData.name
+          configAccessTokenEndTime.value = accessTokenData.endTime
+        })
       }, resp => {
         qUtil.notifyError(resp.message || '读取节点配置发生错误')
       }).finally(() => {
@@ -198,6 +216,8 @@ export default {
     })
 
     return {
+      dayjs,
+
       readLoading,
       saveLoading,
       
@@ -206,6 +226,8 @@ export default {
 
       configAgentId,
       configAccessToken,
+      configAccessTokenName,
+      configAccessTokenEndTime,
       configServerHost,
       configServerRpcPort,
       configServerRestUseSsl,

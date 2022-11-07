@@ -8,8 +8,8 @@
               :to="`/project/${projectId}/pipeline/${pipelineId}/step`" />
           </q-toolbar>
         </div>
-        <div class="q-pa-md page-content">
-          <q-card flat bordered class="q-pa-md">
+        <div class="q-pa-sm page-content">
+          <q-card flat class="q-pa-md">
             <div class="q-pb-md">
               <div>选择步骤类型</div>
               <q-skeleton v-if="!pipelineName" type="text" animation="fade" style="max-width: 150px;" />

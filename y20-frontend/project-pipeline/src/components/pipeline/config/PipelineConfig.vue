@@ -139,6 +139,8 @@
     height: 302px;
     border: 1px solid #ccc;
     overflow: auto;
+    background: #2b2b2b;
+    color: #f5f5f5;
   }
 }
 </style>

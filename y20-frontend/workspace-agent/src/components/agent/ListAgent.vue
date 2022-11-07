@@ -14,26 +14,22 @@
             </q-input>
           </q-toolbar>
         </div>
-        <div class="q-pa-md page-content">
-          <div class="page-heading q-px-sm">
-            <div class="row">
-              <div class="self-center">节点</div>
-              <q-space />
-              <div class="self-center">
-                <q-toggle class="text-subtitle2" size="sm" v-model="flagDetail" label="详细" />
-              </div>
+        <div class="q-pa-xs page-content">
+          <div class="row q-pl-xs q-pr-sm q-pb-sm">
+            <div class="col self-center q-pr-sm">
+              <q-chip square style="overflow-x: auto; overflow-y: hidden;">
+                <q-avatar icon="bookmark" color="green" text-color="white" />
+                <span>最新版本：</span>
+                <q-skeleton v-if="loadingVersion" type="text" width="50px" />
+                <span v-else>{{latestVersion || '-'}}</span>
+                <span class="q-ml-md">发布时间：</span>
+                <q-skeleton v-if="loadingVersion" type="text" width="50px" />
+                <span v-else>{{releaseTime ? dayjs(releaseTime).format('YYYY-MM-DD HH:mm:ss') : '-'}}</span>
+              </q-chip>
             </div>
-          </div>
-          <div class="q-px-xs">
-            <q-chip square style="overflow-x: auto; overflow-y: hidden;">
-              <q-avatar icon="bookmark" color="green" text-color="white" />
-              <span>最新版本：</span>
-              <q-skeleton v-if="loadingVersion" type="text" width="50px" />
-              <span v-else>{{latestVersion || '-'}}</span>
-              <span class="q-ml-md">发布时间：</span>
-              <q-skeleton v-if="loadingVersion" type="text" width="50px" />
-              <span v-else>{{releaseTime ? dayjs(releaseTime).format('YYYY-MM-DD HH:mm:ss') : '-'}}</span>
-            </q-chip>
+            <div class="self-center">
+              <q-toggle class="text-subtitle2" size="sm" v-model="flagDetail" label="详细" />
+            </div>
           </div>
           <q-table
             grid
@@ -50,9 +46,9 @@
           >
             <template v-slot:no-data>
               <div class="full-width">
-                <div class="row q-mt-sm">
+                <div class="row q-mt-xs">
                   <div class="col-12 col-md-6 col-lg-3">
-                    <q-card class="agent-card q-pa-sm">
+                    <q-card flat class="agent-card q-pa-xs">
                       <q-item>
                         <q-item-section avatar>
                           <q-avatar icon="computer" class="q-mr-sm text-grey" size="lg" style="background: #ECF2FF;" />
@@ -65,13 +61,6 @@
                           </q-item-label>
                         </q-item-section>
                       </q-item>
-
-                      <template v-if="flagDetail">
-                        <q-card-section v-for="j in [1,2,3,4,5]" :key="j">
-                          <q-skeleton type="text" width="50%" class="text-subtitle2" animation="fade" />
-                          <q-skeleton type="text" class="text-subtitle2" animation="fade" />
-                        </q-card-section>
-                      </template>
                     </q-card>
                   </div>
                 </div>
@@ -79,8 +68,8 @@
             </template>
             <template v-slot:loading>
               <div class="row">
-                <div class="q-pa-sm col-12 col-md-6 col-lg-3" v-for="i in [1,2,3,4]" :key="i">
-                  <q-card class="agent-card q-pa-sm">
+                <div class="q-pa-xs col-12 col-md-6 col-lg-3" v-for="i in [1,2,3,4]" :key="i">
+                  <q-card flat class="agent-card q-pa-xs">
                     <q-item>
                       <q-item-section avatar>
                         <q-skeleton type="QAvatar" animation="fade" size="25px" />
@@ -104,8 +93,8 @@
               </div>
             </template>
             <template v-slot:item="props">
-              <div class="q-pa-sm col-12 col-md-6 col-lg-3">
-                <q-card class="agent-card q-pa-sm">
+              <div class="q-pa-xs col-12 col-md-6 col-lg-3">
+                <q-card flat class="agent-card q-pa-xs">
                   <div>
                     <q-badge v-if="props.row.flagUpgrading" color="warning" floating>升级中</q-badge>
                     <q-badge v-else-if="props.row.flagRestarting" color="warning" floating>重启中</q-badge>
@@ -132,7 +121,8 @@
                           <q-badge v-if="props.row.active" color="green">在线</q-badge>
                           <q-badge v-else color="red">离线</q-badge>
                           <q-badge v-if="latestVersion && props.row.version !== latestVersion" color="warning">可升级</q-badge>
-                          <q-badge v-if="props.row.accessTokenEndTime && props.row.accessTokenEndTime < new Date().getTime()" class="vertical-middle q-ml-xs" color="warning">令牌过期</q-badge>
+                          <q-badge v-if="props.row.accessTokenEndTime && props.row.accessTokenEndTime <= new Date().getTime()" class="vertical-middle q-ml-xs" color="warning">令牌过期</q-badge>
+                          <q-badge v-else-if="props.row.accessTokenEndTime && props.row.accessTokenEndTime - new Date().getTime() < 30*24*60*60*1000" class="vertical-middle q-ml-xs" color="warning">即将过期</q-badge>
                         </q-item-label>
                       </q-item-section>
                       <q-item-section side>
@@ -223,7 +213,8 @@
                         <q-item-label>
                           <template v-if="props.row.accessTokenEndTime">
                             <span class="vertical-middle">{{ dayjs(props.row.accessTokenEndTime).format('YYYY-MM-DD HH:mm:ss') }}</span>
-                            <q-badge v-if="props.row.accessTokenEndTime < new Date().getTime()" class="vertical-middle q-ml-xs" color="warning">令牌过期</q-badge>
+                            <q-badge v-if="props.row.accessTokenEndTime <= new Date().getTime()" class="vertical-middle q-ml-xs" color="warning">令牌过期</q-badge>
+                            <q-badge v-else-if="props.row.accessTokenEndTime && props.row.accessTokenEndTime - new Date().getTime() < 30*24*60*60*1000" class="vertical-middle q-ml-xs" color="warning">即将过期</q-badge>
                           </template>
                           <template v-else>
                             -
@@ -262,6 +253,10 @@
 .list-agent{
   &-table{
     .agent-card{
+
+      .q-item {
+        padding: 8px;
+      }
 
       .title {
         font-size: 16px;
@@ -315,13 +310,13 @@ export default {
     const loadingVersion = ref(false)
     const latestVersion = ref(null)
     const releaseTime = ref(null)
-    const flagDetail = ref(false)
+    const flagDetail = ref(true)
 
     const pagination = ref({
       sortBy: 'agentId',
       descending: false,
       page: 1,
-      rowsPerPage: 16,
+      rowsPerPage: 8,
       rowsNumber: 0
     })
 

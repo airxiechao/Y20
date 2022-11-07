@@ -9,9 +9,9 @@
             <q-btn unelevated class="q-ml-md" icon="add" color="primary" :to="`/workspace/template/${templateId}/apply`" label="创建流水线" />
           </q-toolbar>
         </div>
-        <div class="q-pa-md page-content relative-position">
+        <div class="q-pa-sm page-content relative-position">
           <template v-if="loading">
-            <q-card>
+            <q-card flat>
               <div class="q-pa-md">
                 <q-item-section>
                   <q-item-label>
@@ -30,7 +30,7 @@
             </q-card>
           </template>
           <template v-else>
-            <q-card class="template-detail-card">
+            <q-card flat class="template-detail-card">
               <div class="q-pa-md">
                 <template v-if="template.name">
                   <div  class="text-bold">

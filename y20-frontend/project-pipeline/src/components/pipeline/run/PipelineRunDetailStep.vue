@@ -21,8 +21,8 @@
             />
           </q-toolbar>
         </div>
-        <div class="q-pa-md page-content relative-position">
-          <div class="q-mb-md">
+        <div class="q-pa-sm page-content relative-position">
+          <div class="q-mb-sm">
             <q-bar dark class="bg-primary text-white rounded-borders">
               <div>执行情况</div>
               <q-toggle size="xs" color="yellow" v-model="flagDetail" label="详细" />
@@ -37,14 +37,14 @@
               />
             </q-bar>
           </div>
-          <q-card v-if="loading" class="q-pa-md">
+          <q-card flat v-if="loading" class="q-pa-md">
             <q-skeleton type="text" animation="fade" style="max-width: 200px;" />
             <div class="row" v-for="pi in [1,2,3]" :key="pi">
               <div class="q-pr-sm" style="width: 80px;"><q-skeleton type="text" animation="fade" /></div>
               <div class="col"><q-skeleton type="text" animation="fade" /></div>
             </div>
           </q-card>
-          <q-card v-else class="pipeline-run-detial-step-top q-px-md q-py-xs">
+          <q-card flat v-else class="pipeline-run-detial-step-top q-px-md q-pt-sm q-pb-xs">
             <div class="page-heading">
               <span>{{pipelineRun.name}}</span>
               <a :href="`/nav${fromUrl}`" target="_black"><q-icon v-if="fromUrl" name="link" class="cursor-pointer" /></a>
@@ -97,7 +97,7 @@
             </div>
           </q-card>
 
-          <q-card v-if="flagDetail" class="q-my-md">
+          <q-card flat v-if="flagDetail" class="q-my-sm">
             <q-list dense separator>
               <q-item-label header class="text-primary text-bold">输入变量</q-item-label>
               
@@ -151,7 +151,7 @@
             </q-list>
           </q-card>
 
-          <div class="q-my-md">
+          <div class="q-my-sm">
             <q-bar dark class="bg-primary text-white rounded-borders">
               <div>执行步骤</div>
               <q-toggle size="xs" v-model="flagTail" label="跟随" color="orange" />
@@ -179,7 +179,7 @@
             </q-bar>
           </div>
           <template v-if="loading">
-            <q-card class="q-pa-sm q-mb-md" v-for="si in [1,2]" :key="si">
+            <q-card flat class="q-my-sm q-pa-sm" v-for="si in [1]" :key="si">
               <q-item>
                 <q-item-section avatar>
                   <q-skeleton type="QAvatar" animation="fade" size="38px" />
@@ -196,97 +196,102 @@
               </q-item>
             </q-card>
           </template>
-          <q-card v-else-if="pipelineStepRuns.length == 0" class="q-my-md q-pa-md text-grey-7">
-            无执行步骤
-          </q-card>
+          <template v-else-if="pipelineStepRuns.length == 0">
+            <q-card flat class="q-my-sm q-pa-md text-grey-7">
+              无执行步骤
+            </q-card>
+          </template>
           <template v-else>
-            <q-card class="q-my-md" v-for="(stepRun, i) in pipelineStepRuns" :key="stepRun.id" >
-              <q-list class="q-pt-xs">
-                <q-item>
-                  <q-item-section v-if="$q.screen.gt.xs || (pipelineRun.flagDebug && !['PASSED', 'FAILED'].includes(pipelineRun.status))" avatar>
-                    <q-icon v-if="waitingStepPos === i" name="play_circle_outline" color="primary" size="34px"
-                      class="cursor-pointer" @click="onClickForwardRun" />
-                    <q-icon v-else :name="stepRun.type == 'remote-prepare-env' ? 'computer' : 'account_tree'" color="black" size="34px" />
-                  </q-item-section>
-                  <q-item-section>
-                    <q-item-label>
-                      <span class="vertical-middle q-mr-sm">步骤 {{i+1}}</span>
-                      <span class="vertical-middle">{{ stepRun.name }}</span>
-                    </q-item-label>
-                    <q-item-label caption>{{ stepRun.type }}</q-item-label>
-                  </q-item-section>
-                  <q-item-section class="text-center">
-                    <span :class="{
-                      'text-grey': stepRun.status == 'CREATED',
-                      'text-orange': stepRun.status == 'STARTED',
-                      'text-green': stepRun.status == 'PASSED',
-                      'text-red': stepRun.status == 'FAILED',
-                    }">
-                      <template v-if="stepRun.status == 'STARTED'">
-                        <q-spinner-facebook class="vertical-middle q-mr-xs" color="orange" />
-                      </template>
-                      <span class="vertical-middle">{{ stepRun.status }}</span>
-                      <template v-if="stepRun.status == 'FAILED'">
-                        <span>
-                          <q-icon name="error" class="vertical-top" />
-                          <q-tooltip class="bg-red">
-                            {{ stepRun.error }}
-                          </q-tooltip>
-                        </span>
-                      </template>
-                    </span>
-                  </q-item-section>
-                  <q-item-section class="text-center gt-xs">
-                    <span v-if="stepRun.beginTime">
-                    {{ dayjs(stepRun.beginTime).format('YYYY-MM-DD HH:mm:ss') }} 启动
-                    </span>
-                  </q-item-section>
-                  <q-item-section class="text-center gt-xs">
-                    <span v-if="stepRun.beginTime">
-                      持续 {{ dayjs.duration(stepRun.endTimeOrNow - stepRun.beginTime).format('HH:mm:ss') }}
-                    </span>
-                  </q-item-section>
-                  <q-item-section side>
-                    <div class="text-grey-8 q-gutter-xs">
-                      <q-toggle v-model="stepRun.openLog" label="日志" size="xs" @update:model-value="(value) => onToggleOpenLog(value, i)" />
-                      <q-btn class="gt-xs" flat dense round icon="download" size="sm" @click="onClickDownloadLog(i)" />
+            <q-card flat class="q-my-sm">
+              <q-card v-for="(stepRun, i) in pipelineStepRuns" :key="stepRun.id" >
+                <q-list class="q-pt-xs">
+                  <q-item>
+                    <q-item-section v-if="$q.screen.gt.xs || (pipelineRun.flagDebug && !['PASSED', 'FAILED'].includes(pipelineRun.status))" avatar>
+                      <q-icon v-if="waitingStepPos === i" name="play_circle_outline" color="primary" size="34px"
+                        class="cursor-pointer" @click="onClickForwardRun" />
+                      <q-icon v-else :name="stepRun.type == 'remote-prepare-env' ? 'computer' : 'account_tree'" color="black" size="34px" />
+                    </q-item-section>
+                    <q-item-section>
+                      <q-item-label>
+                        <span class="vertical-middle q-mr-sm">步骤 {{i+1}}</span>
+                        <span class="vertical-middle">{{ stepRun.name }}</span>
+                      </q-item-label>
+                      <q-item-label caption>{{ stepRun.type }}</q-item-label>
+                    </q-item-section>
+                    <q-item-section class="text-center">
+                      <span :class="{
+                        'text-grey': stepRun.status == 'CREATED',
+                        'text-orange': stepRun.status == 'STARTED',
+                        'text-green': stepRun.status == 'PASSED',
+                        'text-red': stepRun.status == 'FAILED',
+                      }">
+                        <template v-if="stepRun.status == 'STARTED'">
+                          <q-spinner-facebook class="vertical-middle q-mr-xs" color="orange" />
+                        </template>
+                        <span class="vertical-middle">{{ stepRun.status }}</span>
+                        <template v-if="stepRun.status == 'FAILED'">
+                          <span>
+                            <q-icon name="error" class="vertical-top" />
+                            <q-tooltip class="bg-red">
+                              {{ stepRun.error }}
+                            </q-tooltip>
+                          </span>
+                        </template>
+                      </span>
+                    </q-item-section>
+                    <q-item-section class="text-center gt-xs">
+                      <span v-if="stepRun.beginTime">
+                      {{ dayjs(stepRun.beginTime).format('YYYY-MM-DD HH:mm:ss') }} 启动
+                      </span>
+                    </q-item-section>
+                    <q-item-section class="text-center gt-xs">
+                      <span v-if="stepRun.beginTime">
+                        持续 {{ dayjs.duration(stepRun.endTimeOrNow - stepRun.beginTime).format('HH:mm:ss') }}
+                      </span>
+                    </q-item-section>
+                    <q-item-section side>
+                      <div class="text-grey-8 q-gutter-xs">
+                        <q-toggle v-model="stepRun.openLog" label="日志" size="xs" @update:model-value="(value) => onToggleOpenLog(value, i)" />
+                        <q-btn class="gt-xs" flat dense round icon="download" size="sm" @click="onClickDownloadLog(i)" />
+                      </div>
+                    </q-item-section>
+                  </q-item>
+                  <q-item v-if="stepRun.openLog">
+                    <div class="full-width">
+                      <q-linear-progress v-if="stepRun.status == 'STARTED'" indeterminate color="orange" />
+                      <Logger :log="stepRun.log" :loading="stepRun.logLoading" :tail="flagTail" class="full-width" />
                     </div>
-                  </q-item-section>
-                </q-item>
-                <q-item v-if="stepRun.openLog">
-                  <div class="full-width">
-                    <q-linear-progress v-if="stepRun.status == 'STARTED'" indeterminate color="orange" />
-                    <Logger :log="stepRun.log" :loading="stepRun.logLoading" :tail="flagTail" class="full-width" />
-                  </div>
-                </q-item>
-                <q-item>
-                    <q-toggle label="终端" size="xs" class="q-mr-sm" :model-value="!!terminalRuns[i]" @update:model-value="(value) => onToggleOpenTerminal(value, i)" />
-                    <q-toggle label="浏览器" size="xs" :model-value="!!explorerRuns[i]" @update:model-value="(value) => onToggleOpenExplorer(value, i)" />
-                </q-item>
-                <q-item v-if="!!terminalRuns[i] || !!explorerRuns[i]">
-                  <div class="row full-width">
-                    <div :class="{
-                      'col': true,
-                      'col-12': $q.screen.lt.md,
-                    }" v-if="!!terminalRuns[i]">
-                      <Terminal :socketUrl="getTerminalRunAttachWsUrl(i)" />
+                  </q-item>
+                  <q-item>
+                      <q-toggle label="终端" size="xs" class="q-mr-sm" :model-value="!!terminalRuns[i]" @update:model-value="(value) => onToggleOpenTerminal(value, i)" />
+                      <q-toggle label="浏览器" size="xs" :model-value="!!explorerRuns[i]" @update:model-value="(value) => onToggleOpenExplorer(value, i)" />
+                  </q-item>
+                  <q-item v-if="!!terminalRuns[i] || !!explorerRuns[i]">
+                    <div class="row full-width">
+                      <div :class="{
+                        'col': true,
+                        'col-12': $q.screen.lt.md,
+                      }" v-if="!!terminalRuns[i]">
+                        <Terminal :socketUrl="getTerminalRunAttachWsUrl(i)" />
+                      </div>
+                      <div :class="{
+                        'col': true,
+                        'col-12': $q.screen.lt.md,
+                      }" v-if="!!explorerRuns[i]">
+                        <Explorer :explorerRunInstanceUuid="explorerRuns[i]" :socketUrl="getExplorerRunAttachWsUrl(i)" />
+                      </div>
                     </div>
-                    <div :class="{
-                      'col': true,
-                      'col-12': $q.screen.lt.md,
-                    }" v-if="!!explorerRuns[i]">
-                      <Explorer :explorerRunInstanceUuid="explorerRuns[i]" :socketUrl="getExplorerRunAttachWsUrl(i)" />
-                    </div>
-                  </div>
-                </q-item>
-              </q-list>
+                  </q-item>
+                  <q-separator v-if="i+1 < pipelineStepRuns.length" />
+                </q-list>
+              </q-card> 
             </q-card>
           </template>
           <!-- <q-inner-loading :showing="loading">
             <q-spinner-gears size="30px" color="primary" />
           </q-inner-loading> -->
         </div>
-        <q-page-scroller position="bottom-right" :scroll-offset="150" :offset="[15, 15]">
+        <q-page-scroller position="bottom-right" :scroll-offset="150" :offset="[15, 25]">
           <q-btn fab-mini icon="keyboard_arrow_up" color="primary" />
         </q-page-scroller>
       </div>

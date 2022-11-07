@@ -7,8 +7,8 @@
             <q-btn unelevated rounded flat color="primary" icon="keyboard_backspace" label="返回" @click="onClickBack" />
           </q-toolbar>
         </div>
-        <div class="q-pa-md page-content">
-          <q-card class="q-pa-md relative-position">
+        <div class="q-pa-sm page-content">
+          <q-card flat class="q-pa-md relative-position">
             <div class="q-pb-md">
               <div>发布到应用市场</div>
               <q-skeleton v-if="!pipelineName" type="text" animation="fade" style="max-width: 150px;" />

@@ -4,12 +4,20 @@ import com.airxiechao.axcboot.communication.common.PageData;
 import com.airxiechao.axcboot.communication.common.Response;
 import com.airxiechao.y20.common.core.biz.Biz;
 import com.airxiechao.y20.common.core.rest.EnhancedRestUtil;
+import com.airxiechao.y20.common.core.rest.ServiceRestClient;
 import com.airxiechao.y20.monitor.biz.api.IMonitorBiz;
 import com.airxiechao.y20.monitor.db.record.MonitorRecord;
 import com.airxiechao.y20.monitor.pojo.Monitor;
+import com.airxiechao.y20.monitor.pojo.MonitorPipelineActionParam;
+import com.airxiechao.y20.monitor.pojo.constant.EnumMonitorActionType;
 import com.airxiechao.y20.monitor.pojo.constant.EnumMonitorStatus;
 import com.airxiechao.y20.monitor.rest.api.IUserMonitorRest;
 import com.airxiechao.y20.monitor.rest.param.*;
+import com.airxiechao.y20.pipeline.pojo.vo.PipelineBasicVo;
+import com.airxiechao.y20.pipeline.rest.api.IServicePipelineRest;
+import com.airxiechao.y20.pipeline.rest.param.ServiceCreatePipelineRunParam;
+import com.airxiechao.y20.pipeline.rest.param.ServiceGetPipelineBasicParam;
+import com.alibaba.fastjson.JSONObject;
 import io.undertow.server.HttpServerExchange;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -101,9 +109,17 @@ public class UserMonitorRestHandler implements IUserMonitorRest {
             return new Response().error(e.getMessage());
         }
 
+        // 检查动作流水线是否存在
+        if(EnumMonitorActionType.PIPELINE.equals(param.getActionType())){
+            MonitorPipelineActionParam pipelineActionParam = ((JSONObject)param.getActionParam()).toJavaObject(MonitorPipelineActionParam.class);
+            if(!existsPipeline(param.getUserId(), pipelineActionParam.getProjectId(), pipelineActionParam.getPipelineId())){
+                return new Response().error("no pipeline");
+            }
+        }
+
         boolean updated = monitorBiz.updateBasic(
                 param.getUserId(), param.getProjectId(), param.getMonitorId(),
-                param.getAgentId(), param.getName(), param.getType(), param.getTarget());
+                param.getAgentId(), param.getName(), param.getType(), param.getTarget(), param.getActionType(), param.getActionParam());
         if(!updated){
             return new Response().error();
         }
@@ -123,9 +139,17 @@ public class UserMonitorRestHandler implements IUserMonitorRest {
             return new Response().error(e.getMessage());
         }
 
+        // 检查动作流水线是否存在
+        if(EnumMonitorActionType.PIPELINE.equals(param.getActionType())){
+            MonitorPipelineActionParam pipelineActionParam = ((JSONObject)param.getActionParam()).toJavaObject(MonitorPipelineActionParam.class);
+            if(!existsPipeline(param.getUserId(), pipelineActionParam.getProjectId(), pipelineActionParam.getPipelineId())){
+                return new Response().error("no pipeline");
+            }
+        }
+
         MonitorRecord record = monitorBiz.create(
                 param.getUserId(), param.getProjectId(), param.getAgentId(),
-                param.getName(), param.getType(), param.getTarget());
+                param.getName(), param.getType(), param.getTarget(), param.getActionType(), param.getActionParam());
         if(null == record){
             return new Response().error();
         }
@@ -151,5 +175,19 @@ public class UserMonitorRestHandler implements IUserMonitorRest {
         }
 
         return new Response();
+    }
+
+    private boolean existsPipeline(long userId, long projectId, long pipelineId){
+        Response<PipelineBasicVo> pipelineResp = ServiceRestClient.get(IServicePipelineRest.class).getPipelineBasic(
+                new ServiceGetPipelineBasicParam(
+                        userId, projectId, pipelineId
+                ));
+
+        if(!pipelineResp.isSuccess()){
+            logger.error("no pipeline");
+            return false;
+        }
+
+        return true;
     }
 }

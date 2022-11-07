@@ -7,14 +7,13 @@
             <q-btn unelevated rounded flat color="primary" icon="keyboard_backspace" label="账号" to="/user/account" />
           </q-toolbar>
         </div>
-        <div class="q-pa-md page-content">
-          <q-card class="q-pa-md">
-            <div class="q-pb-md">开启两步验证</div>
+        <div class="q-pa-sm page-content">
+          <q-card flat>
+            <div class="q-px-md q-pt-md">开启两步验证</div>
             <q-stepper
               v-model="step"
               :vertical="$q.screen.lt.sm"
               color="primary"
-              animated
             >
               <q-step
                 :name="1"
@@ -69,7 +68,7 @@
                   <div>
                     如果无法扫码，请手动输入：
                   </div>
-                  <q-list bordered dense class="q-mt-sm" style="max-width: 400px;">
+                  <q-list bordered dense separator class="q-mt-sm" style="max-width: 400px;">
                     <q-item>
                       <q-item-section style="min-width: 35px;">帐户</q-item-section>
                       <q-item-section side style="word-break: break-all;">{{username}}</q-item-section>
@@ -94,7 +93,7 @@
                 :header-nav="step > 3"
               >
                 <div>
-                  3. 在身份验证器中，进入帐户，输入屏幕上的动态代码
+                  3. 打开身份验证器，进入上一步添加的帐户，查看屏幕上的动态代码
                 </div>
                 <q-form
                   class="q-mt-md"

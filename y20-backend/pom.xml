@@ -7,7 +7,7 @@
     <groupId>com.airxiechao.y20</groupId>
     <artifactId>Y-20</artifactId>
     <packaging>pom</packaging>
-    <version>1.0</version>
+    <version>0.6-SNAPSHOT</version>
     <modules>
         <module>common</module>
         <module>agent</module>
@@ -43,7 +43,7 @@
         <dependency>
             <groupId>io.github.airxiechao</groupId>
             <artifactId>axcboot</artifactId>
-            <version>0.40</version>
+            <version>0.41-SNAPSHOT</version>
         </dependency>
     </dependencies>
 

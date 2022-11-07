@@ -25,8 +25,8 @@
             <q-btn unelevated rounded flat color="primary" icon="keyboard_backspace" label="令牌" to="/user/token" />
           </q-toolbar>
         </div>
-        <div class="q-pa-md page-content">
-          <q-card class="q-pa-md bg-white">
+        <div class="q-pa-sm page-content">
+          <q-card flat class="q-pa-md bg-white">
             <div class="q-pb-md">创建新令牌</div>
             <q-form
               @submit="onSubmit"

@@ -9,8 +9,9 @@
             <q-btn unelevated color="primary" label="创建变量" icon="add" @click="onClickCreateVariable" />
           </q-toolbar>
         </div>
-        <div class="q-pa-md page-content">
+        <div class="q-pa-sm page-content">
           <q-table
+            flat
             class="list-project-variable-table"
             :rows="rows"
             :columns="columns"

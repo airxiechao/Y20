@@ -30,7 +30,7 @@ public class MonitorBizProcess implements IMonitorBiz {
     }
 
     @Override
-    public MonitorRecord create(Long userId, Long projectId, String agentId, String name, String type, Object target) {
+    public MonitorRecord create(Long userId, Long projectId, String agentId, String name, String type, Object target, String actionType, Object actionParam) {
         Monitor monitor = new Monitor();
         monitor.setUserId(userId);
         monitor.setProjectId(projectId);
@@ -38,6 +38,8 @@ public class MonitorBizProcess implements IMonitorBiz {
         monitor.setName(name);
         monitor.setType(type);
         monitor.setTarget(target);
+        monitor.setActionType(actionType);
+        monitor.setActionParam(actionParam);
         monitor.setStatus(EnumMonitorStatus.UNKNOWN);
         monitor.setCreateTime(new Date());
 
@@ -51,7 +53,7 @@ public class MonitorBizProcess implements IMonitorBiz {
     }
 
     @Override
-    public boolean updateBasic(Long userId, Long projectId, Long monitorId, String agentId, String name, String type, Object target) {
+    public boolean updateBasic(Long userId, Long projectId, Long monitorId, String agentId, String name, String type, Object target, String actionType, Object actionParam) {
         MonitorRecord monitorRecord = monitorDb.getById(userId, projectId, monitorId);
 
         Monitor monitor = monitorRecord.toPojo();
@@ -59,6 +61,8 @@ public class MonitorBizProcess implements IMonitorBiz {
         monitor.setName(name);
         monitor.setType(type);
         monitor.setTarget(target);
+        monitor.setActionType(actionType);
+        monitor.setActionParam(actionParam);
 
         return monitorDb.update(monitor.toRecord());
     }

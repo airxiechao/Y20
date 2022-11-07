@@ -11,8 +11,8 @@
             </q-input>
           </q-toolbar>
         </div>
-        <div class="q-pa-md page-content">
-          <div class="page-heading q-px-sm">
+        <div class="q-pa-xs page-content">
+          <div class="page-heading q-px-xs">
             <div class="row">
               <div class="self-center">应用市场</div>
               <q-space />
@@ -33,12 +33,36 @@
             @request="onTableSearch"
             :loading="loading"
           >
+            <template v-slot:no-data>
+              <div class="full-width">
+                <div class="row q-mt-xs">
+                  <div class="col-12 col-md-6 col-lg-3">
+                    <q-card flat class="template-card q-pa-xs">
+                      <q-item>
+                        <q-item-section avatar>
+                          <q-avatar icon="apps" class="q-mr-sm text-grey" size="lg" style="background: #ECF2FF;" />
+                        </q-item-section>
+
+                        <q-item-section>
+                          <q-item-label>
+                            <span class="vertical-middle text-grey">没有应用</span>
+                          </q-item-label>
+                        </q-item-section>
+                      </q-item>
+                    </q-card>
+                  </div>
+                </div>
+              </div>
+            </template>
             <template v-slot:loading>
               <div class="row">
-                <div class="q-pa-sm col-12 col-md-6 col-lg-3" v-for="i in [1,2,3,4]" :key="i">
-                  <q-card class="template-card">
-                    <q-list class="q-pa-sm">
+                <div class="q-pa-xs col-12 col-md-6 col-lg-3" v-for="i in [1,2,3,4]" :key="i">
+                  <q-card flat class="template-card">
+                    <q-list class="q-pa-xs">
                       <q-item>
+                        <q-item-section avatar>
+                          <q-avatar icon="apps" class="q-mr-sm text-grey" size="lg" style="background: #ECF2FF;" />
+                        </q-item-section>
                         <q-item-section>
                           <q-item-label>
                             <q-skeleton type="text" animation="fade" />
@@ -57,10 +81,13 @@
               </div>
             </template>
             <template v-slot:item="props">
-              <div class="q-pa-sm col-12 col-md-6 col-lg-3">
-                <q-card class="template-card bordered full-height">
-                  <q-list class="q-pa-sm">
+              <div class="q-pa-xs col-12 col-md-6 col-lg-3">
+                <q-card flat class="template-card full-height">
+                  <q-list class="q-pa-xs">
                     <q-item>
+                      <q-item-section avatar class="cursor-pointer" @click="onClickTemplate(props.row.templateId)">
+                        <q-avatar icon="apps" class="q-mr-sm text-primary" size="lg" style="background: #ECF2FF;" />
+                      </q-item-section>
                       <q-item-section>
                         <q-item-label class="cursor-pointer" @click="onClickTemplate(props.row.templateId)">
                           <span class="title">
@@ -122,8 +149,8 @@
 .template-list{
   .template-card{
 
-    &.bordered{
-      border-left: 2px solid var(--q-primary);
+    .q-item{
+      padding: 8px;
     }
 
     .title{

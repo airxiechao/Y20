@@ -3,9 +3,9 @@
     <template v-slot:center>
       <div class="page-center">
         <div class="page-toolbar">
-          <q-toolbar v-if="$q.screen.gt.xs">
+          <q-toolbar>
             <q-input dense outlined class="full-width" bg-color="white" v-model="name" placeholder="搜索监视" @change="onClickSearch">
-              <template v-slot:before>
+              <template v-slot:before v-if="$q.screen.gt.xs">
                 <q-btn unelevated rounded flat color="primary" icon="keyboard_backspace" label="项目" to="/workspace/project" />
               </template>
               <template v-slot:append>
@@ -16,19 +16,8 @@
               </template>
             </q-input>
           </q-toolbar>
-          <q-toolbar v-else>
-            <q-btn unelevated rounded flat color="primary" icon="keyboard_backspace" label="项目" to="/workspace/project" />
-            <q-toolbar-title>
-            </q-toolbar-title>
-            <q-btn unelevated icon="add" color="primary" label="创建监视" @click="onClickCreateMonitor" />
-          </q-toolbar>
         </div>
-        <div class="q-pa-md page-content">
-          <div class="page-heading q-px-sm">
-            <div class="row">
-              <div class="self-center">监视</div>
-            </div>
-          </div>
+        <div class="q-pa-xs page-content">
           <q-table
             grid
             :hide-bottom="loading"
@@ -46,7 +35,7 @@
               <div class="full-width">
                 <div class="row q-mt-xs">
                   <div class="col-12 col-md-6 col-lg-3">
-                    <q-card class="monitor-card">
+                    <q-card flat class="monitor-card q-pa-xs">
                       <q-item>
                         <q-item-section avatar>
                           <q-avatar icon="monitor" class="q-mr-sm text-grey" size="lg" style="background: #ECF2FF;" />
@@ -66,8 +55,8 @@
             </template>
             <template v-slot:loading>
               <div class="row">
-                <div class="q-pa-sm col-12 col-md-6 col-lg-3" v-for="i in [1,2,3,4]" :key="i">
-                  <q-card class="monitor-card">
+                <div class="q-pa-xs col-12 col-md-6 col-lg-3" v-for="i in [1,2,3,4]" :key="i">
+                  <q-card flat class="monitor-card q-pa-xs">
                     <q-item>
                       <q-item-section avatar>
                         <q-skeleton type="QAvatar" animation="fade" size="25px" />
@@ -87,8 +76,8 @@
               </div>
             </template>
             <template v-slot:item="props">
-              <div class="q-pa-sm col-12 col-md-6 col-lg-3">
-                <q-card class="monitor-card full-height">
+              <div class="q-pa-xs col-12 col-md-6 col-lg-3">
+                <q-card flat class="monitor-card  q-pa-xs full-height">
                   <q-card-section horizontal class="row">
                     <q-list class="col">
                       <q-item>
@@ -143,7 +132,9 @@
 <style lang="scss">
 .monitor-list{
   .monitor-card{
-    padding: 8px 0 8px 8px;
+    .q-item{
+      padding: 8px;
+    }
 
     .title{
       font-size: 16px;

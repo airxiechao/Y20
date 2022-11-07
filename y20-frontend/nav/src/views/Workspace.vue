@@ -64,7 +64,7 @@
         <div v-if="username" class="quota-card q-ma-sm">
           <q-list dense>
             <q-item-label header>
-              <router-link class="text-grey-5" :to="`/user/billing`">当前配额</router-link>
+              <router-link class="text-grey" :to="`/user/billing`">当前配额</router-link>
             </q-item-label>
             <q-item>
               <q-item-section>
@@ -73,16 +73,13 @@
               <q-item-section side>
                 <q-skeleton v-if="loadingCurrentQuota" type="text" width="20px" />
                 <q-item-label v-else class="text-grey">
-                  <span :class="{
-                    'text-warning' : numAgent > maxAgent,
-                  }">
-                    {{numAgent}}
-                  </span>
+                  {{numAgent}}
                   <q-icon
                     v-if="numAgent > maxAgent"
                     name="warning"
+                    color="warning"
                     size="14px"
-                    class="q-ml-xs text-warning"
+                    class="q-ml-xs"
                   />
                   /
                   <span>{{maxAgent}}</span>
@@ -97,16 +94,13 @@
               <q-item-section side>
                 <q-skeleton v-if="loadingCurrentQuota" type="text" width="20px" />
                 <q-item-label v-else class="text-grey">
-                  <span :class="{
-                    'text-warning' : numPipelineRun >= maxPipelineRun,
-                  }">
-                    {{numPipelineRun}}
-                  </span>
+                  {{numPipelineRun}}
                   <q-icon
                     v-if="numPipelineRun >= maxPipelineRun"
                     name="warning"
+                    color="warning"
                     size="14px"
-                    class="q-ml-xs text-warning"
+                    class="q-ml-xs"
                   />
                   /
                   <span>{{maxPipelineRun}}</span>

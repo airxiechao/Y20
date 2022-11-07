@@ -7,8 +7,8 @@
             <q-btn unelevated rounded flat color="primary" icon="keyboard_backspace" label="账号" to="/user/account" />
           </q-toolbar>
         </div>
-        <div class="q-pa-md page-content">
-          <q-card class="q-pa-md">
+        <div class="q-pa-sm page-content">
+          <q-card flat class="q-pa-md">
             <div class="q-pb-md">绑定新手机</div>
             <q-form
               @submit="onSubmit"

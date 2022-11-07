@@ -7,8 +7,8 @@
             <q-btn unelevated rounded flat color="primary" icon="keyboard_backspace" label="项目" to="/workspace/project" />
           </q-toolbar>
         </div>
-        <div class="q-pa-md page-content">
-          <q-card class="q-pa-md">
+        <div class="q-pa-sm page-content">
+          <q-card flat class="q-pa-md">
             <div v-if="projectId" class="q-pb-md">修改项目</div>
             <div v-else class="q-pb-md">创建新项目</div>
             <q-form

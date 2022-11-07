@@ -8,8 +8,8 @@
             <q-toolbar-title></q-toolbar-title>
           </q-toolbar>
         </div>
-        <div class="q-pa-md page-content">
-          <q-card class="q-px-md q-pb-md q-pt-sm">
+        <div class="q-pa-sm page-content">
+          <q-card flat class="q-px-md q-pb-md q-pt-sm">
             <div class="page-heading">接入新节点</div>
             <q-banner dense rounded class="q-pa-md bg-grey-2">
               <template v-slot:avatar>
@@ -20,7 +20,7 @@
               节点和服务器的通信是加密的。
             </q-banner>
             <div>
-              <q-card flat bordered class="join-agent-card q-mt-md">
+              <q-card flat class="join-agent-card q-mt-md">
                 <q-tabs
                   align="justify"
                   v-model="tab"

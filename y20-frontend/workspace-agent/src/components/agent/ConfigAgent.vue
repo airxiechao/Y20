@@ -7,8 +7,8 @@
             <q-btn unelevated rounded flat color="primary" icon="keyboard_backspace" label="节点" to="/workspace/agent" />
           </q-toolbar>
         </div>
-        <div class="q-pa-md page-content">
-          <q-card flat bordered class="bg-white q-pa-md">
+        <div class="q-pa-sm page-content">
+          <q-card flat class="bg-white q-pa-md">
             <div class="q-pb-md">配置节点 - {{agentId}}</div>
             <q-form
               @submit="onSubmit"

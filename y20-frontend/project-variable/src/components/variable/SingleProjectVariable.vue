@@ -8,8 +8,8 @@
           </q-toolbar>
         </div>
 
-        <div class="q-pa-md page-content">
-          <q-card class="q-pa-md">
+        <div class="q-pa-sm page-content">
+          <q-card flat class="q-pa-md">
             <div class="q-pb-md">
               <template v-if="isEdit">编辑变量</template>
               <template v-else>创建变量</template>
@@ -59,6 +59,7 @@
               <div>
                 <q-btn v-if="isEdit" unelevated label="保存" type="submit" color="primary"/>
                 <q-btn v-else unelevated label="创建" type="submit" color="primary"/>
+                <q-btn class="q-ml-sm" flat label="取消" @click="onClickBack" /> 
               </div>
             </q-form>
           </q-card>
@@ -139,6 +140,10 @@ export default {
 
       paramTypeOptions,
       isEdit,
+
+      onClickBack(){
+        router.back()
+      },
 
       onSubmit(){
         if(isEdit.value){

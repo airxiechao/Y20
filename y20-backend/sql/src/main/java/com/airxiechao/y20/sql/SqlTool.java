@@ -10,6 +10,7 @@ import com.airxiechao.axcboot.util.ClsUtil;
 import com.airxiechao.axcboot.util.StringUtil;
 import com.airxiechao.y20.auth.db.api.IUserDb;
 import com.airxiechao.y20.auth.db.record.UserRecord;
+import com.airxiechao.y20.auth.util.AuthUtil;
 import com.airxiechao.y20.common.pojo.constant.meta.Meta;
 import liquibase.Liquibase;
 import liquibase.database.Database;
@@ -219,9 +220,9 @@ public class SqlTool {
     }
 
     /**
-     * 创建测试数据
+     * 创建admin用户
      */
-    public static void makeTestData(){
+    public static void createAdminUser(){
         // user
         logger.info("insert user");
         String userDbConfigFile = IUserDb.class.getAnnotation(IDb.class).value();
@@ -230,9 +231,9 @@ public class SqlTool {
 
         UserRecord userRecord = new UserRecord();
         userRecord.setId(1L);
-        userRecord.setUsername("aaa");
-        userRecord.setPasswordHashed("e10adc3949ba59abbe56e057f20f883e");
-        userRecord.setMobile("13548046239");
+        userRecord.setUsername("admin");
+        userRecord.setPasswordHashed(AuthUtil.hashPassword("123456"));
+        userRecord.setMobile("");
         userDbManager.insert(userRecord);
     }
 }

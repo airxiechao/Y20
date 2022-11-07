@@ -2,16 +2,6 @@
   <div class="template-variable-detail">
     <div class="row q-pb-md">
       <div class="col page-heading text-primary self-center">查看变量</div>
-      <div class="self-center">
-        <q-btn
-          flat
-          class="bg-blue-1"
-          icon="subdirectory_arrow_left"
-          color="primary"
-          label="返回"
-          @click="onClickBack"
-        />
-      </div>
     </div>
     <q-form class="q-gutter-md">
       <q-input
@@ -134,6 +124,10 @@
             </template>
           </q-input>
         </div>
+      </div>
+      
+      <div class="q-pt-sm">
+        <q-btn unelevated color="primary" label="返回" @click="onClickBack" />
       </div>
     </q-form>
   </div>

@@ -12,7 +12,6 @@
           v-model="step"
           :vertical="$q.screen.lt.sm"
           color="primary"
-          animated
         >
           <q-step
             :name="1"
@@ -22,7 +21,7 @@
             :header-nav="step > 1"
           >
             <div class="q-pb-md">
-              1. 输入项目名称，创建一个项目
+              1. 输入项目名称
             </div>
             <q-form
               @submit="onSubmitCreateProject"
@@ -54,7 +53,7 @@
             :header-nav="step > 2"
           >
             <div class="q-pb-md">
-              2. 输入节点标识，生成接入脚本，本地运行，接入一个节点
+              2. 输入节点名称
             </div>
             <q-form
               @submit="onSubmitCreateAgentJoinScript"
@@ -63,7 +62,7 @@
               <q-input
                 outlined
                 v-model="agentId"
-                label="节点唯一标识 *"
+                label="节点名称 *"
                 hint="自定义的节点唯一标识"
                 lazy-rules
                 :rules="[ val => val && val.length > 0 || '请输入节点唯一标识']"
@@ -111,7 +110,7 @@
             </div>
 
             <q-stepper-navigation v-if="flagAgentWaiting">
-              <q-card flat bordered class="text-center q-pa-sm bg-grey-1">
+              <q-card flat class="text-center q-pa-sm bg-grey-1">
                 <div>
                   <q-spinner-facebook color="primary" />
                 </div>
@@ -122,7 +121,7 @@
             </q-stepper-navigation>
 
             <q-stepper-navigation v-if="flagAgentJoined">
-              <q-card flat bordered class="text-center q-pa-sm bg-grey-1">
+              <q-card flat class="text-center q-pa-sm bg-grey-1">
                 <div>
                   <q-icon color="green" name="check_circle" />
                 </div>
@@ -141,7 +140,7 @@
             :header-nav="step > 3"
           >
             <div class="">
-              3. 点击“启动”，运行 <router-link target="_blank" :to="`/project/${projectId}/pipeline/${pipelineId}/step`">Hello World</router-link> 流水线。观察流水线第二个步骤的日志是否打印了 “Hello World”
+              3. 点击“启动”。运行 <router-link target="_blank" :to="`/project/${projectId}/pipeline/${pipelineId}/step`">Hello World</router-link> 流水线，观察日志是否输出了 “Hello World”。
             </div>
 
             <q-stepper-navigation>
@@ -153,13 +152,13 @@
     </q-card>
   </q-dialog>
 
-  <q-card class="newbie-guide q-pa-md q-mx-xs q-mb-md">
+  <q-card flat class="newbie-guide q-pa-md q-mx-xs q-mb-sm">
     <q-btn class="absolute-top-right cursor-pointer q-ma-sm" icon="close" flat round dense @click="onClickClose" />
     <div class="self-center text-center fig-welcome">
       <img alt="fig-welcome" :src="`/${FRONTEND_SERVICE_NAME}/static/img/fig-welcome.png`"/>
     </div>
     <div class="text-center text-h6">欢迎使用 鲲擎流水线</div>
-    <div class="text-center q-mt-sm text-grey">还没有启动过流水线？请跟随新手指引，完成第一条 Hello World 流水线的运行！</div>
+    <div class="text-center q-mt-sm text-grey">跟随指引，完成第一条 Hello World 流水线的运行！</div>
     <div class="text-center q-mt-md">
       <q-btn unelevated class="q-mr-sm" color="primary" label="开始学习"  @click="onClickBegin" />
     </div>
@@ -214,7 +213,7 @@ export default {
 
     const agentId = ref(null)
     const agentAccessToken = ref('')
-    const agentServerHost = ref('y20.work')
+    const agentServerHost = ref(window.location.hostname)
     const agentServerRpcPort = ref(9100)
     const agentServerRestUseSsl = ref(true)
     const agentDataDir = ref('.')

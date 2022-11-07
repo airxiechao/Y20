@@ -16,6 +16,7 @@ import com.airxiechao.y20.agent.rest.param.*;
 import com.airxiechao.y20.agent.rpc.api.client.ILocalAgentClientRpc;
 import com.airxiechao.y20.agent.rpc.param.*;
 import com.airxiechao.y20.auth.db.record.AccessTokenRecord;
+import com.airxiechao.y20.auth.pojo.vo.AccessTokenVo;
 import com.airxiechao.y20.auth.rest.api.IServiceAuthRest;
 import com.airxiechao.y20.auth.rest.param.ServiceGetAccessTokenParam;
 import com.airxiechao.y20.common.agent.AgentUtil;
@@ -430,6 +431,34 @@ public class UserAgentRestHandler implements IUserAgentRest {
     }
 
     @Override
+    public Response getAgentAccessToken(Object exc) {
+        HttpServerExchange exchange = (HttpServerExchange) exc;
+
+        GetAgentAccessTokenParam param = null;
+        try {
+            param = EnhancedRestUtil.queryDataWithHeader(exchange, GetAgentAccessTokenParam.class, true);
+        } catch (Exception e) {
+            logger.error("parse rest param error", e);
+            return new Response().error(e.getMessage());
+        }
+
+        try {
+            Response<AccessTokenRecord> accessTokenResp = ServiceRestClient.get(IServiceAuthRest.class).getAccessToken(
+                    new ServiceGetAccessTokenParam(param.getAgentAccessToken()));
+            if (!accessTokenResp.isSuccess()) {
+                throw new Exception("no access token record");
+            }
+
+            AccessTokenRecord accessTokenRecord = accessTokenResp.getData();
+            AccessTokenVo vo = new AccessTokenVo(accessTokenRecord);
+            return new Response().data(vo);
+        } catch (Exception e) {
+            logger.error("get agent access token error", e);
+            return new Response().error(e.getMessage());
+        }
+    }
+
+    @Override
     public Response saveAgentConfig(Object exc) {
         HttpServerExchange exchange = (HttpServerExchange) exc;
 
@@ -521,13 +550,24 @@ public class UserAgentRestHandler implements IUserAgentRest {
         Boolean serverRestUseSsl = param.getServerRestUseSsl();
         String dataDir = param.getDataDir();
 
+        AgentVersionRecord latestVersion = agentBiz.getLatestVersion();
+        if(null == latestVersion){
+            return new Response().error("no agent version");
+        }
+
         String script = null;
         switch (osType){
             case OsUtil.OS_WINDOWS:
-                script = generateWindowsAgentJoinScript(agentId, accessToken, serverHost, serverRpcPort, serverRestUseSsl,dataDir);
+                script = generateWindowsAgentJoinScript(
+                        agentId, accessToken, serverHost, serverRpcPort, serverRestUseSsl,
+                        dataDir, latestVersion.getDownloadWinUrl()
+                );
                 break;
             case OsUtil.OS_LINUX:
-                script = generateLinuxAgentJoinScript(agentId, accessToken, serverHost, serverRpcPort, serverRestUseSsl,dataDir);
+                script = generateLinuxAgentJoinScript(
+                        agentId, accessToken, serverHost, serverRpcPort, serverRestUseSsl,
+                        dataDir, latestVersion.getDownloadLinuxUrl()
+                );
                 break;
         }
 
@@ -538,11 +578,14 @@ public class UserAgentRestHandler implements IUserAgentRest {
         return new Response().data(script);
     }
 
-    private String generateLinuxAgentJoinScript(String agentId, String accessToken, String serverHost, Integer serverRpcPort, Boolean serverRestUseSsl, String dataDir){
+    private String generateLinuxAgentJoinScript(
+            String agentId, String accessToken, String serverHost, Integer serverRpcPort, Boolean serverRestUseSsl,
+            String dataDir, String downloadUrl
+    ){
         return String.format("sudo bash << EOF\n" +
             "# download\n" +
             "echo \"1. download...\"\n" +
-            "curl -kfL \"https://airxiechao-generic.pkg.coding.net/y-20/agent-client-release/y20-agent-client-linux.zip?version=latest\" -o y20-agent-client-linux.zip\n" +
+            "curl -kfL \"%s\" -o y20-agent-client-linux.zip\n" +
             "rm -rf y20-agent-client\n" +
             "unzip y20-agent-client-linux.zip\n" +
             "rm y20-agent-client-linux.zip\n" +
@@ -563,14 +606,27 @@ public class UserAgentRestHandler implements IUserAgentRest {
             "cd -\n" +
             "chmod +x *.sh\n" +
             "./install-y20-agent-client-service.sh\n" +
-            "EOF\n", agentId, accessToken, serverHost, serverRpcPort, serverRestUseSsl, dataDir);
+            "EOF\n", downloadUrl, agentId, accessToken, serverHost, serverRpcPort, serverRestUseSsl, dataDir);
     }
 
-    private String generateWindowsAgentJoinScript(String agentId, String accessToken, String serverHost, Integer serverRpcPort, Boolean serverRestUseSsl, String dataDir){
+    private String generateWindowsAgentJoinScript(
+            String agentId, String accessToken, String serverHost, Integer serverRpcPort, Boolean serverRestUseSsl,
+            String dataDir, String downloadUrl
+    ){
         return String.format("$curDir = Get-Location; Start-Process powershell -Verb runAs -Wait -ArgumentList @(\"cd $curDir;\"+'\n" +
                 "# download\n"+
                 "echo \\\"1. download...\\\"\n" +
-                "Invoke-WebRequest -Uri \\\"https://airxiechao-generic.pkg.coding.net/y-20/agent-client-release/y20-agent-client-win.zip?version=latest\\\" -OutFile y20-agent-client-win.zip;\n"+
+                "add-type @\\\"\n" +
+                "  using System.Net;\n" +
+                "  using System.Security.Cryptography.X509Certificates;\n" +
+                "  public class TrustAllCertsPolicy : ICertificatePolicy {\n" +
+                "    public bool CheckValidationResult(ServicePoint srvPoint, X509Certificate certificate, WebRequest request, int certificateProblem) {\n" +
+                "        return true;\n" +
+                "      }\n" +
+                "    }\n" +
+                "\\\"@\n" +
+                "[System.Net.ServicePointManager]::CertificatePolicy = New-Object TrustAllCertsPolicy\n" +
+                "Invoke-WebRequest -Uri \\\"%s\\\" -OutFile y20-agent-client-win.zip;\n"+
                 "Remove-Item y20-agent-client -Recurse -Force -ErrorAction Ignore;\n"+
                 "Expand-Archive -Path y20-agent-client-win.zip -DestinationPath . -Force;\n"+
                 "Remove-Item y20-agent-client-win.zip;\n"+
@@ -592,6 +648,6 @@ public class UserAgentRestHandler implements IUserAgentRest {
                 "echo \\\"3. install...\\\"\n" +
                 "cd ..;\n"+
                 "cmd.exe /c \\\"install-y20-agent-client-service.bat\\\";\n" +
-                "')\n", agentId, accessToken, serverHost, serverRpcPort, serverRestUseSsl, dataDir);
+                "')\n", downloadUrl, agentId, accessToken, serverHost, serverRpcPort, serverRestUseSsl, dataDir);
     }
 }

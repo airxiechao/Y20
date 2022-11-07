@@ -36,9 +36,10 @@
             </q-input>
           </q-toolbar>
         </div>
-        <div class="q-pa-md page-content">
+        <div class="q-pa-sm page-content">
           <div class="page-heading">我的团队</div>
           <q-table
+            flat
             class="q-mt-sm"
             :rows="members"
             :columns="memberColumns"
@@ -71,8 +72,9 @@
             </template>
           </q-table>
 
-          <div class="page-heading q-mt-lg">已加入的团队</div>
+          <div class="page-heading q-mt-md">已加入的团队</div>
           <q-table
+            flat
             class="q-mt-sm"
             :rows="teams"
             :columns="teamColumns"
