@@ -20,16 +20,17 @@
       </q-btn>
     </div>
     <q-toolbar class="page-home-toolbar">
-      <q-toolbar-title class="text-h5 text-bold">
+      <q-toolbar-title class="text-bold">
         <q-icon class="q-mr-sm vertical-middle" size="lg" :name="`img:/${FRONTEND_SERVICE_NAME}/static/img/icon-logo.png`" />
         <span class="vertical-middle">鲲擎流水线 Y20</span>
       </q-toolbar-title>
       <div class="gt-xs">
+        <a href="https://github.com/airxiechao/Y20" class="q-mx-md" target="_blank">
+          <img class="vertical-middle" alt="icon-github" :src="`/${FRONTEND_SERVICE_NAME}/static/img/icon-github.png`"/>
+        </a>
         <q-btn style="padding: 0 20px;" class="q-mx-md text-dark" rounded size="lg" type="a" href="/nav/workspace/template" flat label="应用" />
         <q-btn style="padding: 0 20px;" class="q-mx-md text-dark" rounded size="lg" type="a" href="/docs" flat label="文档" />
         <q-btn style="padding: 0 20px;" class="q-mx-md text-dark" rounded size="lg" type="a" target="_blank" href="https://www.zhihu.com/column/c_1500492490684149761" flat label="博客" />
-      </div>
-      <div class="gt-xs">
         <q-btn style="padding: 0 20px;" class="q-mx-md text-dark" rounded type="a" href="/nav/login" size="lg" flat label="登录" />
         <q-btn style="padding: 0 20px;" class="q-ml-md text-dark" rounded size="lg" type="a" href="/nav/signup" unelevated label="注册" />
       </div>
@@ -76,9 +77,6 @@
             <div class="q-py-md q-mt-md text-grey-7 text-center" style="font-size: 16px; line-height: 36px;">
               <span class="vertical-middle">
                 通过编排流水线实现流程的标准化、自动化！
-                <a href="https://github.com/airxiechao/Y20" target="_blank">
-                  <img class="vertical-middle" alt="icon-github" :src="`/${FRONTEND_SERVICE_NAME}/static/img/icon-github.png`"/>
-                </a>
               </span>
             </div>
             <div :class="{
@@ -369,12 +367,6 @@
               </div>
             </template>
 
-          </div>
-          <div class="row justify-center text-grey">
-            <div>
-              <q-icon class="vertical-middle q-mr-xs" name="help" />
-              <span class="vertical-middle">私有部署请联系客服</span>
-            </div>
           </div>
         </div>
       </div>

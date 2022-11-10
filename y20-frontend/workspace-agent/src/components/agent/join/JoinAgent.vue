@@ -9,13 +9,12 @@
           </q-toolbar>
         </div>
         <div class="q-pa-sm page-content">
-          <q-card flat class="q-px-md q-pb-md q-pt-sm">
-            <div class="page-heading">接入新节点</div>
+          <q-card flat class="q-pa-sm">
             <q-banner dense rounded class="q-pa-md bg-grey-2">
               <template v-slot:avatar>
                 <q-icon name="info" color="primary" />
               </template>
-              通过以下方法安装节点程序，安装包大小为85M左右。
+              通过以下方法安装节点程序，安装包大小为90M左右。
               节点程序使用Java编写，以服务（y20-agent-client）的方式运行。
               节点和服务器的通信是加密的。
             </q-banner>

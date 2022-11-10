@@ -8,7 +8,8 @@ public class AgentClientConfig {
     private String serverHost;
     private String agentId;
     private String accessToken;
-    private int serverRpcPort;
+    private Integer serverRpcPort;
+    private Integer serverRestPort;
     private boolean serverRestUseSsl;
     private String dataDir;
 
@@ -36,12 +37,20 @@ public class AgentClientConfig {
         this.accessToken = accessToken;
     }
 
-    public int getServerRpcPort() {
+    public Integer getServerRpcPort() {
         return serverRpcPort;
     }
 
-    public void setServerRpcPort(int serverRpcPort) {
+    public void setServerRpcPort(Integer serverRpcPort) {
         this.serverRpcPort = serverRpcPort;
+    }
+
+    public Integer getServerRestPort() {
+        return serverRestPort;
+    }
+
+    public void setServerRestPort(Integer serverRestPort) {
+        this.serverRestPort = serverRestPort;
     }
 
     public boolean isServerRestUseSsl() {

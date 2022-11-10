@@ -61,6 +61,7 @@
 - accessToken：创建的访问令牌
 - serverHost：服务器地址 `y20.work`
 - serverRpcPort：服务器Rpc端口 `9100`
+- serverRestPort: 服务器Rest端口 `443`
 - serverRestUseSsl：服务器Rest是否使用SSL `true`
 - dataDir：节点的本地工作目录，用于存放流水线执行过程中产生的文件 `.`
 

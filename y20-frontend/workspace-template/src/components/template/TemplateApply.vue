@@ -53,7 +53,7 @@
               </div>
               
               <div>
-                <q-toggle v-model="flagRunAfterApply" :label="$t('label-run-after-apply')" />
+                <q-toggle size="xs" v-model="flagRunAfterApply" :label="$t('label-run-after-apply')" />
               </div>
               
               <div class="q-mt-md">

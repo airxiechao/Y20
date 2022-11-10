@@ -17,7 +17,7 @@
               <div class="self-center">应用市场</div>
               <q-space />
               <div class="self-center">
-                <q-toggle class="text-subtitle2" size="sm" v-model="onlyMy" label="我发布的" />
+                <q-toggle class="text-subtitle2" size="xs" v-model="onlyMy" label="我发布的" />
               </div>
             </div>
           </div>
@@ -40,7 +40,7 @@
                     <q-card flat class="template-card q-pa-xs">
                       <q-item>
                         <q-item-section avatar>
-                          <q-avatar icon="apps" class="q-mr-sm text-grey" size="lg" style="background: #ECF2FF;" />
+                          <q-avatar icon="extension" class="q-mr-sm text-grey" size="lg" style="background: #ECF2FF;" />
                         </q-item-section>
 
                         <q-item-section>
@@ -61,7 +61,7 @@
                     <q-list class="q-pa-xs">
                       <q-item>
                         <q-item-section avatar>
-                          <q-avatar icon="apps" class="q-mr-sm text-grey" size="lg" style="background: #ECF2FF;" />
+                          <q-avatar icon="extension" class="q-mr-sm text-grey" size="lg" style="background: #ECF2FF;" />
                         </q-item-section>
                         <q-item-section>
                           <q-item-label>
@@ -86,7 +86,7 @@
                   <q-list class="q-pa-xs">
                     <q-item>
                       <q-item-section avatar class="cursor-pointer" @click="onClickTemplate(props.row.templateId)">
-                        <q-avatar icon="apps" class="q-mr-sm text-primary" size="lg" style="background: #ECF2FF;" />
+                        <q-avatar icon="extension" class="q-mr-sm text-primary" size="lg" style="background: #ECF2FF;" />
                       </q-item-section>
                       <q-item-section>
                         <q-item-label class="cursor-pointer" @click="onClickTemplate(props.row.templateId)">

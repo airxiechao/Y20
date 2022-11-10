@@ -3,7 +3,7 @@
     <template v-slot:center>
       <div class="page-signup-center full-height flex justify-center">
         <div class="page-signup-card full-width self-center">
-          <div class="text-center text-h4 q-mb-lg">
+          <div class="text-center text-h5 q-mb-lg">
             <a href="/">
               <q-icon class="q-mr-sm vertical-middle" size="lg" :name="`img:/${FRONTEND_SERVICE_NAME}/static/img/icon-logo.png`" />
               <span class="vertical-middle text-black text-weight-bold">鲲擎流水线</span>

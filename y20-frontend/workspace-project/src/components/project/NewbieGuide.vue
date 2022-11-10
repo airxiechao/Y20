@@ -215,7 +215,8 @@ export default {
     const agentAccessToken = ref('')
     const agentServerHost = ref(window.location.hostname)
     const agentServerRpcPort = ref(9100)
-    const agentServerRestUseSsl = ref(true)
+    const agentServerRestPort = ref(window.location.port || (window.location.protocol.startsWith('https') ? '443' : '80'))
+    const agentServerRestUseSsl = ref(window.location.protocol.startsWith('https'))
     const agentDataDir = ref('.')
     const agentOsType = ref('WINDOWS')
     const agentJoinScript = ref('')
@@ -253,6 +254,7 @@ export default {
       agentAccessToken,
       agentServerHost,
       agentServerRpcPort,
+      agentServerRestPort,
       agentServerRestUseSsl,
       agentDataDir,
       agentOsType,
@@ -343,6 +345,7 @@ export default {
             accessToken: agentAccessToken.value,
             serverHost: agentServerHost.value,
             serverRpcPort: agentServerRpcPort.value,
+            serverRestPort: agentServerRestPort.value,
             serverRestUseSsl: agentServerRestUseSsl.value,
             dataDir: agentDataDir.value,
           }).then(resp => {
@@ -356,7 +359,7 @@ export default {
               qUtil.notifyError('复制脚本到粘贴板发生错误')
             })
           }, resp => {
-            qUtil.notifyError('生成接入脚本方式错误')
+            qUtil.notifyError('生成接入脚本发生错误')
           }).finally(() => {
             createAgentJoinScriptLoading.value = false
           })

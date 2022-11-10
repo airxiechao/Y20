@@ -28,7 +28,7 @@
               </q-chip>
             </div>
             <div class="self-center">
-              <q-toggle class="text-subtitle2" size="sm" v-model="flagDetail" label="详细" />
+              <q-toggle class="text-subtitle2" size="xs" v-model="flagDetail" label="详细" />
             </div>
           </div>
           <q-table

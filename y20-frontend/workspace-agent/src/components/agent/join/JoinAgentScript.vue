@@ -71,6 +71,15 @@
         :rules="[ val => !!val || '请输入服务器Rpc端口']"
       />
 
+      <q-input
+        outlined
+        v-model="serverRestPort"
+        label="服务器Rest端口 *"
+        :hint="`serverRestPort（必填），节点服务器Rest端口：${window.location.port || (window.location.protocol.startsWith('https') ? '443' : '80')}`"
+        lazy-rules
+        :rules="[ val => !!val || '请输入服务器Rest端口']"
+      />
+
       <q-select
         outlined
         v-model="serverRestUseSsl"
@@ -83,7 +92,7 @@
           },
         ]" 
         label="服务器Rest是否使用SSL *"
-        hint="serverRestUseSsl（必填），节点服务器Rest是否使用SSL：true"
+        :hint="`serverRestUseSsl（必填），节点服务器Rest是否使用SSL：${window.location.protocol.startsWith('https')}`"
         emit-value 
         map-options
       />
@@ -164,7 +173,8 @@ export default {
     const accessToken = ref('')
     const serverHost = ref(window.location.hostname)
     const serverRpcPort = ref(9100)
-    const serverRestUseSsl = ref(true)
+    const serverRestPort = ref(window.location.port || (window.location.protocol.startsWith('https') ? '443' : '80'))
+    const serverRestUseSsl = ref(window.location.protocol.startsWith('https'))
     const dataDir = ref('.')
     const scriptLoading = ref(false)
 
@@ -204,6 +214,7 @@ export default {
       accessToken,
       serverHost,
       serverRpcPort,
+      serverRestPort,
       serverRestUseSsl,
       dataDir,
       scriptLoading,
@@ -233,6 +244,7 @@ export default {
           accessToken: accessToken.value,
           serverHost: serverHost.value,
           serverRpcPort: serverRpcPort.value,
+          serverRestPort: serverRestPort.value,
           serverRestUseSsl: serverRestUseSsl.value,
           dataDir: dataDir.value,
         }).then(resp => {

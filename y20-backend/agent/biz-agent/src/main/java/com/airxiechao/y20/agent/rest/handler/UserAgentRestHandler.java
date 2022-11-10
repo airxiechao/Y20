@@ -547,6 +547,7 @@ public class UserAgentRestHandler implements IUserAgentRest {
         String accessToken = param.getAccessToken();
         String serverHost = param.getServerHost();
         Integer serverRpcPort = param.getServerRpcPort();
+        Integer serverRestPort = param.getServerRestPort();
         Boolean serverRestUseSsl = param.getServerRestUseSsl();
         String dataDir = param.getDataDir();
 
@@ -559,13 +560,13 @@ public class UserAgentRestHandler implements IUserAgentRest {
         switch (osType){
             case OsUtil.OS_WINDOWS:
                 script = generateWindowsAgentJoinScript(
-                        agentId, accessToken, serverHost, serverRpcPort, serverRestUseSsl,
+                        agentId, accessToken, serverHost, serverRpcPort, serverRestPort, serverRestUseSsl,
                         dataDir, latestVersion.getDownloadWinUrl()
                 );
                 break;
             case OsUtil.OS_LINUX:
                 script = generateLinuxAgentJoinScript(
-                        agentId, accessToken, serverHost, serverRpcPort, serverRestUseSsl,
+                        agentId, accessToken, serverHost, serverRpcPort, serverRestPort, serverRestUseSsl,
                         dataDir, latestVersion.getDownloadLinuxUrl()
                 );
                 break;
@@ -579,7 +580,7 @@ public class UserAgentRestHandler implements IUserAgentRest {
     }
 
     private String generateLinuxAgentJoinScript(
-            String agentId, String accessToken, String serverHost, Integer serverRpcPort, Boolean serverRestUseSsl,
+            String agentId, String accessToken, String serverHost, Integer serverRpcPort, Integer serverRestPort, Boolean serverRestUseSsl,
             String dataDir, String downloadUrl
     ){
         return String.format("sudo bash << EOF\n" +
@@ -598,6 +599,7 @@ public class UserAgentRestHandler implements IUserAgentRest {
             "sed -i s/accessToken:.*/'accessToken: %s'/ agent-client.yml\n" +
             "sed -i s/serverHost:.*/'serverHost: %s'/ agent-client.yml\n" +
             "sed -i s/serverRpcPort:.*/'serverRpcPort: %d'/ agent-client.yml\n" +
+            "sed -i s/serverRestPort:.*/'serverRestPort: %d'/ agent-client.yml\n" +
             "sed -i s/serverRestUseSsl:.*/'serverRestUseSsl: %b'/ agent-client.yml\n" +
             "sed -i 's|dataDir:.*|dataDir: %s|' agent-client.yml\n" +
             "\n" +
@@ -606,11 +608,11 @@ public class UserAgentRestHandler implements IUserAgentRest {
             "cd -\n" +
             "chmod +x *.sh\n" +
             "./install-y20-agent-client-service.sh\n" +
-            "EOF\n", downloadUrl, agentId, accessToken, serverHost, serverRpcPort, serverRestUseSsl, dataDir);
+            "EOF\n", downloadUrl, agentId, accessToken, serverHost, serverRpcPort, serverRestPort, serverRestUseSsl, dataDir);
     }
 
     private String generateWindowsAgentJoinScript(
-            String agentId, String accessToken, String serverHost, Integer serverRpcPort, Boolean serverRestUseSsl,
+            String agentId, String accessToken, String serverHost, Integer serverRpcPort, Integer serverRestPort, Boolean serverRestUseSsl,
             String dataDir, String downloadUrl
     ){
         return String.format("$curDir = Get-Location; Start-Process powershell -Verb runAs -Wait -ArgumentList @(\"cd $curDir;\"+'\n" +
@@ -640,6 +642,7 @@ public class UserAgentRestHandler implements IUserAgentRest {
                 "$conf = $conf -replace \\\"accessToken:.*\\\", \\\"accessToken: %s\\\";\n"+
                 "$conf = $conf -replace \\\"serverHost:.*\\\", \\\"serverHost: %s\\\";\n"+
                 "$conf = $conf -replace \\\"serverRpcPort:.*\\\", \\\"serverRpcPort: %d\\\";\n"+
+                "$conf = $conf -replace \\\"serverRestPort:.*\\\", \\\"serverRestPort: %d\\\";\n"+
                 "$conf = $conf -replace \\\"serverRestUseSsl:.*\\\", \\\"serverRestUseSsl: %b\\\";\n"+
                 "$conf = $conf -replace \\\"dataDir:.*\\\", \\\"dataDir: %s\\\";\n"+
                 "$conf | set-content -Path agent-client.yml -Encoding UTF8;\n"+
@@ -648,6 +651,6 @@ public class UserAgentRestHandler implements IUserAgentRest {
                 "echo \\\"3. install...\\\"\n" +
                 "cd ..;\n"+
                 "cmd.exe /c \\\"install-y20-agent-client-service.bat\\\";\n" +
-                "')\n", downloadUrl, agentId, accessToken, serverHost, serverRpcPort, serverRestUseSsl, dataDir);
+                "')\n", downloadUrl, agentId, accessToken, serverHost, serverRpcPort, serverRestPort, serverRestUseSsl, dataDir);
     }
 }

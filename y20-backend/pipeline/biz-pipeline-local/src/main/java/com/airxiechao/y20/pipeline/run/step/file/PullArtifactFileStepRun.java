@@ -66,6 +66,7 @@ public class PullArtifactFileStepRun extends AbstractStepRunInstance {
         AgentRestClient agentRestClient = new AgentRestClient(
                 agentRpcClient, agentRpcClientContext,
                 agentClientConfig.getServerHost(),
+                agentClientConfig.getServerRestPort(),
                 agentClientConfig.isServerRestUseSsl(),
                 agentClientConfig.getAccessToken());
 

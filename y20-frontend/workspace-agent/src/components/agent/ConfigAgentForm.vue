@@ -74,6 +74,15 @@
                   :rules="[ val => !!val || '请输入服务器Rpc端口']"
                 />
 
+                <q-input
+                  outlined
+                  v-model="configServerRestPort"
+                  label="服务器Rest端口 *"
+                  hint="serverRestPort（必填），节点服务器Rest端口"
+                  lazy-rules
+                  :rules="[ val => !!val || '请输入服务器Rest端口']"
+                />
+
                 <q-select
                   outlined
                   v-model="configServerRestUseSsl"
@@ -160,17 +169,30 @@ export default {
     const configAccessTokenEndTime = ref(null)
     const configServerHost = ref(null)
     const configServerRpcPort = ref(null)
+    const configServerRestPort = ref(null)
     const configServerRestUseSsl = ref(null)
     const configDataDir = ref(null)
 
+    const updateConfigField = (conf, field, value) => {
+      if(conf.indexOf(`${field}:`) >= 0){
+        const regex =  new RegExp(`${field}:(.+)`, 'g');
+        conf = conf.replace(regex, `${field}: ${value}`)
+      }else{
+        conf = conf + (conf.endsWith('\n') ? '' : '\n') + `${field}: ${value}\n`
+      }
+
+      return conf
+    }
+
     const newConfig = computed(() => {
       let conf = config.value
-      conf = conf.replace(/agentId:(.+)/g, `agentId: ${configAgentId.value}`)
-      conf = conf.replace(/accessToken:(.+)/g, `accessToken: ${configAccessToken.value}`)
-      conf = conf.replace(/serverHost:(.+)/g, `serverHost: ${configServerHost.value}`)
-      conf = conf.replace(/serverRpcPort:(.+)/g, `serverRpcPort: ${configServerRpcPort.value}`)
-      conf = conf.replace(/serverRestUseSsl:(.+)/g, `serverRestUseSsl: ${configServerRestUseSsl.value}`)
-      conf = conf.replace(/dataDir:(.+)/g, `dataDir: ${configDataDir.value}`)
+      conf = updateConfigField(conf, 'agentId', configAgentId.value)
+      conf = updateConfigField(conf, 'accessToken', configAccessToken.value)
+      conf = updateConfigField(conf, 'serverHost', configServerHost.value)
+      conf = updateConfigField(conf, 'serverRpcPort', configServerRpcPort.value)
+      conf = updateConfigField(conf, 'serverRestPort', configServerRestPort.value)
+      conf = updateConfigField(conf, 'serverRestUseSsl', configServerRestUseSsl.value)
+      conf = updateConfigField(conf, 'dataDir', configDataDir.value)
       return conf
     })
 
@@ -195,6 +217,7 @@ export default {
         configAccessToken.value = extractConfigValue('accessToken')
         configServerHost.value = extractConfigValue('serverHost')
         configServerRpcPort.value = extractConfigValue('serverRpcPort')
+        configServerRestPort.value = extractConfigValue('serverRestPort')
         configServerRestUseSsl.value = extractConfigValue('serverRestUseSsl') == 'true'
         configDataDir.value = extractConfigValue('dataDir')
 
@@ -230,6 +253,7 @@ export default {
       configAccessTokenEndTime,
       configServerHost,
       configServerRpcPort,
+      configServerRestPort,
       configServerRestUseSsl,
       configDataDir,
 

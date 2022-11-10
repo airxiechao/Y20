@@ -2,6 +2,7 @@ agentId:
 accessToken: 
 serverHost: y20.work
 serverRpcPort: 9100
+serverRestPort: 443
 serverRestUseSsl: true
 dataDir: /data/y20-agent-client-data
 

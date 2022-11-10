@@ -34,7 +34,7 @@
               <div class="q-pa-md">
                 <template v-if="template.name">
                   <div  class="text-bold">
-                    <q-icon name="book" size="xs" /> {{template.username}}/<a :href="`/nav/workspace/template/${templateId}`">{{template.name}}</a>
+                    {{template.username}}/<a :href="`/nav/workspace/template/${templateId}`">{{template.name}}</a>
                   </div>
                   <q-breadcrumbs class="text-subtitle2 text-grey" active-color="grey">
                     <q-breadcrumbs-el :label="`更新于 ${dayjs(template.lastUpdateTime || template.createTime).format('YYYY-MM-DD HH:mm:ss')}`"/>

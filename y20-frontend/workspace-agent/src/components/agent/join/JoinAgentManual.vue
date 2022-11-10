@@ -54,8 +54,17 @@
 
           <q-item>
             <q-item-section>
+              <q-item-label>serverRestPort</q-item-label>
+              <q-item-label caption lines="2">必填，节点服务器Rest端口：{{window.location.port || (window.location.protocol.startsWith('https') ? '443' : '80')}}</q-item-label>
+            </q-item-section>
+          </q-item>
+
+          <q-separator spaced inset />
+
+          <q-item>
+            <q-item-section>
               <q-item-label>serverRestUseSsl</q-item-label>
-              <q-item-label caption lines="2">必填，节点服务器Rest是否使用SSL：true</q-item-label>
+              <q-item-label caption lines="2">必填，节点服务器Rest是否使用SSL：{{window.location.protocol.startsWith('https')}}</q-item-label>
             </q-item-section>
           </q-item>
 

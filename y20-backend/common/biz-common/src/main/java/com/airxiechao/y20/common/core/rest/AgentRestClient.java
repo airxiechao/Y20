@@ -25,16 +25,18 @@ public class AgentRestClient extends AbstractRestClient {
     private IAgentRpcClient agentRpcClient;
     private ChannelHandlerContext agentRpcCtx;
     private String host;
-    private String accessToken;
+    private Integer port;
     private boolean useSsl;
+    private String accessToken;
 
     public AgentRestClient(
             IAgentRpcClient agentRpcClient, ChannelHandlerContext agentRpcCtx,
-            String host, boolean useSsl, String accessToken
+            String host, Integer port, boolean useSsl, String accessToken
     ){
         this.agentRpcClient = agentRpcClient;
         this.agentRpcCtx = agentRpcCtx;
         this.host = host;
+        this.port = port;
         this.useSsl = useSsl;
         this.accessToken = accessToken;
     }
@@ -77,7 +79,9 @@ public class AgentRestClient extends AbstractRestClient {
         String servicePath = getServicePathResp.getData();
 
         String protocol = useSsl ? "https" : "http";
-        int port = useSsl ? 443 : 80;
+        if(null == port){
+            port = useSsl ? 443 : 80;
+        }
 
         return String.format("%s://%s:%d/%s%s", protocol, host, port, servicePath, RestUtil.getMethodPath(method));
     }

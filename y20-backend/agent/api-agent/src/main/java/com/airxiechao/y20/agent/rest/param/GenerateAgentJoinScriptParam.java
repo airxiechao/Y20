@@ -9,6 +9,7 @@ public class GenerateAgentJoinScriptParam {
     @Required private String accessToken;
     @Required private String serverHost;
     @Required private Integer serverRpcPort;
+    @Required private Integer serverRestPort;
     @Required private Boolean serverRestUseSsl;
     @Required private String dataDir;
 
@@ -58,6 +59,14 @@ public class GenerateAgentJoinScriptParam {
 
     public void setServerRpcPort(Integer serverRpcPort) {
         this.serverRpcPort = serverRpcPort;
+    }
+
+    public Integer getServerRestPort() {
+        return serverRestPort;
+    }
+
+    public void setServerRestPort(Integer serverRestPort) {
+        this.serverRestPort = serverRestPort;
     }
 
     public Boolean getServerRestUseSsl() {

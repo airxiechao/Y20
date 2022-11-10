@@ -15,10 +15,9 @@
           </q-toolbar>
         </div>
         <div class="q-pa-sm page-content">
-          <div class="page-heading">令牌</div>
           <q-table
             flat
-            class="token-list-table q-mt-sm"
+            class="token-list-table"
             :rows="tokens"
             :columns="columns"
             v-model:pagination="pagination"

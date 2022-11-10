@@ -105,10 +105,10 @@
       </div>
       <div v-if="variable.kind == 'IN'" class="row q-gutter-x-sm">
         <div class="self-center q-py-sm">
-          <q-toggle :model-value="variable.required" label="必填" />
+          <q-toggle size="xs" :model-value="variable.required" label="必填" />
         </div>
         <div class="self-center q-py-sm">
-          <q-toggle :model-value="variable.password" label="密码" />
+          <q-toggle size="xs" :model-value="variable.password" label="密码" />
         </div>
         <div class="col-12 col-sm-6 self-center q-py-sm">
           <q-input
@@ -120,7 +120,7 @@
             label="默认值"
           >
             <template v-slot:before>
-              <q-toggle :model-value="!!variable.defaultValue" />
+              <q-toggle size="xs" :model-value="!!variable.defaultValue" />
             </template>
           </q-input>
         </div>

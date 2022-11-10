@@ -38,6 +38,7 @@ public class MonitorJob implements Runnable{
             AgentRestClient agentRestClient = new AgentRestClient(
                     agentRpcClient, ctx,
                     agentClientConfig.getServerHost(),
+                    agentClientConfig.getServerRestPort(), 
                     agentClientConfig.isServerRestUseSsl(),
                     agentClientConfig.getAccessToken());
 

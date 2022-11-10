@@ -35,8 +35,8 @@
               <PipelineInVariablesForm :pipelineInVariables="pipelineInVariables" :loading="loading" />
 
               <div class="q-gutter-x-sm">
-                <q-toggle class="q-ml-none" v-model="flagDebug" label="调试模式" />
-                <q-toggle v-model="flagTail" label="跟随日志" />
+                <q-toggle size="xs" class="q-ml-none" v-model="flagDebug" label="调试模式" />
+                <q-toggle size="xs" v-model="flagTail" label="跟随日志" />
               </div>
 
               <div class="q-mt-md">

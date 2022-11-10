@@ -11,13 +11,14 @@ export default {
   getLatestVersion(){
     return request().get(`${API_AGENT_PREFIX}/agent/version/latest/get`)
   },
-  generateJoinScript({ osType, agentId, accessToken, serverHost, serverRpcPort, serverRestUseSsl, dataDir }){
+  generateJoinScript({ osType, agentId, accessToken, serverHost, serverRpcPort, serverRestPort, serverRestUseSsl, dataDir }){
     return request().post(`${API_AGENT_PREFIX}/agent/join/script/generate`, {
       osType,
       agentId,
       accessToken,
       serverHost,
       serverRpcPort,
+      serverRestPort,
       serverRestUseSsl,
       dataDir,
     })

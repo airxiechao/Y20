@@ -155,22 +155,21 @@
       </div>
       <div v-if="variable.kind == 'IN'" class="row q-gutter-x-sm">
         <div class="self-center q-py-sm">
-          <q-toggle v-model="variable.required" label="必填" />
+          <q-toggle size="xs" v-model="variable.required" label="必填" />
         </div>
         <div class="self-center q-py-sm">
-          <q-toggle v-model="variable.password" label="密码" />
+          <q-toggle size="xs" v-model="variable.password" label="密码" />
         </div>
         <div class="col-12 col-sm-6 self-center q-py-sm">
           <q-input
             outlined
-            bg-color="grey-2"
             dense
             :disable="!hasDefaultValue"
             v-model="variable.defaultValue"
             label="默认值"
           >
             <template v-slot:before>
-              <q-toggle v-model="hasDefaultValue" />
+              <q-toggle size="xs" v-model="hasDefaultValue" />
             </template>
           </q-input>
         </div>

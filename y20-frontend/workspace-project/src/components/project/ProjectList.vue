@@ -18,6 +18,9 @@
           
           <NewbieGuide v-if="flagGuide" @stepTo="onGuideStepTo" @close="onGuideClose"/>
 
+          <div class="page-heading q-px-xs">
+            我的项目
+          </div>
           <q-table
             grid
             :hide-bottom="projectLoading"

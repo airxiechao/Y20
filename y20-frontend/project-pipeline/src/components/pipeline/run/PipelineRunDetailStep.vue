@@ -23,15 +23,14 @@
         </div>
         <div class="q-pa-sm page-content relative-position">
           <div class="q-mb-sm">
-            <q-bar dark class="bg-primary text-white rounded-borders">
-              <div>执行情况</div>
-              <q-toggle size="xs" color="yellow" v-model="flagDetail" label="详细" />
+            <q-bar dark class="rounded-borders">
+              <div class="page-heading">执行情况</div>
+              <q-toggle size="xs" color="primary" style="font-size: 14px;" v-model="flagDetail" label="详细" />
               <q-space />
               <q-btn 
                 flat 
                 dense 
                 icon="folder" 
-                color="white"
                 :label="$q.screen.gt.xs?'上传的文件':undefined"
                 :to="`/project/${projectId}/pipeline/${pipelineId}/run/${pipelineRunId}/file`" 
               />
@@ -93,13 +92,13 @@
             </div>
             <div class="row" v-if="flagDetail">
               <div class="title self-center">调试模式</div>
-              <div class="col"><q-toggle dense :model-value="pipelineRun.flagDebug" /></div>
+              <div class="col"><q-toggle size="xs" dense :model-value="pipelineRun.flagDebug" /></div>
             </div>
           </q-card>
 
           <q-card flat v-if="flagDetail" class="q-my-sm">
             <q-list dense separator>
-              <q-item-label header class="text-primary text-bold">输入变量</q-item-label>
+              <q-item-label header class="page-heading">输入变量</q-item-label>
               
               <q-markup-table v-if="loading" flat>
                 <tbody>
@@ -131,7 +130,7 @@
 
               <template v-if="['PASSED', 'FAILED'].includes(pipelineRun.status)">
                 <q-separator />
-                <q-item-label header class="text-primary text-bold">输出变量</q-item-label>
+                <q-item-label header class="page-heading">输出变量</q-item-label>
                 <template v-if="pipelineRun.outParams && Object.keys(pipelineRun.outParams).length > 0">
                   <q-item v-for="(value, name) in pipelineRun.outParams" :key="name">
                     <q-item-section>
@@ -152,9 +151,9 @@
           </q-card>
 
           <div class="q-my-sm">
-            <q-bar dark class="bg-primary text-white rounded-borders">
+            <q-bar dark class="rounded-borders">
               <div>执行步骤</div>
-              <q-toggle size="xs" v-model="flagTail" label="跟随" color="orange" />
+              <q-toggle size="xs" color="primary" style="font-size: 14px;" v-model="flagTail" label="跟随" />
               <q-space />
               <q-btn 
                 :disabled="['PASSED', 'FAILED'].includes(pipelineRun.status)"
