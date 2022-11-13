@@ -219,7 +219,10 @@ mc admin user svcacct add myminio admin
 创建mysql数据库 sql-create  
 初始化mysql数据 sql-initialize  
 创建mongodb数据库 mongodb-create  
-创建minio的bucket mc mb myminio/y20-artifact  
+创建minio的bucket
+```
+mc mb myminio/y20-artifact  
+```
 
 ## 15. 部署 y20-backend
 上传y20-backend到/opt/y20/y20-backend
