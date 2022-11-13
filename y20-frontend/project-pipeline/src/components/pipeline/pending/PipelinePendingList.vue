@@ -13,14 +13,17 @@
       @request="onTableSearch"
     >
       <template v-slot:body-cell-name="props">
-        <q-td :props="props">
-          <span class="cursor-pointer" @click="onClickDetailPipelinePending(props.row.pipelinePendingId)">
-            <span>{{ props.row.name }}</span>
-          </span>
+        <q-td :props="props" class="cursor-pointer" @click="onClickDetailPipelinePending(props.row.pipelinePendingId)">
+          {{ props.row.name }}
+        </q-td>
+      </template>
+      <template v-slot:body-cell-createReason="props">
+        <q-td :props="props" class="cursor-pointer" @click="onClickDetailPipelinePending(props.row.pipelinePendingId)">
+          {{ props.row.name }}
         </q-td>
       </template>
       <template v-slot:body-cell-createTime="props">
-        <q-td :props="props">
+        <q-td :props="props" class="cursor-pointer" @click="onClickDetailPipelinePending(props.row.pipelinePendingId)">
           <span v-if="props.row.createTime">
             {{ dayjs(props.row.createTime).format('YYYY-MM-DD HH:mm:ss') }}
           </span>

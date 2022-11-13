@@ -25,7 +25,6 @@
 
     .q-item{
       background: #fff;
-      border-bottom: 1px solid #0000001f;
     }
   }
 
@@ -118,6 +117,5 @@
 }
 
 .drawer-menu-active{
-  background: #EBF0FD !important;
-  color: $--color-primary !important;
+  background: #eee !important;
 }

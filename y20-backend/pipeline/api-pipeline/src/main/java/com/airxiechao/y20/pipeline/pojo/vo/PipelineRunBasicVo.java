@@ -1,11 +1,14 @@
 package com.airxiechao.y20.pipeline.pojo.vo;
 
-import com.airxiechao.y20.pipeline.db.record.PipelineRecord;
 import com.airxiechao.y20.pipeline.db.record.PipelineRunRecord;
+import com.airxiechao.y20.pipeline.pojo.PipelineRun;
 
 import java.util.Date;
 
 public class PipelineRunBasicVo {
+    private Long projectId;
+    private Long pipelineId;
+    private String pipelineName;
     private Long pipelineRunId;
     private String name;
     private String status;
@@ -16,11 +19,40 @@ public class PipelineRunBasicVo {
     }
 
     public PipelineRunBasicVo(PipelineRunRecord record) {
-        this.pipelineRunId = record.getId();
-        this.name = record.getName();
-        this.status = record.getStatus();
-        this.beginTime = record.getBeginTime();
-        this.endTime = record.getEndTime();
+        PipelineRun pipelineRun = record.toPojo();
+
+        this.projectId = pipelineRun.getProjectId();
+        this.pipelineId = pipelineRun.getPipelineId();
+        this.pipelineName = pipelineRun.getPipeline().getName();
+        this.pipelineRunId = pipelineRun.getPipelineRunId();
+        this.name = pipelineRun.getName();
+        this.status = pipelineRun.getStatus();
+        this.beginTime = pipelineRun.getBeginTime();
+        this.endTime = pipelineRun.getEndTime();
+    }
+
+    public Long getProjectId() {
+        return projectId;
+    }
+
+    public void setProjectId(Long projectId) {
+        this.projectId = projectId;
+    }
+
+    public Long getPipelineId() {
+        return pipelineId;
+    }
+
+    public void setPipelineId(Long pipelineId) {
+        this.pipelineId = pipelineId;
+    }
+
+    public String getPipelineName() {
+        return pipelineName;
+    }
+
+    public void setPipelineName(String pipelineName) {
+        this.pipelineName = pipelineName;
     }
 
     public Long getPipelineRunId() {

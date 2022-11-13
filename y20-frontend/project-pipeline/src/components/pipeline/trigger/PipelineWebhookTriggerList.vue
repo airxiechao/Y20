@@ -42,8 +42,18 @@
           <q-icon name="numbers" />y20-{{props.value}}
         </q-td>
       </template>
+      <template v-slot:body-cell-sourceType="props">
+        <q-td :props="props" class="cursor-pointer" @click="onClickWebhookTrigger(props.row.pipelineWebhookTriggerId)">
+          {{props.value}}
+        </q-td>
+      </template>
+      <template v-slot:body-cell-eventType="props">
+        <q-td :props="props" class="cursor-pointer" @click="onClickWebhookTrigger(props.row.pipelineWebhookTriggerId)">
+          {{props.value}}
+        </q-td>
+      </template>
       <template v-slot:body-cell-lastTriggerTime="props">
-        <q-td :props="props">
+        <q-td :props="props" class="cursor-pointer" @click="onClickWebhookTrigger(props.row.pipelineWebhookTriggerId)">
           <span v-if="props.value" class="vertical-middle q-mr-xs">{{dayjs(props.value).format('YYYY-MM-DD HH:mm:ss')}}</span>
           <q-icon v-if="props.row.lastTriggerPipelineRunId" class="vertical-middle cursor-pointer" name="history" @click="onClickLastTrigger(props.row.lastTriggerPipelineRunId)" />
         </q-td>

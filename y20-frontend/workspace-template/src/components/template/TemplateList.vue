@@ -218,9 +218,11 @@ export default {
       }
     })
 
-    const search = () => {
-      loading.value = true
-      templates.value = []
+    const search = (noLoading) => {
+      if(!noLoading){
+        loading.value = true
+        templates.value = []
+      }
       const fnList = onlyMy.value ? templateApi.listMy : templateApi.list
       fnList({ 
         name: name.value,
@@ -296,7 +298,7 @@ export default {
           cancel: true,
         }).onOk(data => {
           templateApi.delete({ templateId }).then(resp => {
-            search()
+            search(true)
           }, resp => {
             qUtil.notifyError(resp.message || '删除发生错误')
           })

@@ -1,7 +1,7 @@
 <template>
   <LayoutNavSecondary class="user">
     <template v-slot:header>
-      <q-breadcrumbs class="text-primary">
+      <q-breadcrumbs class="text-dark">
         <q-breadcrumbs-el tag="a" label="工作空间" to="/workspace/project" />
         <q-breadcrumbs-el tag="a" label="用户" to="/user/account" />
       </q-breadcrumbs>
@@ -9,6 +9,10 @@
 
     <template v-slot:left>
       <q-list>
+        <q-item-label header>
+          <span class="text-dark text-bold">用户</span>
+        </q-item-label>
+
         <q-item
           clickable
           v-ripple

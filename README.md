@@ -184,3 +184,5 @@ y20 （主目录）
 ```
 docker run -itd -p 30022:22 -p 80:80 -p 443:443 -p 9100:9100 airxiechao/y20
 ```
+
+[镜像制作方法](y20-docs/MakeDockerImage.md) 

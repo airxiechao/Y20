@@ -3,6 +3,9 @@ import { request } from 'common'
 const API_PIPELINE_PREFIX = '/pipeline/api/user'
 
 export default {
+  listRunRunning(){
+    return request().get(`${API_PIPELINE_PREFIX}/pipeline/run/running/list`)
+  },
   createHello({ projectId, name, flagOneRun }){
     return request().post(`${API_PIPELINE_PREFIX}/pipeline/create/hello`, {
       projectId,

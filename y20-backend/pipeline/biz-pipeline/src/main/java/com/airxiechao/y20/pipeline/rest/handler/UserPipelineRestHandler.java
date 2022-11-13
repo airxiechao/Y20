@@ -4,6 +4,7 @@ import com.airxiechao.axcboot.communication.common.PageData;
 import com.airxiechao.axcboot.communication.common.Response;
 import com.airxiechao.axcboot.communication.rest.util.RestUtil;
 import com.airxiechao.axcboot.process.transaction.TransactionPipeline;
+import com.airxiechao.axcboot.storage.db.sql.model.OrderType;
 import com.airxiechao.axcboot.storage.fs.common.FsFile;
 import com.airxiechao.y20.artifact.rest.api.IServiceArtifactRest;
 import com.airxiechao.y20.artifact.rest.param.ServiceCopyPipelineFileParam;
@@ -926,6 +927,34 @@ public class UserPipelineRestHandler implements IUserPipelineRest {
                 param.getPageSize(),
                 count,
                 list));
+    }
+
+    @Override
+    public Response listPipelineRunRunning(Object exc) {
+        HttpServerExchange exchange = (HttpServerExchange)exc;
+
+        ListPipelineRunRunningParam param;
+        try {
+            param = EnhancedRestUtil.queryDataWithHeader(exchange, ListPipelineRunRunningParam.class, true);
+        } catch (Exception e) {
+            return new Response().error(e.getMessage());
+        }
+
+        // list
+        List<PipelineRunBasicVo> list = pipelineBiz.listPipelineRun(
+                param.getUserId(),
+                null,
+                null,
+                null,
+                null,
+                true,
+                "beginTime",
+                OrderType.DESC,
+                null,
+                null
+        ).stream().map(record -> new PipelineRunBasicVo((record))).collect(Collectors.toList());;
+
+        return new Response().data(list);
     }
 
     @Override

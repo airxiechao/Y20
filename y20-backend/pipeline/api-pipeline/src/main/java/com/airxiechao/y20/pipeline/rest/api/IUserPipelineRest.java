@@ -140,6 +140,10 @@ public interface IUserPipelineRest {
     @Auth(scope = EnumAccessScope.USER)
     Response listPipelineRun(Object exc);
 
+    @Get("/user/pipeline/run/running/list")
+    @Auth(scope = EnumAccessScope.USER)
+    Response listPipelineRunRunning(Object exc);
+
     @Get("/user/pipeline/run/get")
     @Auth(scope = EnumAccessScope.USER)
     Response getPipelineRun(Object exc);

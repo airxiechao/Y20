@@ -114,10 +114,6 @@
                 <div class="q-pa-xs col-12 col-md-6 col-lg-3" v-for="i in [1,2,3,4]" :key="i">
                   <q-card flat class="pipeline-card">
                     <q-item>
-                      <q-item-section avatar>
-                        <q-skeleton type="QAvatar" animation="fade" size="25px" />
-                      </q-item-section>
-
                       <q-item-section>
                         <q-item-label>
                           <q-skeleton type="text" animation="fade" />
@@ -192,11 +188,11 @@
                       </q-item>
                     </q-list>
                     <q-card-actions vertical class="actions justify-start">
-                      <q-btn class="text-primary" style="background: #ECF2FF;" flat round size="sm" icon="play_arrow" @click="onClickCreatePipelineRun(props.row.id)" />
+                      <q-btn class="bg-grey-3" flat round size="sm" icon="play_arrow" @click="onClickCreatePipelineRun(props.row.id)" />
                       <q-btn v-if="flagDetail" class="text-grey" flat round size="sm" icon="history" @click="onClickListPipelineRun(props.row.id)" />
                       <q-btn v-if="flagDetail" class="text-grey" flat round size="sm" icon="account_tree" @click="onClickEditPipelineStep(props.row.id)" />
                       <q-btn v-if="flagDetail" class="text-grey" flat round size="sm" icon="superscript" @click="onClickEditPipelineVariable(props.row.id)" />
-                      <q-btn class="text-grey" flat round size="sm" icon="more_horiz">
+                      <q-btn class="text-grey" flat round size="sm" icon="more_vert">
                         <q-menu anchor="bottom right" self="top right">
                           <q-list>
                             <q-item clickable v-close-popup @click="onClickCreatePipelineRun(props.row.id)">
@@ -204,6 +200,9 @@
                             </q-item>
                             <q-item clickable v-close-popup @click="onClickPublishPipeline(props.row.id)">
                               <q-item-section>发布应用</q-item-section>
+                            </q-item>
+                            <q-item clickable v-close-popup @click="onClickUpdateBookmark(props.row.id, !props.row.bookmarked)">
+                              <q-item-section>{{props.row.bookmarked ? '取消' : '添加'}}书签</q-item-section>
                             </q-item>
                             <q-separator />
                             <q-item clickable v-close-popup @click="onClickListPipelineRun(props.row.id)">
@@ -242,9 +241,10 @@
                   <div class="tag bg-white">
                     <q-icon
                       class="cursor-pointer"
-                      :name="props.row.bookmarked ? 'bookmark' : 'bookmark_border'"
+                      name="bookmark"
                       color="primary" 
                       @click="onClickUpdateBookmark(props.row.id, !props.row.bookmarked)"
+                      v-if="props.row.bookmarked"
                     >
                       <q-tooltip>书签</q-tooltip>
                     </q-icon>
@@ -316,10 +316,6 @@
       line-height: 14px;
       top: -5px;
       left: 3px;
-    }
-
-    .actions{
-      border-left: 1px dashed #ddd;
     }
   }
 }
@@ -560,7 +556,7 @@ export default {
           cancel: true,
         }).onOk(data => {
           pipelineApi.delete({ pipelineId }).then(resp => {
-            search()
+            search(true)
             qUtil.notifySuccess('删除完成')
           }, resp => {
             qUtil.notifyError(resp.message)
@@ -575,7 +571,7 @@ export default {
           toProjectId: copyToProjectId.value,
           toPipelineName: copyToPipelineName.value,
         }).then(resp => {
-          search()
+          search(true)
           flagShowCopyDialog.value = false
           qUtil.notifySuccess('复制完成')
         }, resp => {

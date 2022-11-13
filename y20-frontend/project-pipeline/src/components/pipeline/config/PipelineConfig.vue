@@ -141,6 +141,12 @@
     overflow: auto;
     background: #2b2b2b;
     color: #f5f5f5;
+
+    table {
+      td, th {
+        background: #2b2b2b;
+      }
+    }
   }
 }
 </style>

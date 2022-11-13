@@ -21,13 +21,13 @@
     >
       <template v-slot:body="props">
         <q-tr :props="props">
-          <q-td>
+          <q-td class="cursor-pointer" @click="onClickVariable(props.row.name)">
             <span>{{ props.row.order }}</span>
           </q-td>
           <q-td class="cursor-pointer" @click="onClickVariable(props.row.name)">
             <span>{{ props.row.name }}</span>
           </q-td>
-          <q-td>
+          <q-td class="cursor-pointer" @click="onClickVariable(props.row.name)">
             <q-badge v-if="props.row.kind == 'IN'" color="green">输入</q-badge>
             <q-badge v-else-if="props.row.kind == 'SECRET'" color="orange">机密</q-badge>
             <q-badge v-else-if="props.row.kind == 'PROJECT_VARIABLE_REFERENCE'" color="blue">引用项目变量 {{ props.row.value }}</q-badge>

@@ -4,12 +4,13 @@
       <div class="page-center">
         <div class="page-toolbar">
           <q-toolbar>
-            <q-btn unelevated rounded flat color="primary" icon="keyboard_backspace" label="返回" :to="`/project/${projectId}/pipeline/${pipelineId}`" />
+            <q-btn unelevated rounded flat color="primary" icon="keyboard_backspace" label="返回" @click="onClickBack" />
             <q-toolbar-title>
             </q-toolbar-title>
             <q-btn flat label="重启" color="primary" :to="`/project/${projectId}/pipeline/${pipelineId}/run/create`" />
             <q-btn flat label="编辑" color="primary" :to="`/project/${projectId}/pipeline/${pipelineId}/step`" />
             <q-btn
+              class="gt-xs"
               v-if="pipelineRun.status && !['PASSED', 'FAILED'].includes(pipelineRun.status)"
               flat
               color="red" 

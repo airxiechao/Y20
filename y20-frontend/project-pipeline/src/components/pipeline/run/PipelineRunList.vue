@@ -18,7 +18,7 @@
         </q-td>
       </template>
       <template v-slot:body-cell-status="props">
-        <q-td :props="props">
+        <q-td :props="props" class="cursor-pointer" @click="onClickDetailPipelineRun(props.row.pipelineRunId)">
           <tempalte v-if="['STARTED', 'RUNNING', 'WAITING'].includes(props.row.status)">
             <q-icon name="update" color="orange" class="q-mr-xs" size="xs" />
             <span class="text-orange">{{props.row.status}}</span>
@@ -37,21 +37,21 @@
         </q-td>
       </template>
       <template v-slot:body-cell-beginTime="props">
-        <q-td :props="props">
+        <q-td :props="props" class="cursor-pointer" @click="onClickDetailPipelineRun(props.row.pipelineRunId)">
           <span v-if="props.row.beginTime">
             {{ dayjs(props.row.beginTime).format('YYYY-MM-DD HH:mm:ss') }}
           </span>
         </q-td>
       </template>
       <template v-slot:body-cell-endTime="props">
-        <q-td :props="props">
+        <q-td :props="props" class="cursor-pointer" @click="onClickDetailPipelineRun(props.row.pipelineRunId)">
           <span v-if="props.row.endTime">
             {{ dayjs(props.row.endTime).format('YYYY-MM-DD HH:mm:ss') }}
           </span>
         </q-td>
       </template>
       <template v-slot:body-cell-elapsedTime="props">
-        <q-td :props="props">
+        <q-td :props="props" class="cursor-pointer" @click="onClickDetailPipelineRun(props.row.pipelineRunId)">
           <span v-if="props.row.beginTime">
             {{ dayjs.duration((props.row.endTime || Date.now()) - props.row.beginTime).format('HH:mm:ss') }}
           </span>

@@ -94,7 +94,7 @@
             </template>
             <template v-slot:item="props">
               <div class="q-pa-xs col-12 col-md-6 col-lg-3">
-                <q-card flat class="agent-card q-pa-xs">
+                <q-card flat class="agent-card q-pa-xs full-height">
                   <div>
                     <q-badge v-if="props.row.flagUpgrading" color="warning" floating>升级中</q-badge>
                     <q-badge v-else-if="props.row.flagRestarting" color="warning" floating>重启中</q-badge>
@@ -451,7 +451,7 @@ export default {
           cancel: true,
         }).onOk(data => {
           agentApi.uninstall({ agentId }).then(resp => {
-            search()
+            search(true)
           }, resp => {
             qUtil.notifyError(resp.message || '卸载发生错误')
           })

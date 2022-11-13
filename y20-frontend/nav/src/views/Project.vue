@@ -1,7 +1,7 @@
 <template>
   <LayoutNavSecondary class="project">
     <template v-slot:header>
-      <q-breadcrumbs class="text-primary">
+      <q-breadcrumbs class="text-dark">
         <q-breadcrumbs-el>
           <TeamSelect />
         </q-breadcrumbs-el>
@@ -12,6 +12,10 @@
     
     <template v-slot:left>
       <q-list>
+        <q-item-label header>
+          <span class="text-dark text-bold">项目</span>
+        </q-item-label>
+
         <q-item
           clickable
           v-ripple
@@ -68,7 +72,7 @@
           :to="`/project/${projectId}/file`"
         >
           <q-item-section avatar>
-            <q-icon name="upload_file" />
+            <q-icon name="folder_open" />
           </q-item-section>
 
           <q-item-section>

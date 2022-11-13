@@ -1,7 +1,7 @@
 <template>
   <LayoutNavSecondary class="workspace">
     <template v-slot:header>
-      <q-breadcrumbs class="text-primary">
+      <q-breadcrumbs class="text-dark">
         <q-breadcrumbs-el>
           <TeamSelect />
         </q-breadcrumbs-el>
@@ -12,6 +12,10 @@
     <template v-slot:left>
       <div class="column full-height">
         <q-list class="col">
+          <q-item-label header>
+            <span class="text-dark text-bold">工作空间</span>
+          </q-item-label>
+
           <q-item
             clickable
             v-ripple

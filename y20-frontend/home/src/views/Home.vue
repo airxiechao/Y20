@@ -103,7 +103,7 @@
                 <div>满足复杂的流水线需求</div>
               </div>
             </div>
-            <div class="col row q-pa-md content-center" style="border-top: 1px solid #eee;">
+            <div class="col row q-pa-md content-center">
               <div class="col-4 col-sm-2">
                 <q-list>
                   <q-item>
@@ -319,38 +319,20 @@
           </div>
           <div class="row q-py-lg">
             <template v-if="saleLoading">
-              <div :class="{
-                'col-12': true, 
-                'col-sm-4': true, 
-                'q-pa-md': i != 1,
-                'q-pa-sm': i == 1,
-              }" v-for="(_, i) in [1,2,3]" :key="i">
-                <div :class="{
-                  'price-card': true, 
-                  'q-pa-md': true,
-                  'q-py-lg': i == 1,
-                }">
+              <div class="col-12 col-sm-4 q-pa-sm" v-for="(_, i) in [1,2,3]" :key="i">
+                <div class="price-card q-pa-md full-height">
                   <q-skeleton type="text" width="25%" />
                   <q-skeleton type="text" class="q-mt-sm" width="50%" />
                   <q-skeleton type="text" width="12%" />
-                  <q-separator class="q-my-md" />
+                  <div class="q-mt-md" />
                   <q-skeleton type="text" />
                   <q-skeleton type="text" />
                 </div>
               </div>
             </template>
             <template v-else>
-              <div :class="{
-                'col-12': true, 
-                'col-sm-4': true, 
-                'q-pa-md': i != 1,
-                'q-pa-sm': i == 1,
-              }" v-for="(sale, i) in sales" :key="i">
-                <div :class="{
-                  'price-card': true, 
-                  'q-pa-md': true,
-                  'q-py-lg': i == 1,
-                }">
+              <div class="col-12 col-sm-4 q-pa-sm" v-for="(sale, i) in sales" :key="i">
+                <div class="price-card q-pa-md full-height">
                   <div :class="{
                     'name': true,
                     'text-green': sale.name == '免费',
@@ -358,7 +340,7 @@
                   <div class="q-mt-md">￥ <span class="text-h5">{{(sale.price/100).toFixed(1)}}</span></div>
                   <div class="text-grey">每月</div>
                   <q-badge class="q-mr-xs" v-for="discount in sale.discounts" :key="discount.id" :label="discountText(discount)" />
-                  <q-separator class="q-my-md" />
+                  <div class="q-mt-md" />
                   <div v-for="(item, ii) in sale.items" :key="ii">
                     <q-icon class="vertical-middle q-mr-xs" name="check_circle" color="primary" />
                     <span class="vertical-middle text-grey-7">{{item}}</span>

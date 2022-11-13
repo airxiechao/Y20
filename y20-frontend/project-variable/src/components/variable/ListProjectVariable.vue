@@ -28,7 +28,7 @@
                 <q-td class="cursor-pointer" @click="onClickVariable(props.row.name)">
                   <span>{{ props.row.name }}</span>
                 </q-td>
-                <q-td>
+                <q-td class="cursor-pointer" @click="onClickVariable(props.row.name)">
                   <q-badge v-if="props.row.kind == 'SECRET'" color="orange">机密</q-badge>
                   <span v-else>{{ props.row.value }}</span>
                 </q-td>

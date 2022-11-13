@@ -1,11 +1,6 @@
 <template>
   <div class="pipeline-pending-detail">
-    <div class="row q-pb-md">
-      <div class="col page-heading text-primary self-center">等待执行</div>
-      <div class="self-center">
-        <q-btn flat icon="subdirectory_arrow_left" label="返回" :to="`/project/${projectId}/pipeline/${pipelineId}/pending`" />  
-      </div>
-    </div>
+    <div class="page-heading text-primary q-pb-md">等待执行</div>
     <q-form class="q-gutter-md">
       <q-skeleton v-if="loading" type="input" animation="fade" />
       <q-input v-else readonly outlined v-model="pending.name" 
@@ -13,6 +8,10 @@
       />
 
       <PipelineInVariablesForm :pipelineInVariables="pipelineInVariables" :loading="loading" :readonly="true" />
+    
+      <div class="q-pt-sm">
+        <q-btn unelevated color="primary" label="返回" @click="onClickCancel" />
+      </div>
     </q-form>
   </div>
 </template>
@@ -101,6 +100,9 @@ export default {
       inParams,
       loading,
 
+      onClickCancel() {
+        router.push(`/project/${projectId}/pipeline/${pipelineId}/pending`);
+      },
     }
   }
 };

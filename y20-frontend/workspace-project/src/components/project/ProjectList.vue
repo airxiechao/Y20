@@ -106,6 +106,9 @@
                             <q-item clickable v-close-popup @click="onClickEditProject(props.row.projectId)">
                               <q-item-section>重命名</q-item-section>
                             </q-item>
+                            <q-item clickable v-close-popup @click="onClickUpdateBookmark(props.row.projectId, !props.row.bookmarked)">
+                              <q-item-section>{{props.row.bookmarked ? '取消' : '添加'}}书签</q-item-section>
+                            </q-item>
                             <q-separator />
                             <q-item clickable v-close-popup @click="onClickDeleteProject(props.row.projectId, props.row.name)">
                               <q-item-section class="text-negative">删除</q-item-section>
@@ -118,9 +121,10 @@
 
                   <q-icon 
                     class="bookmark cursor-pointer bg-white" 
-                    :name="props.row.bookmarked ? 'bookmark' : 'bookmark_border'" 
+                    name="bookmark" 
                     color="primary"
                     @click="onClickUpdateBookmark(props.row.projectId, !props.row.bookmarked)"
+                    v-if="props.row.bookmarked"
                   >
                     <q-tooltip>书签</q-tooltip>
                   </q-icon>
@@ -129,84 +133,138 @@
             </template>
           </q-table>
 
-          <q-card flat class="q-mx-xs q-mt-xs">
-            <div class="page-heading q-px-md q-pt-xs">
-              <span class="vertical-middle">项目动态</span>
-            </div>
-            <div class="relative-position">
-              <template v-if="activityLoading">
-                <q-item v-for="ai in [1]" :key="ai" style="max-width: 700px;" class="q-pb-md">
-                  <q-item-section>
-                    <q-item-label caption>
-                      <q-skeleton type="text" animation="fade" style="width: 25%;"/>
-                    </q-item-label>
-                    <q-item-label>
-                      <q-skeleton type="text" animation="fade" />
-                    </q-item-label>
-                  </q-item-section>
-                </q-item>
-              </template>
-              <template v-else>
-                <div class="q-pa-md q-mt-xs text-grey" v-if="activities.length == 0" style="font-size: 12px;">
-                  没有什么动静
+          <div class="row">
+            <div class="col-12 col-md-6 q-my-xs">
+              <q-card flat class="q-mx-xs full-height">
+                <div class="page-heading q-px-md q-pt-xs">
+                  <span class="vertical-middle">项目动态</span>
                 </div>
-                <q-card flat v-if="activities.length > 0 || activityPageNo > 1" class="activity-card q-pb-md q-pl-md q-pt-sm q-pr-sm" >
-                  <q-scroll-area style="height: 305px;" :visible="true">
-                    <q-infinite-scroll @load="onLoadActivity" :offset="100">
-                      <template v-for="(activity, i) in activities" :key="i">
-                        <div class="activity-card-entry q-mb-md q-pr-sm">
-                          <div class="text-grey">
-                            <span class="vertical-middle" >
-                              {{getTimeAgo(activity.time)}}
-                            </span>
-                            <span class="q-ml-sm">
-                              <q-icon class="vertical-middle q-mr-xs" name="timer" />
-                              <span class="vertical-middle" >
-                                {{ dayjs.duration(activity.event.endTime - activity.event.beginTime).format('HH:mm:ss') }}
-                              </span>
-                            </span>
-                          </div>
-                          <div class="q-mt-xs row rounded-borders">
-                            <div class="col-12 col-sm-6">
-                              流水线：
-                              <router-link :to="`/project/${activity.event.projectId}/pipeline/${activity.event.pipelineId}`">
-                                {{activity.event.pipelineName}}
-                              </router-link>
+                <div class="relative-position">
+                  <template v-if="activityLoading">
+                    <q-item v-for="ai in [1]" :key="ai" class="q-pb-md">
+                      <q-item-section>
+                        <q-item-label caption>
+                          <q-skeleton type="text" animation="fade" style="width: 25%;"/>
+                        </q-item-label>
+                        <q-item-label>
+                          <q-skeleton type="text" animation="fade" />
+                        </q-item-label>
+                      </q-item-section>
+                    </q-item>
+                  </template>
+                  <template v-else>
+                    <div class="q-pa-md q-mt-xs text-grey" v-if="activities.length == 0" style="font-size: 12px;">
+                      没有什么动静
+                    </div>
+                    <q-card flat v-if="activities.length > 0 || activityPageNo > 1" class="activity-card q-pb-md q-pl-md q-pt-sm q-pr-sm" >
+                      <q-scroll-area style="height: 305px;" :visible="true">
+                        <q-infinite-scroll @load="onLoadActivity" :offset="100">
+                          <template v-for="(activity, i) in activities" :key="i">
+                            <div class="activity-card-entry q-mb-md q-pr-sm">
+                              <div class="text-grey">
+                                <span class="vertical-middle" >
+                                  {{getTimeAgo(activity.time)}}
+                                </span>
+                                <span class="q-ml-sm">
+                                  <q-icon class="vertical-middle q-mr-xs" name="timer" />
+                                  <span class="vertical-middle" >
+                                    {{ dayjs.duration(activity.event.endTime - activity.event.beginTime).format('HH:mm:ss') }}
+                                  </span>
+                                </span>
+                              </div>
+                              <div class="q-mt-xs row rounded-borders">
+                                <div class="col-12 col-sm-6">
+                                  流水线：
+                                  <router-link :to="`/project/${activity.event.projectId}/pipeline/${activity.event.pipelineId}`">
+                                    {{activity.event.pipelineName}}
+                                  </router-link>
+                                </div>
+                                <div class="col-12 col-sm-6">
+                                  执行：
+                                  <router-link class="q-mr-sm" :to="`/project/${activity.event.projectId}/pipeline/${activity.event.pipelineId}/run/${activity.event.pipelineRunId}`">
+                                    {{activity.event.pipelineRunName}}
+                                  </router-link>
+                                  <q-icon v-if="activity.event.status == 'PASSED'" name="check" color="green" size="xs" />
+                                  <q-icon v-else-if="activity.event.status == 'FAILED'" name="close" color="red" size="xs" />
+                                </div>
+                              </div>
                             </div>
-                            <div class="col-12 col-sm-6">
-                              执行：
-                              <router-link class="q-mr-sm" :to="`/project/${activity.event.projectId}/pipeline/${activity.event.pipelineId}/run/${activity.event.pipelineRunId}`">
-                                {{activity.event.pipelineRunName}}
-                              </router-link>
-                              <q-icon v-if="activity.event.status == 'PASSED'" name="check" color="green" size="xs" />
-                              <q-icon v-else-if="activity.event.status == 'FAILED'" name="close" color="red" size="xs" />
-                            </div>
-                          </div>
-                        </div>
-                      </template>
-                      <template v-slot:loading>
-                        <q-item v-for="ai in [1]" :key="ai" class="q-mt-sm" style="max-width: 700px; padding-left: 0;">
-                          <q-item-section>
-                            <q-item-label caption>
-                              <q-skeleton type="text" animation="fade" style="width: 25%;"/>
-                            </q-item-label>
-                            <q-item-label>
-                              <q-skeleton type="text" animation="fade" />
-                            </q-item-label>
-                          </q-item-section>
-                        </q-item>
-                      </template>
-                    </q-infinite-scroll>
-                  </q-scroll-area>
-                </q-card>
-              </template>
-              <!-- <q-inner-loading :showing="activityLoading">
-                <q-spinner-gears size="30px" color="primary" />
-              </q-inner-loading> -->
+                          </template>
+                          <template v-slot:loading>
+                            <q-item v-for="ai in [1]" :key="ai" class="q-mt-sm" style="max-width: 700px; padding-left: 0;">
+                              <q-item-section>
+                                <q-item-label caption>
+                                  <q-skeleton type="text" animation="fade" style="width: 25%;"/>
+                                </q-item-label>
+                                <q-item-label>
+                                  <q-skeleton type="text" animation="fade" />
+                                </q-item-label>
+                              </q-item-section>
+                            </q-item>
+                          </template>
+                        </q-infinite-scroll>
+                      </q-scroll-area>
+                    </q-card>
+                  </template>
+                </div>
+              </q-card>
             </div>
-          </q-card>
+            <div class="col-12 col-md-6 q-my-xs">
+              <q-card flat class="q-mx-xs full-height">
+                <div class="page-heading q-px-md q-pt-xs">
+                  <span class="vertical-middle">正在运行</span>
+                </div>
+                <div class="relative-position">
+                  <template v-if="runningLoading">
+                    <q-item v-for="ri in [1]" :key="ri" class="q-pb-md">
+                      <q-item-section>
+                        <q-item-label caption>
+                          <q-skeleton type="text" animation="fade" style="width: 25%;"/>
+                        </q-item-label>
+                        <q-item-label>
+                          <q-skeleton type="text" animation="fade" />
+                        </q-item-label>
+                      </q-item-section>
+                    </q-item>
+                  </template>
+                  <template v-else>
+                    <div class="q-pa-md q-mt-xs text-grey" v-if="runnings.length == 0" style="font-size: 12px;">
+                      没有运行实例
+                    </div>
+                    <q-card flat v-if="runnings.length > 0" class="running-card q-pb-md q-pl-md q-pt-sm q-pr-sm" >
+                      <q-scroll-area style="height: 305px;" :visible="true">
+                        <template v-for="(running, i) in runnings" :key="i">
+                          <div class="running-card-entry q-mb-md q-pr-sm">
+                            <div class="text-grey">
+                              <span class="vertical-middle" >
+                                {{getTimeAgo(running.beginTime)}}
+                              </span>
+                            </div>
+                            <div class="q-mt-xs row rounded-borders">
+                              <div class="col-12 col-sm-6">
+                                流水线：
+                                <router-link :to="`/project/${running.projectId}/pipeline/${running.pipelineId}`">
+                                {{running.pipelineName}}
+                                </router-link>
+                              </div>
+                              <div class="col-12 col-sm-6">
+                                执行：
+                                <router-link class="q-mr-sm" :to="`/project/${running.projectId}/pipeline/${running.pipelineId}/run/${running.pipelineRunId}`">
+                                  {{running.name}}
+                                </router-link>
+                              </div>
+                            </div>
+                          </div>
+                        </template>
+                      </q-scroll-area>
+                    </q-card>
+                  </template>
+                </div>
+              </q-card>
+            </div>
+          </div>
 
-          <q-card flat class="q-mx-xs q-mt-sm q-mb-xs">
+          <q-card flat class="q-mx-xs q-my-xs">
             <div class="page-heading q-px-md q-pt-xs">
               <span class="vertical-middle">监视状态</span>
             </div>
@@ -239,9 +297,6 @@
                   </div>
                 </div>
               </template>
-              <!-- <q-inner-loading :showing="activityLoading">
-                <q-spinner-gears size="30px" color="primary" />
-              </q-inner-loading> -->
             </div>
           </q-card>
         </div>
@@ -288,8 +343,15 @@
   }
 
   .activity-card{
-    // background: transparent !important;
+    &-entry{
+      max-width: 650px;
+      word-break: break-all;
+      border-bottom: 1px solid #eee;
+      padding-bottom: 8px;
+    }
+  }
 
+  .running-card{
     &-entry{
       max-width: 650px;
       word-break: break-all;
@@ -319,6 +381,7 @@ import { ref, inject, watch, onMounted, onUnmounted } from 'vue'
 import projectApi from '@/api/project.api'
 import activityApi from '@/api/activity.api'
 import monitorApi from '@/api/monitor.api'
+import pipelineApi from '@/api/pipeline.api'
 
 const columns = [
   { name: 'name', label: '名称', field: 'name' },
@@ -343,6 +406,9 @@ export default {
     const activityLoading = ref(false)
     const activityPageNo = ref(1)
     const activityPageSize = ref(5)
+
+    const runnings = ref([])
+    const runningLoading = ref(false)
 
     const monitors = ref([])
     const monitorLoading = ref(false)
@@ -417,6 +483,21 @@ export default {
       })
     }
 
+    const listRunning = (noLoading) => {
+      if(!noLoading){
+        runningLoading.value = true
+        runnings.value = []
+      }
+
+      pipelineApi.listRunRunning().then(resp => {
+        runnings.value = resp.data
+      }, resp => {
+        //qUtil.notifyError(resp.message || "查询正在运行发生错误")
+      }).finally(() => {
+        runningLoading.value = false
+      })
+    }
+
     const listMonitor = (noLoading) => {
       if(!noLoading){
         monitorLoading.value = true
@@ -439,6 +520,7 @@ export default {
         timer = setInterval(() => {
           searchProject(true)
           listLastActivity()
+          listRunning(true)
           listMonitor(true)
         }, delay)
       }
@@ -463,6 +545,7 @@ export default {
         activityLoading.value = false
       })
 
+      listRunning()
       listMonitor()
     })
 
@@ -485,6 +568,8 @@ export default {
       activityLoading,
       activityPageNo,
       activityPageSize,
+      runnings,
+      runningLoading,
       monitors,
       monitorLoading,
 
@@ -543,7 +628,7 @@ export default {
           cancel: true,
         }).onOk(data => {
           projectApi.delete({ projectId }).then(resp => {
-            searchProject()
+            searchProject(true)
           }, resp => {
             qUtil.notifyError(resp.message)
           })

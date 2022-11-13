@@ -12,7 +12,7 @@ function install(app, options){
       notifyError(text){
         $q.notify({
           color: 'red-5',
-          position: 'top-right',
+          position: 'top',
           textColor: 'white',
           icon: 'error',
           message: text
@@ -21,7 +21,7 @@ function install(app, options){
       notifySuccess(text){
         $q.notify({
           color: 'green-5',
-          position: 'top-right',
+          position: 'top',
           textColor: 'white',
           icon: 'done',
           message: text
