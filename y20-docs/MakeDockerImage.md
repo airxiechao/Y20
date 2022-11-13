@@ -217,8 +217,11 @@ mc admin user svcacct add myminio admin
 
 ## 14. 初始化 mysql、mongodb、minio
 创建mysql数据库 sql-create  
+
 初始化mysql数据 sql-initialize  
+
 创建mongodb数据库 mongodb-create  
+
 创建minio的bucket
 ```
 mc mb myminio/y20-artifact  
