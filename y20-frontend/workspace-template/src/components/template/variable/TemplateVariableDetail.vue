@@ -1,7 +1,7 @@
 <template>
   <div class="template-variable-detail">
     <div class="row q-pb-md">
-      <div class="col page-heading text-primary self-center">查看变量</div>
+      <div class="col page-heading self-center">查看变量</div>
     </div>
     <q-form class="q-gutter-md">
       <q-input
@@ -127,7 +127,7 @@
       </div>
       
       <div class="q-pt-sm">
-        <q-btn unelevated color="primary" label="返回" @click="onClickBack" />
+        <q-btn flat class="bg-grey-2" label="返回" @click="onClickBack" />
       </div>
     </q-form>
   </div>

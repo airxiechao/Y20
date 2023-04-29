@@ -9,7 +9,7 @@
         </div>
         <div class="q-pa-sm page-content">
           <q-card flat class="q-pa-md">
-            <div class="q-pb-md">绑定新手机</div>
+            <div class="q-pb-md page-heading">绑定新手机</div>
             <q-form
               @submit="onSubmit"
               @reset="onReset"
@@ -42,6 +42,7 @@
 
               <div>
                 <q-btn unelevated :label="$t('label-bind')" :loading="flagBindLoading" type="submit" color="primary"/>
+                <q-btn flat class="q-ml-sm bg-grey-2" :label="$t('label-cancel')" @click="onClickBack" />
               </div>
             </q-form>
           </q-card>
@@ -65,6 +66,7 @@
     "label-send-verification-code": "发送验证码",
     "label-bind": "绑定",
     "label-reset": "重置",
+    "label-cancel": "取消",
   },
 }
 </i18n>

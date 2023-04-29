@@ -1,6 +1,6 @@
-endpoint: http://127.0.0.1:9000
-accessKey: DSN9TS8U6YOK25P1PXVE
-secretKey: IbeoDc5nR9wiJmotBv2sCHvae7d+yoTdzzVAYVLq
+endpoint: 
+accessKey: 
+secretKey: 
 bucket: y20-artifact
 threadPoolCoreSize: 5
 threadPoolMaxSize: 10

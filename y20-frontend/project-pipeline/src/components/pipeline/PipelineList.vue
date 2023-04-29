@@ -90,14 +90,13 @@
             <template v-slot:no-data>
               <div class="full-width">
                 <div class="row q-mt-xs">
-                  <div class="col-12 col-md-6 col-lg-3">
-                    <q-card flat class="pipeline-card">
+                  <div class="col-12">
+                    <q-card flat class="pipeline-card text-center">
                       <q-item>
-                        <q-item-section avatar>
-                          <q-avatar icon="play_arrow" class="q-mr-sm text-grey" size="lg" style="background: #ECF2FF;" />
-                        </q-item-section>
-
                         <q-item-section>
+                          <q-item-label>
+                            <q-avatar icon="play_arrow" class="q-ma-sm text-grey" size="lg" style="background: #ECF2FF;" />
+                          </q-item-label>
                           <q-item-label>
                             <span class="vertical-middle text-grey">没有流水线？</span>
                             <q-btn class="q-mx-xs vertical-middle" color="primary" dense flat label="创建一条流水线" @click="onClickCreatePipeline" />
@@ -111,7 +110,7 @@
             </template>
             <template v-slot:loading>
               <div class="row">
-                <div class="q-pa-xs col-12 col-md-6 col-lg-3" v-for="i in [1,2,3,4]" :key="i">
+                <div class="q-pa-xs col-12 col-md-6 col-lg-3" v-for="i in [...Array(pagination.rowsPerPage).keys()]" :key="i">
                   <q-card flat class="pipeline-card">
                     <q-item>
                       <q-item-section>

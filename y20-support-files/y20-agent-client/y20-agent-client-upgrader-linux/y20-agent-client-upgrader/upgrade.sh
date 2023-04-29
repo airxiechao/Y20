@@ -6,7 +6,9 @@ cp -f -v y20-agent-client/*.jar ../../ >> ../../logs/upgrade.log
 cp -f -v y20-agent-client/*.sh ../../ >> ../../logs/upgrade.log
 cp -f -v y20-agent-client/lib/* ../../lib/ >> ../../logs/upgrade.log
 cp -f -v y20-agent-client/conf/cert/* ../../conf/cert/ >> ../../logs/upgrade.log
-cp -f -v y20-agent-client/conf/agent-client-jks.yml ../../conf/agent-client-jks.yml >> ../../logs/upgrade.log
+cp -f -v y20-agent-client/conf/agent-client-jks.yml ../../conf/ >> ../../logs/upgrade.log
+cp -f -v y20-agent-client/conf/*.xml ../../conf/ >> ../../logs/upgrade.log
+cp -f -v y20-agent-client/conf/*.properties ../../conf/ >> ../../logs/upgrade.log
 
 echo restart y20-agent-client... >> ../../logs/upgrade.log
 

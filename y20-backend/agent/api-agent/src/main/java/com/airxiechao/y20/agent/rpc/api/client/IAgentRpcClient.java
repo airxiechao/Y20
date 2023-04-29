@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface IAgentRpcClient {
     List<ChannelHandlerContext> getAllChannelHandlerContext();
-    boolean registerAgent(ChannelHandlerContext ctx) throws UnknownHostException;
+    boolean registerAgent(ChannelHandlerContext ctx) throws Exception;
     <T> T callMaster(ChannelHandlerContext ctx, Class<T> cls);
 }

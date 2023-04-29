@@ -9,7 +9,7 @@
         </div>
         <div class="q-pa-sm page-content">
           <q-card flat>
-            <div class="q-px-md q-pt-md">开启两步验证</div>
+            <div class="q-px-md q-pt-md page-heading">开启两步验证</div>
             <q-stepper
               v-model="step"
               :vertical="$q.screen.lt.sm"

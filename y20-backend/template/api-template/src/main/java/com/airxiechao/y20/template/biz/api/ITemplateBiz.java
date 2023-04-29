@@ -29,6 +29,7 @@ public interface ITemplateBiz {
     );
 
     boolean update(TemplateRecord templateRecord);
+    boolean updateNumApply(TemplateRecord templateRecord);
 
     boolean delete(Long templateId);
 }

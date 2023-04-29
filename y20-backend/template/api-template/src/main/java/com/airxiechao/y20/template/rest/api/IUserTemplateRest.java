@@ -26,6 +26,10 @@ public interface IUserTemplateRest {
     @Auth(scope = EnumAccessScope.USER)
     Response listMy(Object exc);
 
+    @Get("/user/template/recommend")
+    //@Auth(scope = EnumAccessScope.USER)
+    Response recommend(Object exc);
+
     @Post("/user/template/delete")
     @Auth(scope = EnumAccessScope.USER)
     Response delete(Object exc);

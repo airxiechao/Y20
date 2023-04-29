@@ -22,6 +22,8 @@ import com.airxiechao.y20.pipeline.pojo.PipelineStepTypeSelectOption;
 import com.airxiechao.y20.pipeline.run.step.annotation.StepRun;
 import com.airxiechao.y20.pipeline.run.step.annotation.StepTypeParam;
 import com.airxiechao.y20.pipeline.run.step.annotation.StepTypeSelectOption;
+import com.airxiechao.y20.scriptlib.db.api.IScriptLibDb;
+import com.airxiechao.y20.scriptlib.db.record.ScriptPieceRecord;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -47,6 +49,15 @@ public class InitializeDataSqlMain {
         PayPriceRecord pipelineRunQuotaPriceRecord = new PayPriceRecord(EnumPayPriceBillingPlan.PRO, 50, 2000, 9900);
         payDbManager.insert(agentQuotaPriceRecord);
         payDbManager.insert(pipelineRunQuotaPriceRecord);
+    }
+
+    public static void initScriptPiece(){
+        String scriptLibDbConfigFile = IScriptLibDb.class.getAnnotation(IDb.class).value();
+        DbManager scriptLibDbManager = new DbManager(new JavaResourceFs(), scriptLibDbConfigFile);
+        scriptLibDbManager.updateBySql("delete from " + ScriptPieceRecord.class.getAnnotation(Table.class).value() + " where user_id is null");
+
+//        ScriptPieceRecord scriptPieceRecord = new ScriptPieceRecord();
+//        scriptLibDbManager.insert(scriptPieceRecord);
     }
 
     public static void initStepType(){

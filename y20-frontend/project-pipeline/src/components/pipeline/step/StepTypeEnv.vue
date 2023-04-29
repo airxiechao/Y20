@@ -11,7 +11,7 @@
         
         <div class="q-pa-sm page-content">
           <q-card flat class="q-pa-md">
-            <div class="q-pb-md">
+            <div class="q-pb-md page-heading">
               <div>步骤类型 - 准备环境</div>
               <q-skeleton v-if="!pipelineName" type="text" animation="fade" style="max-width: 150px;" />
               <q-breadcrumbs v-else class="text-subtitle2 text-grey" active-color="grey">
@@ -59,8 +59,8 @@
               </q-card>
 
               <div class="q-mt-md">
-                <q-btn unelevated type="submit" class="q-mr-sm" color="primary" :label="isModeEdit ? '保存' : '添加'" />
-                <q-btn flat label="返回" @click="onClickBack" />
+                <q-btn unelevated type="submit" color="primary" :label="isModeEdit ? '保存' : '添加'" />
+                <q-btn flat class="q-ml-sm bg-grey-2" label="返回" @click="onClickBack" />
               </div>
             </q-form>
           </q-card>

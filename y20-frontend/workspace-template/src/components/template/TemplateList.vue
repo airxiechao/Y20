@@ -36,14 +36,13 @@
             <template v-slot:no-data>
               <div class="full-width">
                 <div class="row q-mt-xs">
-                  <div class="col-12 col-md-6 col-lg-3">
-                    <q-card flat class="template-card q-pa-xs">
+                  <div class="col-12">
+                    <q-card flat class="template-card q-pa-xs text-center">
                       <q-item>
-                        <q-item-section avatar>
-                          <q-avatar icon="extension" class="q-mr-sm text-grey" size="lg" style="background: #ECF2FF;" />
-                        </q-item-section>
-
                         <q-item-section>
+                          <q-item-label>
+                            <q-avatar icon="extension" class="q-ma-sm text-grey" size="lg" style="background: #ECF2FF;" />
+                          </q-item-label>
                           <q-item-label>
                             <span class="vertical-middle text-grey">没有应用</span>
                           </q-item-label>
@@ -56,7 +55,7 @@
             </template>
             <template v-slot:loading>
               <div class="row">
-                <div class="q-pa-xs col-12 col-md-6 col-lg-3" v-for="i in [1,2,3,4]" :key="i">
+                <div class="q-pa-xs col-12 col-md-6 col-lg-3" v-for="i in [...Array(pagination.rowsPerPage).keys()]" :key="i">
                   <q-card flat class="template-card">
                     <q-list class="q-pa-xs">
                       <q-item>
@@ -82,25 +81,27 @@
             </template>
             <template v-slot:item="props">
               <div class="q-pa-xs col-12 col-md-6 col-lg-3">
-                <q-card flat class="template-card full-height">
+                <q-card flat class="template-card full-height cursor-pointer" @click="onClickTemplate(props.row.templateId)">
                   <q-list class="q-pa-xs">
                     <q-item>
-                      <q-item-section avatar class="cursor-pointer" @click="onClickTemplate(props.row.templateId)">
+                      <q-item-section avatar>
                         <q-avatar icon="extension" class="q-mr-sm text-primary" size="lg" style="background: #ECF2FF;" />
                       </q-item-section>
                       <q-item-section>
-                        <q-item-label class="cursor-pointer" @click="onClickTemplate(props.row.templateId)">
+                        <q-item-label>
                           <span class="title">
                             {{props.row.name}}
                           </span>
                         </q-item-label>
                         <q-item-label lines="1" style="word-break: break-all;" caption>
-                          <span class="cursor-pointer" @click="onClickTemplateUsername(props.row.username)">{{props.row.username}}</span>
+                          <q-icon name="download" />
+                          <span class="q-mr-xs">{{props.row.numApply || 0}}</span>
+                          <q-icon name="person" />
+                          <span class="cursor-pointer" @click.stop="onClickTemplateUsername(props.row.username)">{{props.row.username}}</span>
                         </q-item-label>
-                        <!-- <q-tooltip anchor="top left" self="bottom left" :offset="[0, 8]">{{ props.row.name }}</q-tooltip> -->
                       </q-item-section>
                       <q-item-section side>
-                        <q-btn flat dense round icon="more_vert">
+                        <q-btn flat dense round icon="more_vert" @click.stop>
                           <q-menu>
                             <q-list style="min-width: 100px">
                               <q-item clickable v-close-popup @click="onClickApplyTemplate(props.row.templateId)">
@@ -122,6 +123,100 @@
               </div>
             </template>
           </q-table>
+
+          <div class="page-heading q-px-md q-mt-xs">
+            <span class="vertical-middle">热门推荐</span>
+          </div>
+          <div class="row q-px-sm q-pb-sm">
+            <div class="self-center">
+              <q-btn dense flat round icon="arrow_left" 
+                :disable="recommendPagination.page <= 1"
+                :color="recommendPagination.page <= 1 ? 'grey': ''"
+                @click="onClickRecommendPrevious" />
+            </div>
+            <div class="q-px-xs" style="flex: 1">
+              <q-table
+                grid
+                :hide-bottom="recommendLoading"
+                hide-pagination
+                :rows="recommends"
+                v-model:pagination="recommendPagination"
+                row-key="templateId"
+                :loading="recommendLoading"
+              >
+                <template v-slot:no-data>
+                  <div class="full-width">
+                    <div class="row">
+                      <div class="col-12">
+                        <q-card flat class="template-card q-pb-xs text-center">
+                          <q-item>
+                            <q-item-section>
+                              <q-item-label>
+                                <q-avatar icon="extension" class="q-my-sm text-grey" size="lg" style="background: #ECF2FF;" />
+                              </q-item-label>
+                              <q-item-label>
+                                <span class="vertical-middle text-grey">没有推荐</span>
+                              </q-item-label>
+                            </q-item-section>
+                          </q-item>
+                        </q-card>
+                      </div>
+                    </div>
+                  </div>
+                </template>
+                <template v-slot:loading>
+                  <div class="row">
+                    <div class="q-pa-xs col-12 col-md-6 col-lg-3" v-for="i in [1,2,3,4]" :key="i">
+                      <q-card flat class="template-card">
+                        <q-list class="q-pa-xs">
+                          <q-item>
+                            <q-item-section>
+                              <q-item-label>
+                                <q-skeleton type="text" animation="fade" />
+                              </q-item-label>
+                              <q-item-label caption>
+                                <q-skeleton type="text" animation="fade" />
+                              </q-item-label>
+                            </q-item-section>
+                          </q-item>
+                        </q-list>
+                      </q-card>
+                    </div>
+                  </div>
+                </template>
+                <template v-slot:item="props">
+                  <div class="q-pa-xs col-12 col-md-6 col-lg-3">
+                    <q-card flat class="template-card full-height cursor-pointer" @click="onClickTemplate(props.row.templateId)">
+                      <q-list class="q-pa-xs">
+                        <q-item>
+                          <q-item-section>
+                            <q-item-label>
+                              <span class="title">
+                                {{props.row.name}}
+                              </span>
+                            </q-item-label>
+                            <q-item-label lines="1" style="word-break: break-all;" caption>
+                              <q-icon name="download" />
+                              <span class="q-mr-xs">{{props.row.numApply || 0}}</span>
+                              <q-icon name="person" />
+                              <span>{{props.row.username}}</span>
+                            </q-item-label>
+                          </q-item-section>
+                        </q-item>
+                      </q-list>
+                    </q-card>
+                  </div>
+                </template>
+              </q-table>
+            </div>
+            <div class="self-center">
+              <q-btn dense flat round icon="arrow_right" 
+                :disable="recommendPagination.page * recommendPagination.rowsPerPage >= recommendPagination.rowsNumber"
+                :color="recommendPagination.page * recommendPagination.rowsPerPage >= recommendPagination.rowsNumber ? 'grey': ''"
+                @click="onClickRecommendNext" />
+            </div>
+          </div>
+
         </div>
       </div>
     </template>
@@ -148,16 +243,13 @@
 <style lang="scss">
 .template-list{
   .template-card{
-
     .q-item{
       padding: 8px;
     }
-
     .title{
       font-size: 16px;
       word-break: break-all;
     }
-    
   }
 }
 </style>
@@ -199,12 +291,22 @@ export default {
     const name = ref('')
     const templates = ref([])
     const loading = ref(false)
+    const recommends = ref([])
+    const recommendLoading = ref(false)
 
     const pagination = ref({
       sortBy: 'lastUpdateTime',
       descending: true,
       page: 1,
       rowsPerPage: 16,
+      rowsNumber: 0
+    })
+
+    const recommendPagination = ref({
+      sortBy: 'numApply',
+      descending: true,
+      page: 1,
+      rowsPerPage: 4,
       rowsNumber: 0
     })
 
@@ -240,6 +342,26 @@ export default {
       })
     }
 
+    const recommend = (noLoading) => {
+      if(!noLoading){
+        recommendLoading.value = true
+        recommends.value = []
+      }
+      templateApi.recommend({ 
+        orderField: recommendPagination.value.sortBy ? recommendPagination.value.sortBy : "", 
+        orderType: recommendPagination.value.descending ? 'DESC' : 'ASC', 
+        pageNo: recommendPagination.value.page, 
+        pageSize: recommendPagination.value.rowsPerPage
+      }).then(resp => {
+        recommends.value = resp.data.page
+        recommendPagination.value.rowsNumber = resp.data.total
+      }, resp => {
+        qUtil.notifyError('查询推荐发生错误')
+      }).finally(() => {
+        recommendLoading.value = false
+      })
+    }
+
     watch(onlyMy, () => {
       pagination.value.page = 1
       search()
@@ -247,6 +369,7 @@ export default {
 
     onMounted(() => {
       search()
+      recommend()
 
       store.commit('setTitle', { title: '应用' })
     })
@@ -263,6 +386,9 @@ export default {
       filter: ref(''),
       pagination,
       loading,
+      recommends,
+      recommendLoading,
+      recommendPagination,
 
       onClickSearch(){
         pagination.value.page = 1
@@ -275,6 +401,20 @@ export default {
 
         pagination.value = props.pagination
         search(true)
+      },
+
+      onClickRecommendPrevious(){
+        if(recommendPagination.value.page > 1){
+          recommendPagination.value.page -= 1
+          recommend()
+        }
+      },
+
+      onClickRecommendNext(){
+        if(recommendPagination.value.page * recommendPagination.value.rowsPerPage < recommendPagination.value.rowsNumber){
+          recommendPagination.value.page += 1
+          recommend()
+        }
       },
 
       onClickTemplate(templateId){

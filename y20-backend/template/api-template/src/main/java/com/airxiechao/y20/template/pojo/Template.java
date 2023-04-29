@@ -15,6 +15,7 @@ public class Template {
     private String description;
     private List<PipelineStep> steps = new ArrayList<>();
     private Map<String, PipelineVariable> variables = new LinkedHashMap<>();
+    private Integer numApply;
     private Date createTime;
     private Date lastUpdateTime;
 
@@ -27,6 +28,7 @@ public class Template {
         record.setDescription(description);
         record.setSteps(JSON.toJSONString(steps));
         record.setVariables(JSON.toJSONString(variables));
+        record.setNumApply(numApply);
         record.setCreateTime(createTime);
         record.setLastUpdateTime(lastUpdateTime);
 
@@ -87,6 +89,14 @@ public class Template {
 
     public void setVariables(Map<String, PipelineVariable> variables) {
         this.variables = variables;
+    }
+
+    public Integer getNumApply() {
+        return numApply;
+    }
+
+    public void setNumApply(Integer numApply) {
+        this.numApply = numApply;
     }
 
     public Date getCreateTime() {

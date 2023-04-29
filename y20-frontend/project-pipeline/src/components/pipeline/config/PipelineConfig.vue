@@ -1,6 +1,6 @@
 <template>
   <div class="pipeline-config">
-    <div class="page-heading text-primary q-pb-md">基础设置</div>
+    <div class="page-heading q-pb-md">基础设置</div>
     <q-form
       @submit="onSubmit"
       class="q-gutter-md"

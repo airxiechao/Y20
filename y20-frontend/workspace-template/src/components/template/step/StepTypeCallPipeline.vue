@@ -1,7 +1,7 @@
 <template>
   <div class="step-type-call-pipeline" style="position:relative;">
     <div>
-      <div class="row q-pb-md">
+      <div class="row q-pb-md page-heading">
         <div class="col">
           <div>步骤类型 - {{ stepTypeName }}</div>
           <q-breadcrumbs class="text-subtitle2 text-grey" active-color="grey">
@@ -51,7 +51,7 @@
         </q-list>
       
         <div class="q-pt-sm">
-          <q-btn unelevated color="primary" label="返回" @click="onClickBack" />
+          <q-btn flat class="bg-grey-2" label="返回" @click="onClickBack" />
         </div>
       </q-form>
     </div>

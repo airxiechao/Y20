@@ -1,6 +1,7 @@
 package com.airxiechao.y20.agent.rpc.reverse;
 
 import com.airxiechao.axcboot.communication.common.Response;
+import com.airxiechao.axcboot.communication.rpc.client.RpcClient;
 import com.airxiechao.axcboot.communication.rpc.server.RpcServer;
 import com.airxiechao.axcboot.core.rpc.RpcReg;
 import com.airxiechao.axcboot.core.rpc.RpcServerCaller;
@@ -65,7 +66,7 @@ public class AgentRpcCallee extends RpcServer implements IAgentRpcClient {
     }
 
     @Override
-    public boolean registerAgent(ChannelHandlerContext ctx) throws UnknownHostException {
+    public boolean registerAgent(ChannelHandlerContext ctx) throws Exception {
         InetAddress localHost = InetAddress.getLocalHost();
         String ip = IpUtil.getIp(true);
         String version = GitUtil.getGitVersion();

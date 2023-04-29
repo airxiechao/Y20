@@ -1,9 +1,9 @@
 <template>
   <div class="pipeline-file-list">
     <div class="row q-pb-md">
-      <div class="col page-heading text-primary self-center">流水线文件</div>
+      <div class="col page-heading self-center">流水线文件</div>
       <div class="self-center">
-        <q-btn flat class="bg-blue-1" icon="upload" color="primary" label="上传文件" @click="onClickUpload" />
+        <q-btn flat icon="upload" label="上传文件" @click="onClickUpload" />
       </div>
     </div>
     <q-card flat>

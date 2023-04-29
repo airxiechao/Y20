@@ -1,7 +1,7 @@
 <template>
   <div class="pipeline-file-upload">
     <div class="q-pb-md">
-      <div class="page-heading text-primary">上传文件</div>
+      <div class="page-heading">上传文件</div>
     </div>
     <div class="q-gutter-md">
       <div>
@@ -18,9 +18,10 @@
           :headers="uploadPipelineFileHeaders"
           :formFields="uploadPipelineFileFields"
           fieldName="file"
+          auto-upload
         />
         <div class="q-mt-md"> 
-          <q-btn unelevated label="返回" color="primary" :to="`/project/${projectId}/pipeline/${pipelineId}/file`" />
+          <q-btn flat class="bg-grey-2" label="返回" :to="`/project/${projectId}/pipeline/${pipelineId}/file`" />
         </div>
       </div>
     </div>

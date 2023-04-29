@@ -1,6 +1,6 @@
 <template>
   <div class="template-file-list">
-    <div class="page-heading text-primary q-pb-md">流水线文件</div>
+    <div class="page-heading q-pb-md">流水线文件</div>
     <q-card flat>
       <div>
         <FsViewer

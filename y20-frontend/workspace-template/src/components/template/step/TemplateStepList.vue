@@ -1,6 +1,6 @@
 <template>
   <div class="template-step-list">
-    <div class="page-heading text-primary q-pb-md">步骤列表</div>
+    <div class="page-heading q-pb-md">步骤列表</div>
     <q-card flat>
       <q-list separator>
         <template v-if="!steps || steps.length == 0">

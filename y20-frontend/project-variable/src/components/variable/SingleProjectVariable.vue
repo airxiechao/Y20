@@ -10,7 +10,7 @@
 
         <div class="q-pa-sm page-content">
           <q-card flat class="q-pa-md">
-            <div class="q-pb-md">
+            <div class="q-pb-md page-heading">
               <template v-if="isEdit">编辑变量</template>
               <template v-else>创建变量</template>
             </div>
@@ -59,7 +59,7 @@
               <div>
                 <q-btn v-if="isEdit" unelevated label="保存" type="submit" color="primary"/>
                 <q-btn v-else unelevated label="创建" type="submit" color="primary"/>
-                <q-btn class="q-ml-sm" flat label="取消" @click="onClickBack" /> 
+                <q-btn flat class="q-ml-sm bg-grey-2" label="取消" @click="onClickBack" /> 
               </div>
             </q-form>
           </q-card>

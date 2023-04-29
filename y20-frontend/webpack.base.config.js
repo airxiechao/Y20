@@ -8,6 +8,8 @@ const { VueLoaderPlugin } = require('vue-loader')
 const { GitRevisionPlugin } = require('git-revision-webpack-plugin')
 const gitRevisionPlugin = new GitRevisionPlugin()
 
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+
 module.exports = ({ entry, publicPath, dist, port = 8080, argv, env }) => {
   const isDev = argv.mode === 'development'
   const envDist = env && env.dist ? env.dist : 'dist'
@@ -87,6 +89,10 @@ module.exports = ({ entry, publicPath, dist, port = 8080, argv, env }) => {
         BRANCH: JSON.stringify(gitRevisionPlugin.branch()),
         LASTCOMMITDATETIME: JSON.stringify(gitRevisionPlugin.lastcommitdatetime()),
       }),
+      new BundleAnalyzerPlugin({
+        analyzerMode: "disabled",
+        generateStatsFile: true
+      })
     ],
     optimization: {
       chunkIds: 'named',

@@ -40,7 +40,7 @@
 
   .header {
     background: #fff;
-    box-shadow: 0 1px 4px #ddd;
+    border-bottom: 1px solid #ddd;
 
     &.wide {
       

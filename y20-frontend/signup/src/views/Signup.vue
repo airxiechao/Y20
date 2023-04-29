@@ -10,8 +10,6 @@
             </a>
           </div>
 
-          <div class="text-center text-h6"><router-link class="text-dark" to="/signup" style="text-decoration: none;">新用户注册</router-link></div>          
-          
           <router-view />
 
         </div>

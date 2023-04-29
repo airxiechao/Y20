@@ -59,7 +59,7 @@
         </div>
         <div class="q-pa-sm page-content">
           <q-card flat class="q-pa-md bg-white">
-            <div class="q-pb-md">购买配额</div>
+            <div class="q-pb-md page-heading">购买配额</div>
             <div>
               <div class="row q-col-gutter-md">
                 <template v-if="priceLoading">
@@ -149,6 +149,7 @@
 
                 <div>
                   <q-btn unelevated label="支付" type="submit" color="primary" :loading="orderLoading" />
+                  <q-btn flat class="q-ml-sm bg-grey-2" label="取消" @click="onClickBack" />
                 </div>
               </q-form>
             </div>
@@ -333,6 +334,10 @@ export default {
 
       discountText(discount){
         return `${discount.numMin}个月${(discount.rate*10).toFixed(1)}折`
+      },
+
+      onClickBack(){
+        router.back();
       },
 
       onClickBillingPlan(name, price, discounts){

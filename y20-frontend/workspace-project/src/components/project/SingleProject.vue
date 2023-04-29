@@ -4,13 +4,13 @@
       <div class="page-center">
         <div class="page-toolbar">
           <q-toolbar>
-            <q-btn unelevated rounded flat color="primary" icon="keyboard_backspace" label="项目" to="/workspace/project" />
+            <q-btn unelevated rounded flat color="primary" icon="keyboard_backspace" label="返回" @click="onClickBack" />
           </q-toolbar>
         </div>
         <div class="q-pa-sm page-content">
           <q-card flat class="q-pa-md">
-            <div v-if="projectId" class="q-pb-md">修改项目</div>
-            <div v-else class="q-pb-md">创建新项目</div>
+            <div v-if="projectId" class="q-pb-md page-heading">修改项目</div>
+            <div v-else class="q-pb-md page-heading">创建新项目</div>
             <q-form
               @submit="onSubmit"
               class="q-gutter-md"
@@ -30,6 +30,7 @@
               <div>
                 <q-btn unelevated v-if="projectId" :label="$t('label-save')" type="submit" color="primary"/>
                 <q-btn unelevated v-else :label="$t('label-create')" type="submit" color="primary"/>
+                <q-btn flat class="q-ml-sm bg-grey-2" :label="$t('label-cancel')" @click="onClickBack" />
               </div>
             </q-form>
           </q-card>
@@ -56,6 +57,7 @@
     "error-name-too-long": "名称长度不超过20个字符",
     "label-save": "保存",
     "label-create": "创建",
+    "label-cancel": "取消",
   }
 }
 </i18n>
@@ -93,6 +95,10 @@ export default {
       name,
       projectId,
 
+      onClickBack(){
+        router.back()
+      },
+
       onSubmit(){
         if(projectId){
           // edit
@@ -100,7 +106,7 @@ export default {
             projectId,
             name: name.value
           }).then(resp => {
-            router.push('/workspace/project/list')
+            router.back()
           }, resp => {
             qUtil.notifyError(resp.message)
           })
@@ -110,7 +116,7 @@ export default {
             name: name.value
           }).then(resp => {
             const projectId = resp.data
-            router.push(`/project/${projectId}/pipeline`)
+            router.back()
           }, resp => {
             qUtil.notifyError(resp.message)
           })

@@ -11,7 +11,7 @@
 
         <div class="q-pa-sm page-content" style="position:relative;">
           <q-card flat class="q-pa-md">
-            <div class="q-pb-md">
+            <div class="q-pb-md page-heading">
               <div>
                 步骤类型 <span v-if="stepTypeName">- {{ stepTypeName }}</span>
               </div>
@@ -72,16 +72,26 @@
                     v-model="step.params[name]" 
                     :rules="[ val => (metaRequired(name) ? !!val : true) || meta.hint ]"
                   >
-                    <CodeEditor v-model="step.params[name]"/>
+                    <div class="full-width">
+                      <div class="row ">
+                        <div :class="{
+                          'col-12': true, 
+                          'col-sm-6': flagOpenScriptLib,
+                        }">
+                          <CodeEditor ref="codeEditor" v-model="step.params[name]" />
+                        </div>
+                        <div v-if="flagOpenScriptLib" :class="{
+                          'col-12': true, 
+                          'col-sm-6': flagOpenScriptLib,
+                        }">
+                          <ScriptLib @script="(script) => onClickScript(name, script)" />
+                        </div>
+                      </div>
+                      <div class="q-pt-xs">
+                        <q-toggle class="text-grey-7" size="xs" v-model="flagOpenScriptLib" label="打开脚本库"/>
+                      </div>
+                    </div>
                   </q-field>
-                  <!-- <q-input v-else-if="meta.type == 'TEXT'" 
-                    outlined
-                    type="textarea" 
-                    bg-color="white"
-                    :label="`${meta.displayName} ${metaRequired(name)?'*':''}`" 
-                    :hint="`${meta.hint}`"
-                    v-model="step.params[name]" 
-                    :rules="[ val => (metaRequired(name) ? !!val : true) || meta.hint ]" /> -->
                   <q-select v-else-if="meta.type == 'SELECT'"
                     outlined
                     emit-value 
@@ -139,8 +149,8 @@
               </q-list>
               
               <div class="q-pt-sm">
-                <q-btn unelevated type="submit" class="q-mr-sm" color="primary" :label="isModeEdit ? '保存' : '添加'" />
-                <q-btn flat label="返回" @click="onClickBack" />
+                <q-btn unelevated type="submit" color="primary" :label="isModeEdit ? '保存' : '添加'" />
+                <q-btn flat class="q-ml-sm bg-grey-2" label="返回" @click="onClickBack" />
               </div>
             </q-form>
           
@@ -160,7 +170,10 @@
 
 <style lang="scss">
 .step-type-normal{
-  
+  .script-lib {
+    height: 302px;
+    overflow: auto;
+  }
 }
 </style>
 
@@ -180,6 +193,7 @@ import { LayoutTwoColumn } from 'common'
 import { ref, inject, computed, onMounted } from 'vue'
 import PipelineStepFileUpload from '@/components/pipeline/file/mixin/PipelineStepFileUpload.mixin'
 import CodeEditor from '@/components/pipeline/codeeditor/CodeEditor'
+import ScriptLib from '@/components/pipeline/scriptlib/ScriptLib'
 
 import pipelineApi from '@/api/pipeline.api'
 
@@ -188,6 +202,7 @@ export default {
   components: {
     LayoutTwoColumn,
     CodeEditor,
+    ScriptLib,
   },
   setup(props){
     const qUtil = inject('quasarUtil')(inject('useQuasar')())
@@ -196,7 +211,9 @@ export default {
     const pipelineName = inject('pipelineName')
     const { projectId, pipelineId, stepPosition } = route.params
     const isModeEdit = computed(() => !route.params.stepType)
+    const codeEditor = ref(null)
     const loading = ref(true)
+    const flagOpenScriptLib = ref(false)
     const stepTypeName = ref(null)
     const stepType = ref(null)
     const stepTypeParamMetas = ref({})
@@ -262,7 +279,9 @@ export default {
 
     return {
       loading,
+      flagOpenScriptLib,
       isModeEdit,
+      codeEditor,
       pipelineName,
       stepPosition,
       stepTypeName,
@@ -283,6 +302,10 @@ export default {
       onUploaded({files, xhr}, name){
         let resp = JSON.parse(xhr.response)
         step.value.params[name] = resp.data
+      },
+
+      onClickScript(name, script){
+        codeEditor.value.insert(script)
       },
 
       onClickBack(){

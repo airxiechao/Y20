@@ -9,7 +9,7 @@
         </div>
         <div class="q-pa-sm page-content">
           <q-card flat class="q-pa-md">
-            <div class="q-pb-md">上传文件</div>
+            <div class="q-pb-md page-heading">上传文件</div>
             <div class="q-gutter-md">
               <div>
                 <q-input outlined v-model="dir" 
@@ -25,7 +25,12 @@
                   :headers="uploadProjectFileHeaders"
                   :formFields="uploadProjectFileFields"
                   fieldName="file"
+                  auto-upload
                 />
+              </div>
+              
+              <div>
+                <q-btn flat class="bg-grey-2" label="返回" type="submit" @click="onClickBack" />
               </div>
             </div>
           </q-card>
@@ -76,6 +81,9 @@ export default {
       projectId,
       projectName,
 
+      onClickBack(){
+        router.back()
+      },
     }
   }
 };

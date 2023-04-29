@@ -16,8 +16,8 @@
                 <property name="poolPingConnectionsNotUsedFor" value="600000"/>
 
                 <property name="url" value="jdbc:mysql://127.0.0.1:3306/y20_auth?useUnicode=true&amp;characterEncoding=utf8&amp;serverTimezone=GMT%2B8"/>
-                <property name="username" value="admin"/>
-                <property name="password" value="123456"/>
+                <property name="username" value=""/>
+                <property name="password" value=""/>
             </dataSource>
         </environment>
     </environments>

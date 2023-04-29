@@ -34,14 +34,13 @@
             <template v-slot:no-data>
               <div class="full-width">
                 <div class="row q-mt-xs">
-                  <div class="col-12 col-md-6 col-lg-3">
-                    <q-card flat class="monitor-card q-pa-xs">
+                  <div class="col-12">
+                    <q-card flat class="monitor-card q-pa-xs text-center">
                       <q-item>
-                        <q-item-section avatar>
-                          <q-avatar icon="monitor" class="q-mr-sm text-grey" size="lg" style="background: #ECF2FF;" />
-                        </q-item-section>
-
                         <q-item-section>
+                          <q-item-label>
+                            <q-avatar icon="monitor" class="q-ma-sm text-grey" size="lg" style="background: #ECF2FF;" />
+                          </q-item-label>
                           <q-item-label>
                             <span class="vertical-middle text-grey">没有监视？</span>
                             <q-btn class="q-mx-xs vertical-middle" color="primary" dense flat label="创建一个监视" @click="onClickCreateMonitor" />
@@ -55,7 +54,7 @@
             </template>
             <template v-slot:loading>
               <div class="row">
-                <div class="q-pa-xs col-12 col-md-6 col-lg-3" v-for="i in [1,2,3,4]" :key="i">
+                <div class="q-pa-xs col-12 col-md-6 col-lg-3" v-for="i in [...Array(pagination.rowsPerPage).keys()]" :key="i">
                   <q-card flat class="monitor-card q-pa-xs">
                     <q-item>
                       <q-item-section avatar>
@@ -81,17 +80,19 @@
                   <q-card-section horizontal class="row">
                     <q-list class="col">
                       <q-item>
-                        <q-item-section avatar class="cursor-pointer" @click="onClickEditMonitor(props.row.monitorId)">
-                          <q-icon v-if="props.row.status == 'OK'" color="green" size="sm" name="radio_button_unchecked" class="q-mr-sm"/>
-                          <q-icon v-else-if="props.row.status == 'ERROR'" color="red" size="sm" name="priority_high" class="q-mr-sm"/>
-                          <q-icon v-else color="grey" size="sm" name="priority_high" class="q-mr-sm"/>
+                        <q-item-section avatar class="cursor-pointer">
+                          <q-avatar icon="monitor" class="q-mr-sm text-primary" size="lg" style="background: #ECF2FF;" />
                         </q-item-section>
                         <q-item-section class="title cursor-pointer" @click="onClickEditMonitor(props.row.monitorId)">
                           <q-item-label>
                             <span>{{ props.row.name }}</span>
                           </q-item-label>
                           <q-item-label caption>
-                            <span class="vertical-middle q-pr-xs">{{ props.row.type }}</span>
+                            <q-badge v-if="props.row.status == 'OK'" color="green" class="q-mr-xs">正常</q-badge >
+                            <q-badge v-else-if="props.row.status == 'ERROR'" color="red" class="q-mr-xs">异常</q-badge >
+                            <q-badge v-else color="grey" class="q-mr-xs">未知</q-badge >
+
+                            <span class="vertical-middle q-mr-xs">{{ props.row.type }}</span>
                             <template v-if="props.row.lastUpdateTime">
                               <q-icon class="vertical-middle" name="update" />
                               <span class="vertical-middle" >{{ getTimeAgo(props.row.lastUpdateTime) }}</span>

@@ -31,9 +31,9 @@
           </template>
           <template v-else>
             <q-card flat class="template-detail-card">
-              <div class="q-pa-md">
+              <div class="q-pa-md page-heading">
                 <template v-if="template.name">
-                  <div  class="text-bold">
+                  <div>
                     {{template.username}}/<a :href="`/nav/workspace/template/${templateId}`">{{template.name}}</a>
                   </div>
                   <q-breadcrumbs class="text-subtitle2 text-grey" active-color="grey">

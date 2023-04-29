@@ -9,7 +9,7 @@
         </div>
         <div class="q-pa-sm page-content">
           <q-card flat class="q-pa-md">
-            <div class="q-pb-md">创建新流水线</div>
+            <div class="q-pb-md page-heading">创建新流水线</div>
             <q-form
               @submit="onSubmit"
               class="q-gutter-md"
@@ -30,6 +30,7 @@
 
               <div>
                 <q-btn unelevated :label="$t('label-create')" :loading="flagCreateLoading" type="submit" color="primary"/>
+                <q-btn flat class="q-ml-sm bg-grey-2" :label="$t('label-cancel')" @click="onClickBack" />
               </div>
             </q-form>
           </q-card>
@@ -55,6 +56,7 @@
     "error-no-name": "请输入流水线名称",
     "error-name-too-long": "名称长度不超过100个字符",
     "label-create": "创建",
+    "label-cancel": "取消",
     "label-one-run": "同时只允许启动一个运行实例",
   }
 }

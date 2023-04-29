@@ -1,4 +1,4 @@
 name: auth
 port: 8001
-accessTokenEncryptKey: 123456
+accessTokenEncryptKey: y20-auth
 numMinuteOfUserAccessToken: 120

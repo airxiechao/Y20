@@ -9,7 +9,7 @@
                 <q-icon name="search" class="cursor-pointer" @click="onClickSearch"/>
               </template>
               <template v-slot:after>
-                <q-btn unelevated icon="add" color="primary" label="接入新节点" to="/workspace/agent/join" />
+                <q-btn v-if="!teamId" unelevated icon="add" color="primary" label="接入新节点" to="/workspace/agent/join" />
               </template>
             </q-input>
           </q-toolbar>
@@ -47,14 +47,13 @@
             <template v-slot:no-data>
               <div class="full-width">
                 <div class="row q-mt-xs">
-                  <div class="col-12 col-md-6 col-lg-3">
-                    <q-card flat class="agent-card q-pa-xs">
+                  <div class="col-12">
+                    <q-card flat class="agent-card q-pa-xs text-center">
                       <q-item>
-                        <q-item-section avatar>
-                          <q-avatar icon="computer" class="q-mr-sm text-grey" size="lg" style="background: #ECF2FF;" />
-                        </q-item-section>
-
                         <q-item-section>
+                          <q-item-label>
+                            <q-avatar icon="computer" class="q-ma-sm text-grey" size="lg" style="background: #ECF2FF;" />
+                          </q-item-label>
                           <q-item-label>
                             <span class="vertical-middle text-grey">没有节点？</span>
                             <q-btn class="q-mx-xs vertical-middle" color="primary" dense flat label="接入一个节点" to="/workspace/agent/join" />
@@ -68,11 +67,11 @@
             </template>
             <template v-slot:loading>
               <div class="row">
-                <div class="q-pa-xs col-12 col-md-6 col-lg-3" v-for="i in [1,2,3,4]" :key="i">
+                <div class="q-pa-xs col-12 col-md-6 col-lg-3" v-for="i in [...Array(pagination.rowsPerPage).keys()]" :key="i">
                   <q-card flat class="agent-card q-pa-xs">
                     <q-item>
                       <q-item-section avatar>
-                        <q-skeleton type="QAvatar" animation="fade" size="25px" />
+                        <q-skeleton type="QAvatar" animation="fade" size="38px" />
                       </q-item-section>
 
                       <q-item-section>
@@ -82,7 +81,13 @@
                       </q-item-section>
                     </q-item>
 
-                    <template v-if="flagDetail">
+                    <template v-if="!flagDetail">
+                      <q-card-section v-for="j in [1,2,3]" :key="j">
+                        <q-skeleton type="text" width="50%" class="text-subtitle2" animation="fade" />
+                        <q-skeleton type="text" class="text-subtitle2" animation="fade" />
+                      </q-card-section>
+                    </template>
+                    <template v-else>
                       <q-card-section v-for="j in [1,2,3,4,5]" :key="j">
                         <q-skeleton type="text" width="50%" class="text-subtitle2" animation="fade" />
                         <q-skeleton type="text" class="text-subtitle2" animation="fade" />
@@ -104,7 +109,9 @@
                       <q-item-section avatar>
                         <q-avatar icon="computer" class="q-mr-sm text-primary" size="lg" style="background: #ECF2FF;" />
                       </q-item-section>
-                      <q-item-section class="cursor-pointer" @click="onClickConfigAgent(props.row.agentId)">
+                      <q-item-section :class="{
+                          'cursor-pointer': !teamId
+                        }" @click="!teamId && onClickConfigAgent(props.row.agentId, props.row.active)">
                         <q-item-label lines="1">
                           <span class="title vertical-middle">
                             {{props.row.agentId}}
@@ -117,19 +124,19 @@
                             </span>
                           </template>
                         </q-item-label>
-                        <q-item-label v-if="!flagDetail" class="q-gutter-x-xs" lines="1">
+                        <!-- <q-item-label v-if="!flagDetail" class="q-gutter-x-xs" lines="1">
                           <q-badge v-if="props.row.active" color="green">在线</q-badge>
                           <q-badge v-else color="red">离线</q-badge>
                           <q-badge v-if="latestVersion && props.row.version !== latestVersion" color="warning">可升级</q-badge>
                           <q-badge v-if="props.row.accessTokenEndTime && props.row.accessTokenEndTime <= new Date().getTime()" class="vertical-middle q-ml-xs" color="warning">令牌过期</q-badge>
                           <q-badge v-else-if="props.row.accessTokenEndTime && props.row.accessTokenEndTime - new Date().getTime() < 30*24*60*60*1000" class="vertical-middle q-ml-xs" color="warning">即将过期</q-badge>
-                        </q-item-label>
+                        </q-item-label> -->
                       </q-item-section>
                       <q-item-section side>
                         <q-btn flat dense round icon="more_vert">
                           <q-menu>
                             <q-list style="min-width: 100px">
-                              <q-item clickable v-close-popup @click="onClickConfigAgent(props.row.agentId)">
+                              <q-item v-if="!teamId" clickable v-close-popup @click="onClickConfigAgent(props.row.agentId, props.row.active)">
                                 <q-item-section>配置</q-item-section>
                               </q-item>
                               <q-separator />
@@ -143,7 +150,7 @@
                               <q-item clickable v-close-popup @click="onClickCleanAgent(props.row.agentId)">
                                 <q-item-section>清理</q-item-section>
                               </q-item>
-                              <q-item clickable v-close-popup @click="onClickUninstallAgent(props.row.agentId)">
+                              <q-item v-if="!teamId" clickable v-close-popup @click="onClickUninstallAgent(props.row.agentId)">
                                 <q-item-section class="text-negative">卸载</q-item-section>
                               </q-item>
                             </q-list>
@@ -151,7 +158,7 @@
                         </q-btn>
                       </q-item-section>
                     </q-item>
-                    <q-item v-if="flagDetail">
+                    <q-item>
                       <q-item-section>
                         <q-item-label caption>
                           <span>状态</span>
@@ -170,7 +177,7 @@
                         <q-item-label>{{props.row.ip}}</q-item-label>
                       </q-item-section>
                     </q-item>
-                    <q-item v-if="flagDetail">
+                    <q-item>
                       <q-item-section>
                         <q-item-label caption>
                           <span>主机名</span>
@@ -186,7 +193,7 @@
                         <q-item-label>{{props.row.os}}</q-item-label>
                       </q-item-section>
                     </q-item>
-                    <q-item v-if="flagDetail">
+                    <q-item>
                       <q-item-section>
                         <q-item-label caption>
                           <span>版本</span>
@@ -205,7 +212,7 @@
                         <q-item-label>{{props.row.accessTokenName || '-'}}</q-item-label>
                       </q-item-section>
                     </q-item>
-                    <q-item v-if="flagDetail">
+                    <q-item>
                       <q-item-section>
                         <q-item-label caption>
                           <span>令牌过期时间</span>
@@ -280,7 +287,7 @@ import duration from 'dayjs/plugin/duration'
 dayjs.extend(duration)
 
 import { LayoutTwoColumn } from 'common'
-import { ref, inject, watch, onMounted, onUnmounted } from 'vue'
+import { ref, inject, watch, onMounted, onUnmounted, computed } from 'vue'
 import agentApi from '@/api/agent.api'
 
 const columns = [
@@ -310,7 +317,9 @@ export default {
     const loadingVersion = ref(false)
     const latestVersion = ref(null)
     const releaseTime = ref(null)
-    const flagDetail = ref(true)
+    const flagDetail = ref(false)
+
+    const teamId = computed(() => store.state.workspace.teamId || '')
 
     const pagination = ref({
       sortBy: 'agentId',
@@ -335,9 +344,8 @@ export default {
         loading.value = true
         agents.value = []
       }
-
-      let fList = flagDetail.value ? agentApi.listDetail : agentApi.list
-      fList({ 
+      
+      agentApi.listDetail({ 
         agentId: agentId.value,
         orderField: pagination.value.sortBy ? pagination.value.sortBy : "", 
         orderType: pagination.value.descending ? 'DESC' : 'ASC', 
@@ -396,6 +404,7 @@ export default {
       latestVersion,
       releaseTime,
       flagDetail,
+      teamId,
 
       onClickSearch(){
         pagination.value.page = 1
@@ -407,7 +416,7 @@ export default {
         const filter = props.filter
 
         pagination.value = props.pagination
-        search(true)
+        search()
       },
 
       onClickRestartAgent(agentId){
@@ -425,7 +434,12 @@ export default {
         })
       },
 
-      onClickConfigAgent(agentId){
+      onClickConfigAgent(agentId, active){
+        if(!active){
+          qUtil.notifyError('节点已离线')
+          return
+        }
+
         router.push(`/workspace/agent/${agentId}/config`)
       },
 

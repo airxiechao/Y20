@@ -1,6 +1,6 @@
 <template>
   <div class="template-variable-list">
-    <div class="page-heading text-primary q-pb-md">流水线变量</div>
+    <div class="page-heading q-pb-md">流水线变量</div>
     <q-table
       flat
       :rows="rows"

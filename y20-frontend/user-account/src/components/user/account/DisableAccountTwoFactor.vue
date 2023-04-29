@@ -9,7 +9,7 @@
         </div>
         <div class="q-pa-sm page-content">
           <q-card flat class="q-pa-md">
-            <div class="q-pb-md">关闭两步验证</div>
+            <div class="q-pb-md page-heading">关闭两步验证</div>
               <q-form
                 autofocus
                 @submit="onSubmitDisable"

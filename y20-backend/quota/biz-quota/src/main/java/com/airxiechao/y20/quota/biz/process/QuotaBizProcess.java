@@ -2,6 +2,7 @@ package com.airxiechao.y20.quota.biz.process;
 
 import com.airxiechao.axcboot.communication.common.Response;
 import com.airxiechao.axcboot.config.factory.ConfigFactory;
+import com.airxiechao.axcboot.storage.db.sql.model.OrderType;
 import com.airxiechao.y20.agent.rest.api.IServiceAgentRest;
 import com.airxiechao.y20.agent.rest.param.CountAgentParam;
 import com.airxiechao.y20.common.core.db.Db;
@@ -70,22 +71,35 @@ public class QuotaBizProcess implements IQuotaBiz {
         int numFreeAgent = quotaConfig.getFreeQuotaNumAgent();
         int numFreePipelineRun = quotaConfig.getFreeQuotaNumPipelineRun();
 
-        Date endTime = new Date();
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(endTime);
-        cal.add(Calendar.DAY_OF_YEAR, -numFreeDays);
-        Date freeBeginTime = cal.getTime();
-
         if(null == aggregatedRecord){
+            Date endTime = new Date();
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(endTime);
+            cal.add(Calendar.DAY_OF_YEAR, -numFreeDays);
+            Date beginTime = cal.getTime();
+
+            List<QuotaPieceRecord> last = quotaDb.listQuota(userId, "endTime", OrderType.DESC, 1, 1);
+            if(last.size() > 0){
+                Date lastQuotaTime = last.get(0).getEndTime();
+                if(lastQuotaTime.after(beginTime)){
+                    beginTime = lastQuotaTime;
+                    cal.setTime(beginTime);
+                    cal.add(Calendar.DAY_OF_YEAR, numFreeDays);
+                    endTime = cal.getTime();
+                }
+            }
+
             // free quota
             quota = new Quota(
                     numFreeAgent,
                     numFreePipelineRun,
-                    freeBeginTime,
+                    beginTime,
                     endTime
             );
         }else{
             Date beginTime = aggregatedRecord.getBeginTime();
+            Date endTime = new Date();
+
             quota = new Quota(
                     aggregatedRecord.getMaxAgent(),
                     aggregatedRecord.getMaxPipelineRun(),

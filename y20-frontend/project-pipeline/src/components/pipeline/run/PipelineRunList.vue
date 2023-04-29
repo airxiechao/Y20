@@ -1,6 +1,6 @@
 <template>
   <div class="pipeline-run-list">
-    <div class="page-heading text-primary q-pb-md">执行历史</div>
+    <div class="page-heading q-pb-md">执行历史</div>
     <q-table
       flat
       :rows="pipelineRuns"
@@ -24,7 +24,7 @@
             <span class="text-orange">{{props.row.status}}</span>
           </tempalte>
           <tempalte v-else-if="props.row.status == 'PASSED'">
-            <q-icon name="check_circle" color="green" class="q-mr-xs" size="xs" />
+            <q-icon name="check" color="green" class="q-mr-xs" size="xs" />
             <span class="text-green">{{props.row.status}}</span>
           </tempalte>
           <tempalte v-else-if="props.row.status == 'FAILED'">

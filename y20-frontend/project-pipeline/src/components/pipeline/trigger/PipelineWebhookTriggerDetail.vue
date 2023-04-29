@@ -1,6 +1,6 @@
 <template>
   <div class="pipeline-webhook-trigger-detail">
-    <div class="page-heading text-primary q-pb-md">
+    <div class="page-heading q-pb-md">
       <template v-if="isEdit">编辑 Webhook 触发</template>
       <template v-else>创建 Webhook 触发</template>
     </div>
@@ -57,7 +57,7 @@
       <div>
         <q-btn v-if="isEdit" unelevated label="保存" type="submit" color="primary" />
         <q-btn v-else unelevated label="创建" type="submit" color="primary" />
-        <q-btn flat class="q-ml-sm" label="返回" @click="onClickCancel" />
+        <q-btn flat class="q-ml-sm bg-grey-2" label="返回" @click="onClickCancel" />
       </div>
     </q-form>
   </div>

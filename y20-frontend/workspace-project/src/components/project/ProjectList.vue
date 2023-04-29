@@ -16,7 +16,7 @@
         </div>
         <div class="q-pa-xs page-content">
           
-          <NewbieGuide v-if="flagGuide" @stepTo="onGuideStepTo" @close="onGuideClose"/>
+          <NewbieGuide v-if="!teamId && flagGuide" @stepTo="onGuideStepTo" @close="onGuideClose"/>
 
           <div class="page-heading q-px-xs">
             我的项目
@@ -38,14 +38,13 @@
             <template v-slot:no-data>
               <div class="full-width">
                 <div class="row q-mt-xs">
-                  <div class="col-12 col-md-6 col-lg-3">
-                    <q-card flat class="project-card q-pa-xs">
+                  <div class="col-12">
+                    <q-card flat class="project-card q-pa-xs text-center">
                       <q-item>
-                        <q-item-section avatar>
-                          <q-avatar icon="bar_chart" class="q-mr-sm text-grey" size="lg" style="background: #ECF2FF;" />
-                        </q-item-section>
-
                         <q-item-section>
+                          <q-item-lable>
+                            <q-avatar icon="folder_open" class="q-ma-sm text-grey" size="lg" style="background: #ECF2FF;" />
+                          </q-item-lable>
                           <q-item-label>
                             <span class="vertical-middle text-grey">没有项目？</span>
                             <q-btn class="q-mx-xs vertical-middle" color="primary" dense flat label="创建一个项目" @click="onClickCreateProject" />
@@ -84,16 +83,17 @@
                 <q-card flat class="project-card q-pa-xs" >
                   <q-item>
                     <q-item-section avatar class="cursor-pointer" @click="onClickProject(props.row.projectId)">
-                      <q-avatar icon="bar_chart" class="q-mr-sm text-primary" size="lg" style="background: #ECF2FF;" />
+                      <q-avatar icon="folder_open" class="q-mr-sm text-primary" size="lg" style="background: #ECF2FF;" />
                     </q-item-section>
                     <q-item-section class="title cursor-pointer" @click="onClickProject(props.row.projectId)">
                       <q-item-label :lines="1">
                         {{ props.row.name }}
                       </q-item-label>
                       <q-item-label caption :lines="1">
-                        <span class="vertical-middle">{{props.row.numPipeline !== undefined ? props.row.numPipeline : '?'}} 流水线</span>
-                        <span v-if="props.row.numRunning">
-                          <q-spinner-facebook class="vertical-middle q-ml-xs" color="orange"></q-spinner-facebook>
+                        <q-icon name="animation" />
+                        <span class="q-ml-xs">{{props.row.numPipeline !== undefined ? props.row.numPipeline : '?'}} 流水线</span>
+                        <span v-if="props.row.numRunning" style="vertical-align: text-bottom;">
+                          <q-spinner-facebook class="q-ml-xs" color="orange"></q-spinner-facebook>
                           <q-tooltip>流水线运行中</q-tooltip>
                         </span>
                       </q-item-label>
@@ -282,17 +282,17 @@
                 </div>
                 <div class="row">
                   <div class="q-px-md q-py-sm col-12 col-md-6 col-lg-3" v-for="monitor in monitors" :key="monitor.monitorId">
-                    <q-chip v-if="monitor.status == 'OK'" square>
-                      <q-avatar icon="radio_button_unchecked" color="green" text-color="white" />
-                      <span class="q-pl-xs">{{monitor.name}}</span>
+                    <q-chip v-if="monitor.status == 'OK'" square class="cursor-pointer">
+                      <q-avatar icon="check" color="green" text-color="white" @click="onClickMonitor(monitor.projectId, monitor.monitorId)"/>
+                      <span class="q-pl-xs" @click="onClickMonitor(monitor.projectId, monitor.monitorId)">{{monitor.name}}</span>
                     </q-chip>
-                    <q-chip v-else-if="monitor.status == 'ERROR'" square>
-                      <q-avatar icon="priority_high" color="red" text-color="white" />
-                      <span class="q-pl-xs">{{monitor.name}}</span>
+                    <q-chip v-else-if="monitor.status == 'ERROR'" square class="cursor-pointer">
+                      <q-avatar icon="priority_high" color="red" text-color="white" @click="onClickMonitor(monitor.projectId, monitor.monitorId)"/>
+                      <span class="q-pl-xs" @click="onClickMonitor(monitor.projectId, monitor.monitorId)">{{monitor.name}}</span>
                     </q-chip>
-                    <q-chip v-else square>
-                      <q-avatar icon="priority_high" color="grey" text-color="white" />
-                      <span class="q-pl-xs">{{monitor.name}}</span>
+                    <q-chip v-else square class="cursor-pointer">
+                      <q-avatar icon="priority_high" color="grey" text-color="white" @click="onClickMonitor(monitor.projectId, monitor.monitorId)"/>
+                      <span class="q-pl-xs" @click="onClickMonitor(monitor.projectId, monitor.monitorId)">{{monitor.name}}</span>
                     </q-chip>
                   </div>
                 </div>
@@ -377,7 +377,7 @@ dayjs.extend(duration)
 
 import { LayoutTwoColumn } from 'common'
 import NewbieGuide from '@/components/project/NewbieGuide'
-import { ref, inject, watch, onMounted, onUnmounted } from 'vue'
+import { ref, inject, watch, onMounted, onUnmounted, computed } from 'vue'
 import projectApi from '@/api/project.api'
 import activityApi from '@/api/activity.api'
 import monitorApi from '@/api/monitor.api'
@@ -396,6 +396,7 @@ export default {
     const $q = inject('useQuasar')()
     const qUtil = inject('quasarUtil')($q)
     const router = inject('useRouter')()
+    const store = inject('useStore')()
     const flagGuide = ref(false)
     const name = ref('')
 
@@ -420,6 +421,8 @@ export default {
       rowsPerPage: 100,
       rowsNumber: 0
     })
+
+    const teamId = computed(() => store.state.workspace.teamId || '')
 
     const searchProject = (noLoading) => {
       if(!noLoading){
@@ -572,6 +575,7 @@ export default {
       runningLoading,
       monitors,
       monitorLoading,
+      teamId,
 
       getTimeAgo(time){
         const dd = dayjs().diff(dayjs(time), 'day')
@@ -661,6 +665,10 @@ export default {
       onLoadActivity(index, done){
         activityPageNo.value += 1
         listActivity(done)
+      },
+
+      onClickMonitor(projectId, monitorId){
+        router.push(`/project/${projectId}/monitor/${monitorId}`)
       },
     
     }

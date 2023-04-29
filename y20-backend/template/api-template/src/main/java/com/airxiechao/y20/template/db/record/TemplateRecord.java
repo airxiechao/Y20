@@ -25,6 +25,7 @@ public class TemplateRecord {
     @Column(type = "text") private String description;
     @Column(type = "text") private String steps;
     @Column(type = "text") private String variables;
+    private Integer numApply;
     private Date createTime;
     private Date lastUpdateTime;
 
@@ -43,6 +44,7 @@ public class TemplateRecord {
                 new TypeReference<LinkedHashMap<String, PipelineVariable>>(){});
         template.setVariables(variables);
 
+        template.setNumApply(numApply);
         template.setCreateTime(createTime);
         template.setLastUpdateTime(lastUpdateTime);
 
@@ -103,6 +105,14 @@ public class TemplateRecord {
 
     public void setVariables(String variables) {
         this.variables = variables;
+    }
+
+    public Integer getNumApply() {
+        return numApply;
+    }
+
+    public void setNumApply(Integer numApply) {
+        this.numApply = numApply;
     }
 
     public Date getCreateTime() {

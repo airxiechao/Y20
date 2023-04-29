@@ -49,6 +49,7 @@ module.exports = {
       {
         text: '常见问题',
         children: [
+          '/faqs.md',
         ],
       },
       {

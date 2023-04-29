@@ -71,7 +71,7 @@ public class AgentDbProcedure extends AbstractDbProcedure implements IAgentDb {
                 .from(DbUtil.table(AgentRecord.class))
                 .where(DbUtil.column(AgentRecord.class, "userId"), "=", userId);
         if(!StringUtil.isBlank(agentId)){
-            sqlParamsBuilder.where(DbUtil.column(AgentRecord.class, "agentId"), "like", agentId + "%");
+            sqlParamsBuilder.where(DbUtil.column(AgentRecord.class, "agentId"), "like", "%" + agentId + "%");
         }
         sqlParamsBuilder.count();
 

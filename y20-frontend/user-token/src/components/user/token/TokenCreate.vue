@@ -27,7 +27,7 @@
         </div>
         <div class="q-pa-sm page-content">
           <q-card flat class="q-pa-md bg-white">
-            <div class="q-pb-md">创建新令牌</div>
+            <div class="q-pb-md page-heading">创建新令牌</div>
             <q-form
               @submit="onSubmit"
               class="q-gutter-md"
@@ -124,6 +124,7 @@
 
               <div>
                 <q-btn unelevated :label="$t('label-create')" :loading="flagCreateLoading" type="submit" color="primary"/>
+                <q-btn flat class="q-ml-sm bg-grey-2" :label="$t('label-cancel')" @click="onClickBack" />
               </div>
             </q-form>
           </q-card>
@@ -156,6 +157,7 @@
     "error-no-endTime": "请输入结束时间",
     "error-wrong-time-format": "时间格式为：YYYY-MM-DD HH:mm:ss",
     "label-create": "创建",
+    "label-cancel": "取消",
   }
 }
 </i18n>
@@ -188,6 +190,10 @@ export default {
       endTime,
       flagShowDialog,
       accessToken,
+
+      onClickBack(){
+        router.back();
+      },
 
       validateTime(val){
         return /^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}$/.test(val)

@@ -65,7 +65,7 @@
           </q-item>
           
         </q-list>
-        <div v-if="username" class="quota-card q-ma-sm">
+        <div v-if="username && !teamId" class="quota-card q-ma-sm">
           <q-list dense>
             <q-item-label header>
               <router-link class="text-grey" :to="`/user/billing`">当前配额</router-link>
@@ -160,6 +160,8 @@ export default {
       return store.getters.username
     })
 
+    const teamId = computed(() => store.state.workspace.teamId || '')
+
     const numAgent = ref(null)
     const numPipelineRun = ref(null)
     const maxAgent = ref(null)
@@ -196,6 +198,7 @@ export default {
       $q,
       link,
       username,
+      teamId,
 
       numAgent,
       numPipelineRun,

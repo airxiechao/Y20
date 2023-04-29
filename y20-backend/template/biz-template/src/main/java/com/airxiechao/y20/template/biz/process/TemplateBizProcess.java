@@ -61,6 +61,11 @@ public class TemplateBizProcess implements ITemplateBiz {
     }
 
     @Override
+    public boolean updateNumApply(TemplateRecord templateRecord) {
+        return templateDb.updateNumApply(templateRecord);
+    }
+
+    @Override
     public boolean delete(Long templateId) {
         return templateDb.delete(templateId);
     }

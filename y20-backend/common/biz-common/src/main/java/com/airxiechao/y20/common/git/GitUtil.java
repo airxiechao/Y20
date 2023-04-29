@@ -23,10 +23,10 @@ public class GitUtil {
             try(InputStream inputStream = resourceFs.getInputStream(gitPropertiesName)) {
                 String strProperties = new String(inputStream.readAllBytes(), StandardCharsets.UTF_8);
                 JSONObject jsonObject = JSON.parseObject(strProperties);
-                String tag = jsonObject.getString("git.closest.tag.name");
+                String build = jsonObject.getString("git.build.version");
                 String abbrev = jsonObject.getString("git.commit.id.abbrev");
-                if(!StringUtil.isBlank(tag) && !StringUtil.isBlank(abbrev)){
-                    version = String.format("%s.%s", tag, abbrev);
+                if(!StringUtil.isBlank(build) && !StringUtil.isBlank(abbrev)){
+                    version = String.format("%s.%s", build, abbrev);
                 }
             } catch (Exception e) {
                 logger.error("read git properties error", e);

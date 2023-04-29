@@ -63,7 +63,7 @@
     <div class="page-home-content absolute-top">
 
       <div class="sec top" :style="{
-        'padding-top': '120px',
+        'padding-top': $q.screen.gt.sm ? '140px' : '120px',
         'padding-bottom': $q.screen.gt.sm ? '50px' : '25px',
       }">
         <div class="row middle">
@@ -73,18 +73,15 @@
               'text-h4': $q.screen.lt.md, 
               'text-center': true,
               'text-dark': true,
-            }">分布式系统的 CI/CD 流水线</div>
+              'text-weight-bold': true,
+            }">分布式系统的运维流水线</div>
             <div class="q-py-md q-mt-md text-grey-7 text-center" style="font-size: 16px; line-height: 36px;">
               <span class="vertical-middle">
                 通过编排流水线实现流程的标准化、自动化！
               </span>
             </div>
-            <div :class="{
-              'q-mt-lg': true,
-              'q-mb-xl': true, 
-              'text-center': true
-            }">
-              <q-btn class="q-px-lg q-ma-sm bg-primary text-white" size="lg" label="开始使用" @click="onClickStart"/>
+            <div class="q-mt-sm q-mb-xl text-center">
+              <q-btn flat class="q-px-lg q-ma-sm bg-primary text-white" size="lg" label="开始使用" @click="onClickStart"/>
               <q-btn flat class="q-px-lg q-ma-sm bg-white text-dark" size="lg" label="入门指南" type="a" href="/docs" />
             </div>
             <!-- <div class="text-center">
@@ -98,17 +95,17 @@
         <div class="middle">
           <div class="column box">
             <div class="col row">
-              <div class="col q-pa-md self-center text-center text-h5 text-bold text-italic"> 
-                <div class="text-primary text-subtitle2">我们的愿景</div>
-                <div>满足复杂的流水线需求</div>
+              <div class="col q-pa-md self-center text-center text-h5"> 
+                <div class="text-grey-7 text-subtitle2">我们的愿景</div>
+                <div>满足开发者的运维需求</div>
               </div>
             </div>
-            <div class="col row q-pa-md content-center">
+            <div class="col row q-py-sm content-center">
               <div class="col-4 col-sm-2">
                 <q-list>
                   <q-item>
                     <q-item-section class="content-center">
-                      <q-avatar round class="text-white" style="background: #ff3366;" icon="all_inclusive" size="70px" />
+                      <q-avatar round style="background: #ecf2ff; color: #7c98ab;" icon="all_inclusive" size="60px" />
                     </q-item-section>
                   </q-item>
                   <q-item>
@@ -123,7 +120,7 @@
                 <q-list>
                   <q-item>
                     <q-item-section class="content-center">
-                      <q-avatar round class="text-white" style="background: #00cc99;" icon="computer" size="70px" />
+                      <q-avatar round style="background: #ecf2ff; color: #7c98ab;" icon="computer" size="60px" />
                     </q-item-section>
                   </q-item>
                   <q-item>
@@ -138,7 +135,7 @@
                 <q-list>
                   <q-item>
                     <q-item-section class="content-center">
-                      <q-avatar round class="text-white" style="background: #3366ff;" icon="superscript" size="70px" />
+                      <q-avatar round style="background: #ecf2ff; color: #7c98ab;" icon="superscript" size="60px" />
                     </q-item-section>
                   </q-item>
                   <q-item>
@@ -153,7 +150,7 @@
                 <q-list>
                   <q-item>
                     <q-item-section class="content-center">
-                      <q-avatar round class="text-white" style="background: #6633ff;" icon="folder" size="70px" />
+                      <q-avatar round style="background: #ecf2ff; color: #7c98ab;" icon="folder" size="60px" />
                     </q-item-section>
                   </q-item>
                   <q-item>
@@ -168,7 +165,7 @@
                 <q-list>
                   <q-item>
                     <q-item-section class="content-center">
-                      <q-avatar round class="text-white" style="background: #ffcc33;" icon="skip_next" size="70px" />
+                      <q-avatar round style="background: #ecf2ff; color: #7c98ab;" icon="skip_next" size="60px" />
                     </q-item-section>
                   </q-item>
                   <q-item>
@@ -183,7 +180,7 @@
                 <q-list>
                   <q-item>
                     <q-item-section class="content-center">
-                      <q-avatar round class="text-white" style="background: #003399;" icon="monitor" size="70px" />
+                      <q-avatar round style="background: #ecf2ff; color: #7c98ab;" icon="monitor" size="60px" />
                     </q-item-section>
                   </q-item>
                   <q-item>
@@ -201,51 +198,39 @@
 
       <div class="sec q-mt-md">
         <div class="row middle">
-          <div class="sec-col col-12 col-sm-6 self-center">
+          <div class="sec-col col-12 col-sm-6">
             <div class="text">
-              <div class="text-primary">
-                <q-icon name="settings" class="vertical-middle q-mr-sm" />
-                <span class="vertical-middle">编排</span>
-              </div>
               <div class="text-h5">
+                <q-icon name="edit" class="vertical-middle q-mr-sm" />
                 <span class="vertical-middle">灵活编排</span>
               </div>
-              <div class="q-mt-md q-gutter-sm text-grey-7">
+              <div class="q-mt-md q-pl-md q-gutter-sm text-grey-7">
                 <div>
-                  <q-icon name="check_circle" color="primary" class="vertical-middle q-mr-sm" />
                   <span class="vertical-middle">支持预定义变量和输入变量，方便存储凭证和配置启动参数。</span>
                 </div>
                 <div>
-                  <q-icon name="check_circle" color="primary" class="vertical-middle q-mr-sm" />
                   <span class="vertical-middle">支持文件，可以为项目和流水线预上传文件，或者启动时进行上传。</span>
                 </div>
                 <div>
-                  <q-icon name="check_circle" color="primary" class="vertical-middle q-mr-sm" />
                   <span class="vertical-middle">节点支持Windows和Linux系统，连接加密，自动生成接入脚本。</span>
                 </div>
               </div>
             </div>
           </div>
-          <div class="sec-col col-12 col-sm-6 self-center">
+          <div class="sec-col col-12 col-sm-6">
             <div class="text">
-              <div class="text-primary">
-                <q-icon name="restart_alt" class="vertical-middle q-mr-sm" />
-                <span class="vertical-middle">运行</span>
-              </div>
               <div class="text-h5">
+                <q-icon name="restart_alt" class="vertical-middle q-mr-sm" />
                 <span class="vertical-middle">实时观测</span>
               </div>
-              <div class="q-mt-md q-gutter-sm text-grey-7">
+              <div class="q-mt-md q-pl-md q-gutter-sm text-grey-7">
                 <div>
-                  <q-icon name="check_circle" color="primary" class="vertical-middle q-mr-sm" />
                   <span class="vertical-middle">流水线启动后，可以实时观测流水线执行状态变化和日志输出。</span>
                 </div>
                 <div>
-                  <q-icon name="check_circle" color="primary" class="vertical-middle q-mr-sm" />
                   <span class="vertical-middle">中途退出页面不会中断执行，再次进入可以继续观测。</span>
                 </div>
                 <div>
-                  <q-icon name="check_circle" color="primary" class="vertical-middle q-mr-sm" />
                   <span class="vertical-middle">流水线结束后，可查询执行结果和历史日志。</span>
                 </div>
               </div>
@@ -256,51 +241,39 @@
 
       <div class="sec">
         <div class="row middle">
-          <div class="sec-col col-12 col-sm-6 self-center">
+          <div class="sec-col col-12 col-sm-6">
             <div class="text">
-              <div class="text-primary">
-                <q-icon name="skip_next" class="vertical-middle q-mr-sm" />
-                <span class="vertical-middle">调试</span>
-              </div>
               <div class="text-h5">
+                <q-icon name="skip_next" class="vertical-middle q-mr-sm" />
                 <span class="vertical-middle">轻松调试</span>
               </div>
-              <div class="q-mt-md q-gutter-sm text-grey-7">
+              <div class="q-mt-md q-pl-md q-gutter-sm text-grey-7">
                 <div>
-                  <q-icon name="check_circle" color="primary" class="vertical-middle q-mr-sm" />
                   <span class="vertical-middle">支持流水线的调试，流水线可以单步运行，和调试程序一样。</span>
                 </div>
                 <div>
-                  <q-icon name="check_circle" color="primary" class="vertical-middle q-mr-sm" />
                   <span class="vertical-middle">当以调试模式启动，每个步骤需手动触发，结束后进入等待状态。</span>
                 </div>
                 <div>
-                  <q-icon name="check_circle" color="primary" class="vertical-middle q-mr-sm" />
                   <span class="vertical-middle">执行中途，可以打开当前节点的远程终端和文件浏览器，进行远程操作。</span>
                 </div>
               </div>
             </div>
           </div>
-          <div class="sec-col col-12 col-sm-6 self-center">
+          <div class="sec-col col-12 col-sm-6">
             <div class="text">
-              <div class="text-primary">
-                <q-icon name="more_vert" class="vertical-middle q-mr-sm" />
-                <span class="vertical-middle">更多</span>
-              </div>
               <div class="text-h5">
+                <q-icon name="more_vert" class="vertical-middle q-mr-sm" />
                 <span class="vertical-middle">了解更多</span>
               </div>
-              <div class="q-mt-md q-gutter-sm text-grey-7">
+              <div class="q-mt-md q-pl-md q-gutter-sm text-grey-7">
                 <div>
-                  <q-icon name="check_circle" color="primary" class="vertical-middle q-mr-sm" />
                   <span class="vertical-middle">支持实时监测部署在节点的进程和服务的运行状态，发现错误时自动执行流水线。</span>
                 </div>
                 <div>
-                  <q-icon name="check_circle" color="primary" class="vertical-middle q-mr-sm" />
                   <span class="vertical-middle">流水线可以通过Git仓库远程触发。如果只允许运行一个实例，则进入等待队列。</span>
                 </div>
                 <div>
-                  <q-icon name="check_circle" color="primary" class="vertical-middle q-mr-sm" />
                   <span class="vertical-middle">支持加入团队，团队内的成员可以访问团队创建者工作空间的所有资源。</span>
                 </div>
               </div>
@@ -312,8 +285,8 @@
       <div class="sec price q-my-xl">
         <div class="middle">
           <div class="row justify-center q-pb-md">
-            <div class="text-h5 text-bold text-center">
-              <div class="text-primary text-subtitle2">配额 & 价格</div>
+            <div class="text-h5 text-center">
+              <div class="text-grey-7 text-subtitle2">配额 & 价格</div>
               <div>每月提供免费配额，更多配额可按需购买</div>
             </div>
           </div>
@@ -342,7 +315,7 @@
                   <q-badge class="q-mr-xs" v-for="discount in sale.discounts" :key="discount.id" :label="discountText(discount)" />
                   <div class="q-mt-md" />
                   <div v-for="(item, ii) in sale.items" :key="ii">
-                    <q-icon class="vertical-middle q-mr-xs" name="check_circle" color="primary" />
+                    <q-icon class="vertical-middle q-mr-xs" name="check" color="green" />
                     <span class="vertical-middle text-grey-7">{{item}}</span>
                   </div>
                 </div>
@@ -390,7 +363,7 @@
                 QQ群：923851253
               </div>
               <div>
-                微信公众号：Y20持续部署
+                微信公众号：鲲擎软件
               </div>
               <div>
                 邮箱：xiechao@y20.work
@@ -459,13 +432,13 @@ $--max-width: 1280px !default;
     }
     
     .tab{
-      margin-top: -70px;
+      margin-top: -60px;
 
       .middle{
         padding: 15px;
         
         .box{
-          box-shadow: 0 5px 10px #ddd;
+          box-shadow: 0 2px 10px #ddd;
           background: #fff;
           border-radius: 8px;
         }
@@ -475,8 +448,8 @@ $--max-width: 1280px !default;
     .price{
 
       &-card{
+        box-shadow: 0 2px 10px #ddd;
         border-radius: 8px;
-        background: #f5f5f5;
 
         .name{
           
@@ -485,7 +458,6 @@ $--max-width: 1280px !default;
     }
 
     .footer{
-      
       .info{
         line-height: 25px;
         max-width: $--max-width;

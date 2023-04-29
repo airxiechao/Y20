@@ -1,5 +1,5 @@
-host: 127.0.0.1
-port: 27017
-username: admin
-password: 123456
+host: 
+port: 
+username: 
+password: 
 database: y20_pipeline_run_log

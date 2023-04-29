@@ -63,6 +63,10 @@
               <q-item>
                 <q-item-section>
                   <q-item-label>当前配额</q-item-label>
+                  <q-item-label v-if="quotaBeginTime" caption>
+                    自 {{ dayjs(quotaBeginTime).format('YYYY-MM-DD HH:mm:ss') }} 
+                    <template v-if="quotaEndTime">到 {{ dayjs(quotaEndTime).format('YYYY-MM-DD HH:mm:ss') }}</template>
+                  </q-item-label>
                 </q-item-section>
 
                 <q-item-section side>
@@ -75,8 +79,7 @@
 
               <q-item>
                 <q-item-section>
-                  <q-item-label lines="1">已运行</q-item-label>
-                  <q-item-label v-if="quotaBeginTime" caption lines="1">自 {{ dayjs(quotaBeginTime).format('YYYY-MM-DD HH:mm:ss') }}</q-item-label>
+                  <q-item-label>已运行</q-item-label>
                 </q-item-section>
 
                 <q-item-section side>
@@ -247,6 +250,7 @@ export default {
       quotaApi.getCurrentQuota().then(resp => {
         const data = resp.data
         quotaBeginTime.value = data.beginTime
+        quotaEndTime.value = data.endTime
         maxAgent.value = data.maxAgent
         maxPipelineRun.value = data.maxPipelineRun
 

@@ -9,7 +9,7 @@
         </div>
         <div class="q-pa-sm page-content">
           <q-card flat class="q-pa-md relative-position">
-            <div class="q-pb-md">
+            <div class="q-pb-md page-heading">
               <div>创建流水线</div>
               <q-skeleton v-if="loading" type="text" width="15%" />
               <q-breadcrumbs v-else class="text-subtitle2 text-grey" active-color="grey">
@@ -33,7 +33,14 @@
                 :rules="[ 
                     val => val !== null || $t('error-no-project'),
                 ]"
-              />
+              >
+                <template v-slot:no-option>
+                  <div class="q-pa-md">
+                    <span class="vertical-middle text-grey">没有项目？</span>
+                    <q-btn class="q-mx-xs vertical-middle" color="primary" dense flat label="创建一个项目" to="/workspace/project/create" />
+                  </div>
+                </template>
+              </q-select>
 
               <q-input
                 outlined
@@ -58,7 +65,7 @@
               
               <div class="q-mt-md">
                 <q-btn unelevated :label="$t('label-apply')" type="submit" color="primary" :loading="applyLoading"/>
-                <q-btn flat class="q-ml-sm" label="取消" @click="onClickBack" />
+                <q-btn flat class="q-ml-sm bg-grey-2" label="取消" @click="onClickBack" />
               </div>
             </q-form>
             <!-- <q-inner-loading :showing="loading">

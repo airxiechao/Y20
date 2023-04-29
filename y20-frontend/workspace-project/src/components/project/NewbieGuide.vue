@@ -57,7 +57,7 @@
             </div>
             <q-form
               @submit="onSubmitCreateAgentJoinScript"
-              class="q-gutter-lg q-mb-md"
+              class="q-gutter-lg q-mb-sm"
             >
               <q-input
                 outlined
@@ -88,25 +88,26 @@
               />
 
               <div>
-                <q-btn unelevated class="q-mr-sm" label="生成接入脚本" type="submit" color="primary" :loading="createAgentJoinScriptLoading" />
+                <q-btn unelevated class="q-mr-sm" label="下载接入脚本" type="submit" color="primary" :loading="createAgentJoinScriptLoading" />
                 <q-btn flat color="primary" label="下一步" @click="forward" :disable="!flagAgentJoined" />
               </div>
 
             </q-form>
 
-            <div class="q-mt-md">
-              <div v-if="agentOsType == 'WINDOWS'" class="text-warning q-py-xs">
+            <div class="q-mt-sm">
+              <div class="text-warning q-py-xs">
                 <q-icon name="warning" />
-                注意：Windows 请使用 <span class="text-bold">Powershell</span> 终端，运行脚本
+                注意：本地打开 <span class="text-bold">{{agentJoinScriptType}}</span> 终端，切换到安装目录，运行脚本。
+                <span v-if="agentJoinScriptType == 'Powershell'">如果安全策略不允许脚本运行，请先以管理员身份打开 <span class="text-bold">{{agentJoinScriptType}}</span> 终端，执行 <span class="text-bold text-grey">set-executionpolicy bypass</span>，更改脚本运行策略</span>
               </div>
-              <q-input
+              <!-- <q-input
                 stack-label
                 v-model="agentJoinScript"
                 label="接入脚本"
                 :hint="`本地打开 ${agentJoinScriptType} 终端，切换到安装目录，运行脚本，完成接入`"
                 outlined
                 type="textarea"
-              />
+              /> -->
             </div>
 
             <q-stepper-navigation v-if="flagAgentWaiting">
@@ -238,6 +239,15 @@ export default {
       }
     })
 
+    function download(fileName, text, hasBom) {
+      const url = window.URL || window.webkitURL || window;
+      const blob = new Blob((hasBom ? ["\ufeff", text] : [text]), {type: 'text/plain;charset=utf-8'});
+      const saveLink = document.createElementNS('http://www.w3.org/1999/xhtml', 'a');
+      saveLink.href = url.createObjectURL(blob);
+      saveLink.download = fileName;
+      saveLink.click();
+    }
+
     return {
       FRONTEND_SERVICE_NAME: FRONTEND_SERVICE_NAME,
 
@@ -353,11 +363,25 @@ export default {
 
             startAgentWaiting()
 
-            copyToClipboard(agentJoinScript.value).then(() => {
-              qUtil.notifySuccess('脚本已复制到粘贴板')
-            }).catch(() => {
-              qUtil.notifyError('复制脚本到粘贴板发生错误')
-            })
+            try{
+              const fileName = `y20-agent-client-install-${agentId.value}`
+              switch(agentOsType.value){
+                case 'WINDOWS':
+                  download(`${fileName}.ps1`, agentJoinScript.value, true)
+                  return
+                case 'LINUX':
+                  download(`${fileName}.sh`, agentJoinScript.value)
+                  return
+              }
+            }catch(err){
+              qUtil.notifyError('下载接入脚本发生错误')
+            }
+
+            // copyToClipboard(agentJoinScript.value).then(() => {
+            //   qUtil.notifySuccess('脚本已复制到粘贴板')
+            // }).catch(() => {
+            //   qUtil.notifyError('复制脚本到粘贴板发生错误')
+            // })
           }, resp => {
             qUtil.notifyError('生成接入脚本发生错误')
           }).finally(() => {

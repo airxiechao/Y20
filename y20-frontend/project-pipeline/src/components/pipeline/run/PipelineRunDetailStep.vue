@@ -47,7 +47,7 @@
           <q-card flat v-else class="pipeline-run-detial-step-top q-px-md q-pt-sm q-pb-xs">
             <div class="page-heading">
               <span>{{pipelineRun.name}}</span>
-              <a :href="`/nav${fromUrl}`" target="_black"><q-icon v-if="fromUrl" name="link" class="cursor-pointer" /></a>
+              <a v-if="fromUrl" :href="`/nav${fromUrl}`" target="_black"><q-icon name="link" class="cursor-pointer" /></a>
             </div>
             <div class="row">
               <div class="title">流水线</div>

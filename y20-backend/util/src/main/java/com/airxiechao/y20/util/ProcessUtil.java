@@ -103,6 +103,7 @@ public class ProcessUtil {
     public static void writeBytes(Process process, byte[] bytes) throws IOException {
         OutputStream outputStream = process.getOutputStream();
         outputStream.write(bytes);
+        outputStream.flush();
     }
 
     public static String[] splitCommandString(String command){

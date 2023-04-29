@@ -1,13 +1,17 @@
 package com.airxiechao.y20.common.core.rest;
 
 import com.airxiechao.axcboot.communication.common.Response;
+import com.airxiechao.axcboot.communication.rest.annotation.Get;
+import com.airxiechao.axcboot.communication.rest.annotation.Post;
 import com.airxiechao.axcboot.communication.rest.util.RestUtil;
+import com.airxiechao.axcboot.util.AnnotationUtil;
 import com.airxiechao.axcboot.util.ClsUtil;
 import com.airxiechao.axcboot.util.StringUtil;
 import com.airxiechao.y20.auth.pojo.AccessPrincipal;
 import com.airxiechao.y20.auth.pojo.vo.JoinedTeamVo;
 import com.airxiechao.y20.auth.rest.api.IServiceTeamRest;
 import com.airxiechao.y20.auth.rest.param.ExtractAccessPrincipalParam;
+import com.airxiechao.y20.auth.rest.param.GetAccountParam;
 import com.airxiechao.y20.auth.rest.param.ServiceGetJoinedTeamParam;
 import com.airxiechao.y20.auth.rest.param.ValidateAccessTokenParam;
 import com.airxiechao.y20.auth.rest.api.IServiceAuthRest;
@@ -18,6 +22,7 @@ import io.undertow.websockets.spi.WebSocketHttpExchange;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.lang.reflect.Method;
 import java.util.Map;
 
 public class EnhancedRestUtil {
@@ -29,6 +34,28 @@ public class EnhancedRestUtil {
         Response resp = ServiceRestClient.get(IServiceAuthRest.class).validateAccessToken(param);
 
         return resp.isSuccess();
+    }
+
+    public static Object resolveParam(HttpServerExchange exchange, Method method, boolean switchToTeamUserId) throws Exception {
+        Get get = AnnotationUtil.getMethodAnnotation(method, Get.class);
+        if(null != get){
+            if(get.value().startsWith("/service/")){
+                return RestUtil.queryData(exchange, method.getParameterTypes()[0]);
+            }else{
+                return EnhancedRestUtil.queryDataWithHeader(exchange, method.getParameterTypes()[0], switchToTeamUserId);
+            }
+        }
+
+        Post post = AnnotationUtil.getMethodAnnotation(method, Post.class);
+        if(null != post) {
+            if(post.value().startsWith("/service/")) {
+                return RestUtil.rawJsonData(exchange, method.getParameterTypes()[0]);
+            }else{
+                return EnhancedRestUtil.rawJsonDataWithHeader(exchange, method.getParameterTypes()[0], switchToTeamUserId);
+            }
+        }
+
+        throw new Exception("resolve param error: http method not support");
     }
 
     public static JoinedTeamVo getJoinedTeam(Long memberUserId, Long joinedTeamId) throws Exception {

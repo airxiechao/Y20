@@ -5,20 +5,20 @@
 
 ### 1. 生成接入脚本
 
-- 进入 [接入节点](/nav/workspace/agent/join) 页面，输入节点配置，生成接入脚本：
+- 进入 [接入节点](/nav/workspace/agent/join) 页面，输入节点配置，下载接入脚本：
 
   - 选择节点的 **操作系统** 类型：Windows 或者 Linux
   - 输入节点的 **唯一标识**：自定义
   - 点击自动生成 **访问令牌**
-  - 其余配置保持默认即可，点击 **生成脚本**
+  - 其余配置保持默认即可，点击 **下载脚本**
 
   ![节点脚本接入](../img/agent-join-script.jpg)
 
 ### 2. 执行脚本
-- 复制脚本，在节点本地打开终端，切换到安装目录，执行脚本，即可完成接入
+- 打开本地终端，切换到安装目录，执行脚本，即可完成接入
 
-  - Windows：使用 `Powershell` 终端
   - Linux：使用 `Bash` 终端
+  - Windows：使用 `Powershell` 终端。如果安全策略不允许脚本运行，请先以管理员身份打开 `Powershell` 终端，执行 `set-executionpolicy bypass`，更改脚本运行策略
 
   ![节点脚本接入powershell](../img/agent-join-script-powershell.jpg)
 

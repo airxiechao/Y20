@@ -59,10 +59,11 @@
     color: #131523;
     font-weight: bold;
     line-height: 35px;
+    font-size: 17px;
   }
 
   .page-toolbar{
-    padding: 8px;
+    padding: 6px;
 
     &.q-toolbar, & .q-toolbar{
       padding-left: 4px;
@@ -118,4 +119,5 @@
 
 .drawer-menu-active{
   background: #eee !important;
+  font-weight: bold;
 }

@@ -73,6 +73,8 @@ public class AgentRpcServer extends RpcServer implements IAgentRpcServer, IAgent
                     }
                 });
 
+        this.setVerboseLog(null != config.getRpcVerbose() ? config.getRpcVerbose() : false);
+
         try{
             logger.info("config agent server to use ssl");
             this.useSsl(

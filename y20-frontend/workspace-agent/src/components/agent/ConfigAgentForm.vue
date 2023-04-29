@@ -9,7 +9,7 @@
         </div>
         <div class="q-pa-sm page-content">
           <q-card flat class="bg-white q-pa-md">
-            <div class="q-pb-md">配置节点 - {{agentId}}</div>
+            <div class="q-pb-md page-heading">配置节点 - {{agentId}}</div>
             <template v-if="readLoading">
               <div v-for="i in [1,2]" :key="i" :class="{'q-mb-md': i < 2}">
                 <q-skeleton type="input" />
@@ -111,6 +111,7 @@
 
                 <div>
                   <q-btn unelevated :loading="saveLoading" label="保存并重启服务" type="submit" color="primary"/>
+                  <q-btn flat class="q-ml-sm bg-grey-2" label="取消" @click="onClickBack" /> 
                 </div>
               </q-form>
             </template>
@@ -256,6 +257,10 @@ export default {
       configServerRestPort,
       configServerRestUseSsl,
       configDataDir,
+
+      onClickBack(){
+        router.back();
+      },
 
       onClickGenerateAccessToken(){
         const now = dayjs()

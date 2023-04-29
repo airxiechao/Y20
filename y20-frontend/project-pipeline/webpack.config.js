@@ -30,7 +30,7 @@ module.exports = (env, argv) => {
       isHttps: true,
       port,
       name,
-    }),
+    })
   ]
     
   config.externals = {

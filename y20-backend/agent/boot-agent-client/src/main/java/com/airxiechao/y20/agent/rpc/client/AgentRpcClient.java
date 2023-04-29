@@ -59,6 +59,8 @@ public class AgentRpcClient extends RpcClient implements IAgentRpcClient {
                 (authToken, scope, item, mode) -> {
                     return true;
                 }, (ctx) -> {
+                    logger.info("agent client connect");
+
                     boolean registered = false;
                     try {
                         registered = registerAgent(ctx);
@@ -70,7 +72,9 @@ public class AgentRpcClient extends RpcClient implements IAgentRpcClient {
                     }
 
                     logger.info("register agent [{}] -> {}", agentId, registered);
-                }, null);
+                }, (ctx, client) -> {
+                    logger.info("agent client disconnect");
+                });
 
         try{
             logger.info("config agent client to use ssl");
@@ -112,7 +116,7 @@ public class AgentRpcClient extends RpcClient implements IAgentRpcClient {
     }
 
     @Override
-    public boolean registerAgent(ChannelHandlerContext ctx) throws UnknownHostException {
+    public boolean registerAgent(ChannelHandlerContext ctx) throws Exception {
         InetAddress localHost = InetAddress.getLocalHost();
         String ip = IpUtil.getIp(true);
         String version = GitUtil.getGitVersion();

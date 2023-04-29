@@ -4,7 +4,7 @@
       <div class="page-center">
         <div class="page-toolbar">
           <q-toolbar>
-            <q-btn unelevated rounded flat color="primary" icon="keyboard_backspace" label="节点" to="/workspace/agent" />
+            <q-btn unelevated rounded flat color="primary" icon="keyboard_backspace" label="返回" @click="onClickBack" />
             <q-toolbar-title></q-toolbar-title>
           </q-toolbar>
         </div>
@@ -41,6 +41,20 @@
       </div>
     </template>
     <template v-slot:right>
+      <div>
+        <div class="text-grey q-mb-md">需要帮助</div>
+        <q-list>
+          <q-item clickable tag="a" href="/docs/guide/agent-join.html" target="_blank">
+            <q-item-section avatar>
+              <q-icon name="link" />
+            </q-item-section>
+            <q-item-section>如何接入新节点？</q-item-section>
+            <q-item-section side>
+              <q-icon name="chevron_right" />
+            </q-item-section>
+          </q-item>
+        </q-list>
+      </div>
     </template>
   </LayoutTwoColumn>
 </template>
@@ -86,6 +100,10 @@ export default {
 
     return {
       tab,
+
+      onClickBack(){
+        router.back();
+      },
     }
   }
 };

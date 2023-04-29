@@ -9,7 +9,7 @@
         </div>
         <div class="q-pa-sm page-content">
           <q-card flat class="q-pa-md relative-position">
-            <div class="q-pb-md">
+            <div class="q-pb-md page-heading">
               <div>发布到应用市场</div>
               <q-skeleton v-if="!pipelineName" type="text" animation="fade" style="max-width: 150px;" />
               <q-breadcrumbs v-else class="text-subtitle2 text-grey" active-color="grey">
@@ -47,7 +47,7 @@
               
               <div class="q-mt-md">
                 <q-btn unelevated :label="$t('label-publish')" type="submit" color="primary" :loading="publishLoading"/>
-                <q-btn class="q-ml-sm" flat label="取消" @click="onClickBack" /> 
+                <q-btn flat class="q-ml-sm bg-grey-2" label="取消" @click="onClickBack" /> 
               </div>
             </q-form>
 

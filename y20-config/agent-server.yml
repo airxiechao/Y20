@@ -1,3 +1,4 @@
 name: agent-server
 port: 8014
 rpcPort: 9100
+rpcVerbose: true

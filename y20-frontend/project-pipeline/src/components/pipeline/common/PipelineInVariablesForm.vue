@@ -2,9 +2,8 @@
   <q-card flat class="q-pt-sm q-gutter-y-md relative-position">
     <div class="text-primary text-bold q-mt-none">输入变量</div>
     <q-card v-if="loading" flat class="q-pa-sm">
-      <div class="row q-mb-sm" v-for="pi in [1,2,3]" :key="pi">
-        <div class="q-pr-sm" style="width: 80px;"><q-skeleton type="text" animation="fade" /></div>
-        <div class="col"><q-skeleton type="text" animation="fade" /></div>
+      <div class="q-mb-md" v-for="pi in [1,2]" :key="pi">
+        <q-skeleton type="input" />
       </div>
     </q-card>
     <div v-else-if="!pipelineInVariables || pipelineInVariables.length == 0">

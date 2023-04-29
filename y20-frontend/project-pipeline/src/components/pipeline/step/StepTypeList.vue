@@ -10,7 +10,7 @@
         </div>
         <div class="q-pa-sm page-content">
           <q-card flat class="q-pa-md">
-            <div class="q-pb-md">
+            <div class="q-pb-md page-heading">
               <div>选择步骤类型</div>
               <q-skeleton v-if="!pipelineName" type="text" animation="fade" style="max-width: 150px;" />
               <q-breadcrumbs v-else class="text-subtitle2 text-grey" active-color="grey">
@@ -79,7 +79,7 @@
                             </q-card-section>
                             <q-separator />
                             <q-card-actions align="center">
-                              <q-btn flat color="primary" icon="add" label="添加" @click="onClickStepType(type.type)" />
+                              <q-btn flat icon="add" label="添加" @click="onClickStepType(type.type)" />
                             </q-card-actions>
                           </q-card>
                         </div>

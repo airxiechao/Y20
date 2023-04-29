@@ -1,5 +1,5 @@
-smtpHost: smtp.exmail.qq.com
-smtpPort: 465
+smtpHost: 
+smtpPort: 
 username: 
 password: 
 sender: 

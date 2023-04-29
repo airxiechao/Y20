@@ -30,7 +30,6 @@ export default {
   setup(props, { emit }){
     const editor = ref(null)
     let cm = null
-    let changed = false
 
     const initCodeMirror = () => {
       if(null == cm){
@@ -43,7 +42,6 @@ export default {
         })
 
         cm.on("change", () => {
-          changed = true
           emit("update:modelValue", cm.getValue())
         })
       }
@@ -58,14 +56,27 @@ export default {
 
     const updateCodeMirror = (value) => {
       if(cm){
-        cm.setValue(value || '')
+        let pos = cm.getCursor();
+        cm.setValue(value || '');
+        cm.setCursor(pos);
+      }
+    }
+
+    const insertCodeMirror = (value) => {
+      if(cm){
+        if(cm.somethingSelected()) {
+          cm.replaceSelection(value);
+          return;
+        }
+
+        let pos = cm.getCursor();
+        cm.replaceRange(value, pos);
+        cm.focus();
       }
     }
 
     watch(() => props.modelValue, (newValue, oldValue) => {
-      if(!changed){
-        updateCodeMirror(newValue)
-      }
+      updateCodeMirror(newValue)
     })
 
     onMounted(() => {
@@ -81,6 +92,10 @@ export default {
 
       updateValue(event) {
         emit('update:modelValue', event.target.value);
+      },
+
+      insert(value){
+        insertCodeMirror(value)
       }
     }
   }

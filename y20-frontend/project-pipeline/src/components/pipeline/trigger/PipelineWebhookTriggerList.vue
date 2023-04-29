@@ -1,9 +1,9 @@
 <template>
   <div class="pipeline-webhook-trigger-list">
     <div class="row q-pb-md">
-      <div class="col page-heading text-primary self-center">Webhook 触发</div>
+      <div class="col page-heading self-center">Webhook 触发</div>
       <div class="self-center">
-        <q-btn flat class="bg-blue-1" icon="add" color="primary" no-caps label="创建触发" @click="onClickCreateWebhookTrigger" />
+        <q-btn flat icon="add" no-caps label="创建触发" @click="onClickCreateWebhookTrigger" />
       </div>
     </div>
     <q-banner dense rounded class="q-pa-md bg-grey-2">

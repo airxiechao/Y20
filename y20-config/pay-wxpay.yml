@@ -1,6 +1,6 @@
 appId: 
 mchId: 
 mchSerialNo: 
-mchPrivateKeyPath: wxpay/apiclient_key.pem
+mchPrivateKeyPath: 
 apiV3Key: 
-notifyUrlPrefix: 
+notifyUrlPrefix: https://y20.work

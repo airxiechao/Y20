@@ -31,7 +31,7 @@ app.use(Quasar, {
   },
   config: {
     brand: {
-      primary: '#1E5EFF',
+      primary: '#0d72dc',
     },
     loadingBar: { 
       skipHijack: true,

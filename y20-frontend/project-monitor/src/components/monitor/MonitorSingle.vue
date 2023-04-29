@@ -10,7 +10,7 @@
 
         <div class="q-pa-sm page-content">
           <q-card flat class="q-pa-md">
-            <div class="q-pb-md">
+            <div class="q-pb-md page-heading">
               <template v-if="isEdit">编辑监视</template>
               <template v-else>创建监视</template>
             </div>
@@ -133,6 +133,7 @@
               <div>
                 <q-btn v-if="isEdit" unelevated label="保存" type="submit" color="primary"/>
                 <q-btn v-else unelevated label="创建" type="submit" color="primary"/>
+                <q-btn flat class="q-ml-sm bg-grey-2" label="取消" @click="onClickBack" /> 
               </div>
             </q-form>
           </q-card>
@@ -369,6 +370,10 @@ export default {
       monitorTypeOptions,
       monitorActionTypeOptions,
       isEdit,
+
+      onClickBack(){
+        router.back()
+      },
 
       onSelectProject(inputValue, doneFn, abortFn){
         searchProject(inputValue, doneFn, abortFn)

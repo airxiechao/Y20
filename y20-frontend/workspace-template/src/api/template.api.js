@@ -14,6 +14,9 @@ export default {
   listMy({ name = '', pageNo = '', pageSize = '', orderField = '', orderType = '' }){
     return request().get(`${API_TEMPLATE_PREFIX}/template/list/my?name=${encodeURIComponent(name)}&pageNo=${pageNo}&pageSize=${pageSize}&orderField=${encodeURIComponent(orderField)}&orderType=${orderType}`)
   },
+  recommend({ pageNo = '', pageSize = '', orderField = '', orderType = '' }){
+    return request().get(`${API_TEMPLATE_PREFIX}/template/recommend?pageNo=${pageNo}&pageSize=${pageSize}&orderField=${encodeURIComponent(orderField)}&orderType=${orderType}`)
+  },
   delete({ templateId }){
     return request().post(`${API_TEMPLATE_PREFIX}/template/delete`, {
       templateId,

@@ -1,6 +1,6 @@
 <template>
   <div class="pipeline-variable-detail">
-    <div class="page-heading text-primary">
+    <div class="page-heading">
       <template v-if="isEdit">编辑变量</template>
       <template v-else>创建变量</template>
     </div>
@@ -107,6 +107,7 @@
                 ]"
               />
               <q-uploader
+                flat bordered
                 class="q-mt-md q-ml-md"
                 label="上传文件"
                 :disable="variable.kind == 'IN'"
@@ -178,7 +179,7 @@
       <div class="q-pt-sm">
         <q-btn v-if="isEdit" unelevated label="保存" type="submit" color="primary" />
         <q-btn v-else unelevated label="创建" type="submit" color="primary" />
-        <q-btn flat class="q-ml-sm" label="返回" @click="onClickCancel" />
+        <q-btn flat class="q-ml-sm bg-grey-2" label="返回" @click="onClickCancel" />
       </div>
     </q-form>
   </div>

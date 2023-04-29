@@ -1,9 +1,9 @@
 <template>
   <div class="pipeline-step-list">
     <div class="row q-pb-md">
-      <div class="col page-heading text-primary self-center">步骤列表</div>
+      <div class="col page-heading self-center">步骤列表</div>
       <div class="self-center">
-        <q-btn flat class="bg-blue-1" icon="add" color="primary" label="添加步骤" @click="onClickAddStep(steps.length)" />
+        <q-btn flat  icon="add" label="添加步骤" @click="onClickAddStep(steps.length)" />
       </div>
     </div>
     <q-card flat>

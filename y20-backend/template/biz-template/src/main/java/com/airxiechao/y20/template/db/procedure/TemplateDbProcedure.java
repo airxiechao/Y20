@@ -10,6 +10,7 @@ import com.airxiechao.axcboot.util.StringUtil;
 import com.airxiechao.y20.template.db.api.ITemplateDb;
 import com.airxiechao.y20.template.db.record.TemplateRecord;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class TemplateDbProcedure extends AbstractDbProcedure implements ITemplateDb {
@@ -87,17 +88,27 @@ public class TemplateDbProcedure extends AbstractDbProcedure implements ITemplat
 
     @Override
     public long count(Long userId, String name) {
-        SqlParamsBuilder sqlParamsBuilder = new SqlParamsBuilder()
-                .select("*")
-                .from(DbUtil.table(TemplateRecord.class));
+        SqlParamsBuilder sqlParamsBuilder = new SqlParamsBuilder();
 
+        String username = null;
+        if(!StringUtil.isBlank(name) && name.startsWith("@")){
+            username = name.substring(1);
+        }
+
+        boolean fulltextSearch = !StringUtil.isBlank(name) && !name.startsWith("@");
+
+        sqlParamsBuilder.from(DbUtil.table(TemplateRecord.class));
 
         if(null != userId) {
             sqlParamsBuilder.where(DbUtil.column(TemplateRecord.class, "userId"), "=", userId);
         }
 
-        if(!StringUtil.isBlank(name)){
-            sqlParamsBuilder.where(DbUtil.column(TemplateRecord.class, "name"), "like", "%" + name + "%");
+        if(null != username) {
+            sqlParamsBuilder.where(DbUtil.column(TemplateRecord.class, "username"), "=", username);
+        }
+
+        if(fulltextSearch){
+            sqlParamsBuilder.where(DbUtil.columns(TemplateRecord.class, new String[]{"name", "description"}), null, name, true);
         }
 
         sqlParamsBuilder.count();
@@ -115,6 +126,13 @@ public class TemplateDbProcedure extends AbstractDbProcedure implements ITemplat
     @Override
     public boolean update(TemplateRecord templateRecord) {
         return dbManager.update(templateRecord) > 0;
+    }
+
+    @Override
+    public boolean updateNumApply(TemplateRecord templateRecord) {
+        return dbManager.updateFields(templateRecord, Arrays.asList(
+                DbUtil.column(TemplateRecord.class, "numApply")
+        )) > 0;
     }
 
     @Override

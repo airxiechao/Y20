@@ -198,6 +198,7 @@ public class LinuxUtil {
     }
 
     public static String formatHidePromptScript(){
+//        return "export PS1='> '; export PS2='> '; export PS3='> '; export PS4='> '; export TERM='xterm'; set -x; clear;";
         return "export PS1='> '; export TERM='xterm'; clear;";
     }
 

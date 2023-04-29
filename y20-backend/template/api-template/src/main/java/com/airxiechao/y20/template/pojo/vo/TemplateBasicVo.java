@@ -11,6 +11,7 @@ public class TemplateBasicVo {
     private String username;
     private String name;
     private String shortDescription;
+    private Integer numApply;
     private Date createTime;
     private Date lastUpdateTime;
 
@@ -31,6 +32,7 @@ public class TemplateBasicVo {
                 this.shortDescription = description;
             }
         }
+        this.numApply = record.getNumApply();
         this.createTime = record.getCreateTime();
         this.lastUpdateTime = record.getLastUpdateTime();
     }
@@ -73,6 +75,14 @@ public class TemplateBasicVo {
 
     public void setShortDescription(String shortDescription) {
         this.shortDescription = shortDescription;
+    }
+
+    public Integer getNumApply() {
+        return numApply;
+    }
+
+    public void setNumApply(Integer numApply) {
+        this.numApply = numApply;
     }
 
     public Date getCreateTime() {

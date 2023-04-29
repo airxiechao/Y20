@@ -1,9 +1,9 @@
 <template>
   <div class="pipeline-variable-list">
     <div class="row q-pb-md">
-      <div class="col page-heading text-primary self-center">流水线变量</div>
+      <div class="col page-heading self-center">流水线变量</div>
       <div class="self-center">
-        <q-btn flat class="bg-blue-1" icon="add" color="primary" label="创建变量" @click="onClickCreateVariable" />
+        <q-btn flat icon="add" label="创建变量" @click="onClickCreateVariable" />
       </div>
     </div>
     <q-table

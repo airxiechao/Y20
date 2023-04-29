@@ -47,7 +47,7 @@
 
     <div class="row">
       <div class="col tab-heading text-primary">环境变量</div>
-      <q-btn unelevated color="primary" label="创建环境变量" @click="onClickShowDialog" />
+      <q-btn flat icon="add" label="创建环境变量" @click="onClickShowDialog" />
     </div>
     <q-table
       flat

@@ -15,7 +15,7 @@
         </div>
         <div class="q-pa-sm page-content">
           <q-card flat class="pipeline-detail-card">
-            <div class="q-pa-md text-bold">
+            <div class="q-pa-md">
               <q-skeleton v-if="!pipelineName" type="text" animation="fade" style="max-width: 150px;" />
               <span v-else>{{pipelineName}}</span>
             </div>

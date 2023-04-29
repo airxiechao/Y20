@@ -20,5 +20,6 @@ public interface ITemplateDb {
     long count(Long userId, String name);
     boolean insert(TemplateRecord templateRecord);
     boolean update(TemplateRecord templateRecord);
+    boolean updateNumApply(TemplateRecord templateRecord);
     boolean delete(long templateId);
 }

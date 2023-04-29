@@ -10,7 +10,7 @@ Description=Y20 agent client service
 WorkingDirectory=$currentDir
 ExecStart=$currentDir/start-y20-agent-client.sh
 User=root
-Type=Simple
+Type=simple
 Restart=on-failure
 
 [Install]

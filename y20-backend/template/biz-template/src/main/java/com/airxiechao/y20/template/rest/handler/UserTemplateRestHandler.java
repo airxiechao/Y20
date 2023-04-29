@@ -20,10 +20,7 @@ import com.airxiechao.y20.template.db.record.TemplateRecord;
 import com.airxiechao.y20.template.pojo.Template;
 import com.airxiechao.y20.template.pojo.vo.TemplateBasicVo;
 import com.airxiechao.y20.template.rest.api.IUserTemplateRest;
-import com.airxiechao.y20.template.rest.param.ApplyTemplateParam;
-import com.airxiechao.y20.template.rest.param.DeleteTemplateParam;
-import com.airxiechao.y20.template.rest.param.GetTemplateParam;
-import com.airxiechao.y20.template.rest.param.ListTemplateParam;
+import com.airxiechao.y20.template.rest.param.*;
 import io.undertow.server.HttpServerExchange;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -101,7 +98,7 @@ public class UserTemplateRestHandler implements IUserTemplateRest {
                 param.getPageSize()
         ).stream().map(record -> new TemplateBasicVo(record)).collect(Collectors.toList());
 
-        long count = templateBiz.count(param.getUserId(), param.getName());
+        long count = templateBiz.count(null, param.getName());
 
         return new Response().data(new PageData(
                 param.getPageNo(),
@@ -133,6 +130,37 @@ public class UserTemplateRestHandler implements IUserTemplateRest {
         ).stream().map(record -> new TemplateBasicVo(record)).collect(Collectors.toList());
 
         long count = templateBiz.count(param.getUserId(), param.getName());
+
+        return new Response().data(new PageData(
+                param.getPageNo(),
+                param.getPageSize(),
+                count,
+                list
+        ));
+    }
+
+    @Override
+    public Response recommend(Object exc) {
+        HttpServerExchange exchange = (HttpServerExchange) exc;
+
+        RecommendTemplateParam param = null;
+        try {
+            param = RestUtil.queryData(exchange, RecommendTemplateParam.class);
+        } catch (Exception e) {
+            logger.error("parse rest param error", e);
+            return new Response().error(e.getMessage());
+        }
+
+        List<TemplateBasicVo> list = templateBiz.list(
+                null,
+                null,
+                param.getOrderField(),
+                param.getOrderType(),
+                param.getPageNo(),
+                param.getPageSize()
+        ).stream().map(record -> new TemplateBasicVo(record)).collect(Collectors.toList());
+
+        long count = templateBiz.count(null, null);
 
         return new Response().data(new PageData(
                 param.getPageNo(),
@@ -263,6 +291,14 @@ public class UserTemplateRestHandler implements IUserTemplateRest {
         if(!resp.isSuccess()){
             return new Response().error(resp.getMessage());
         }
+
+        // add num apply
+        Integer numApply = record.getNumApply();
+        if(null == numApply){
+            numApply = 0;
+        }
+        record.setNumApply(numApply + 1);
+        templateBiz.updateNumApply(record);
 
         Long pipelineId = (Long)resp.getData().get(TRANSACTION_STORE_PIPELINE_ID);
 

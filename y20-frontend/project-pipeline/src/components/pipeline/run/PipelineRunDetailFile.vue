@@ -9,7 +9,7 @@
         </div>
         <div class="q-pa-sm page-content">
           <q-card flat class="q-pa-md">
-            <div class="q-pb-md">
+            <div class="q-pb-md page-heading">
               <div>上传的文件</div>
               <q-breadcrumbs class="text-subtitle2 text-grey" active-color="grey">
                 <q-breadcrumbs-el :label="`${pipelineRun.name}`" />

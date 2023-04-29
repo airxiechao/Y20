@@ -8,6 +8,7 @@ public class AgentServerConfig {
     private String name;
     private int port;
     private int rpcPort;
+    private Boolean rpcVerbose;
 
     public String getName() {
         return name;
@@ -33,4 +34,11 @@ public class AgentServerConfig {
         this.rpcPort = rpcPort;
     }
 
+    public Boolean getRpcVerbose() {
+        return rpcVerbose;
+    }
+
+    public void setRpcVerbose(Boolean rpcVerbose) {
+        this.rpcVerbose = rpcVerbose;
+    }
 }

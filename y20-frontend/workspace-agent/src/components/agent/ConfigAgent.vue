@@ -9,7 +9,7 @@
         </div>
         <div class="q-pa-sm page-content">
           <q-card flat class="bg-white q-pa-md">
-            <div class="q-pb-md">配置节点 - {{agentId}}</div>
+            <div class="q-pb-md page-heading">配置节点 - {{agentId}}</div>
             <q-form
               @submit="onSubmit"
               class="q-gutter-sm"
@@ -31,6 +31,7 @@
 
               <div>
                 <q-btn unelevated :loading="saveLoading" label="保存并重启服务" type="submit" color="primary"/>
+                <q-btn flat class="q-ml-sm bg-grey-2" label="取消" @click="onClickBack" /> 
               </div>
             </q-form>
           </q-card>
@@ -100,6 +101,10 @@ export default {
       
       agentId,
       config,
+
+      onClickBack(){
+        router.back();
+      },
 
       onSubmit(){
         saveLoading.value = true
