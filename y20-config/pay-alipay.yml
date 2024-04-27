@@ -1,8 +1,0 @@
-alipayGateway: 
-appId: 
-format: 
-charset: 
-signType: 
-merchantPrivateKey: 
-alipayPublicKey: 
-notifyUrlPrefix: https://y20.work

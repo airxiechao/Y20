@@ -1,0 +1,66 @@
+server: 
+  url: https://127.0.0.1
+  enableMigrate: true
+
+consul:
+  host: 127.0.0.1
+  port: 8500
+
+
+redis:
+  host: 127.0.0.1
+  port: 6379
+  password: 123456
+  maxPoolSize: 5
+
+
+rabbitmq:
+  host: 127.0.0.1
+  port: 5672
+  username: admin
+  password: 123456
+  virtualHost: /
+
+
+minio:
+  endpoint: http://127.0.0.1:9000
+  accessKey: W00SODOYSCJW5GFANRO6
+  secretKey: 6ynUA2TKi3vh5j3+ZRks4WxE3bsdc0ay66aW4Gcr
+  bucket: y20-artifact
+  threadPoolCoreSize: 5
+  threadPoolMaxSize: 10
+  threadPoolQueueSize: 10
+
+
+mysql:
+  host: 127.0.0.1
+  port: 3306
+  username: y20_dev
+  password: 123456
+  
+
+mongodb:
+  host: 127.0.0.1
+  port: 27017
+  username: y20_dev
+  password: 123456
+  
+
+influxdb:
+  address: http://localhost:8086
+  token: tYlHKT4RsxquFDsiIgkQXmLXPchXiE6woPot1xWlMs3EB_zHBX52kkuVX--kJIJ7GaZ5DlHD85831MLUG3GukA==
+  bucket: bucket1
+  organization: org1
+  
+  
+auth:
+  serviceAccessToken: gZd6H7fGxO69Jr7EDLa1A3ghgx_eEQAdda1CowWZjUCA5toYcl6pIdjKvu4hdZ4LAXQ4zH6ywtDJvHV1GyFaGlpvAgRQbALFn63YdLlsbZOY5I4ozgd68sZYqZIPSCalYbMs3INlXZS_csV6TZIsQLZ6JWoidJsd-m3TbaT3YSSevSSW2lwI4LCSAYZbv1kC
+  
+
+variable:
+  secretVariableEncryptKey: 12345678
+
+
+migrate:
+  migrateAgentVersion: true
+

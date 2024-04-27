@@ -75,6 +75,6 @@
   ![节点列表1](../img/agent-join-list-1.jpg)
 
 ### 5. 维护
-- 在 [节点](/nav/workspace/agent) 页面，可以对节点进行配置、重启、升级或者卸载。
+- 在 [节点](/nav/workspace/agent) 页面，可以对节点进行远程配置、打开终端、重启、升级或者卸载。
 
   ![节点操作](../img/agent-action.jpg)

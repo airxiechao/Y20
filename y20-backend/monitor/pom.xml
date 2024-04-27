@@ -5,7 +5,7 @@
     <parent>
         <artifactId>Y-20</artifactId>
         <groupId>com.airxiechao.y20</groupId>
-        <version>1.0</version>
+        <version>1.2-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -14,7 +14,6 @@
     <modules>
         <module>api-monitor</module>
         <module>biz-monitor</module>
-        <module>biz-monitor-local</module>
         <module>boot-monitor</module>
     </modules>
 

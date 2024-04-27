@@ -10,6 +10,7 @@ import com.airxiechao.axcboot.util.StringUtil;
 import com.airxiechao.axcboot.util.UuidUtil;
 import com.airxiechao.y20.common.core.pubsub.EventBus;
 import com.airxiechao.y20.common.core.rest.ServiceRestClient;
+import com.airxiechao.y20.common.pojo.config.CommonConfig;
 import com.airxiechao.y20.common.pojo.config.VariableCommonConfig;
 import com.airxiechao.y20.pipeline.biz.api.IPipelineBiz;
 import com.airxiechao.y20.pipeline.db.api.IPipelineDb;
@@ -27,6 +28,7 @@ import com.airxiechao.y20.pipeline.pojo.vo.PipelineRunDetailVo;
 import com.airxiechao.y20.pipeline.pojo.vo.PipelineVariableVo;
 import com.airxiechao.y20.pipeline.pojo.vo.PipelineWithLastRunVo;
 import com.airxiechao.y20.pipeline.pubsub.event.cron.EventPipelineCronUpdate;
+import com.airxiechao.y20.pipeline.run.step.param.RemotePrepareEnvStepRunParam;
 import com.airxiechao.y20.quota.rest.api.IServiceQuotaRest;
 import com.airxiechao.y20.quota.rest.param.ServiceValidateQuotaParam;
 import org.slf4j.Logger;
@@ -41,7 +43,7 @@ public class PipelineBizProcess implements IPipelineBiz {
     private static final PipelineConfig pipelineConfig = ConfigFactory.get(PipelineConfig.class);
 
     private IPipelineDb pipelineDb = Db.get(IPipelineDb.class);
-    private VariableCommonConfig variableCommonConfig = ConfigFactory.get(VariableCommonConfig.class);
+    private VariableCommonConfig variableCommonConfig = ConfigFactory.get(CommonConfig.class).getVariable();
 
     private static final ExpiringCache<PipelineStepTypeRecord> stepTypeCache = ExpiringCacheManager.getInstance().createCache(
             "step-type-cache", 6, ExpiringCache.UNIT.HOUR);
@@ -372,6 +374,34 @@ public class PipelineBizProcess implements IPipelineBiz {
     }
 
     @Override
+    public PipelineRunRecord createPipelineRunPty(Long userId, String agentId, Boolean flagDebug) throws Exception {
+        PipelineStep ptyPipelineStep = new PipelineStep()
+                .setType(EnumStepRunType.REMOTE_PREPARE_ENV_TYPE)
+                .setParams(ModelUtil.toMapAndCheckRequiredField(new RemotePrepareEnvStepRunParam(
+                        agentId,
+                        null,
+                        null,
+                        null,
+                        null,
+                        null,
+                        false,
+                        null,
+                        false,
+                        false
+                )));
+        ptyPipelineStep.setDisabled(false);
+
+        Pipeline ptyPipeline = new Pipeline()
+                .addStep(ptyPipelineStep);
+        ptyPipeline.setUserId(userId);
+        ptyPipeline.setProjectId(0L);
+        ptyPipeline.setPipelineId(0L);
+        String name = String.format("pty-%s", agentId);
+
+        return createPipelineRun(ptyPipeline, name, new HashMap<>(), flagDebug);
+    }
+
+    @Override
     public PipelineRunRecord createPipelineRun(Pipeline pipeline, String name, Map<String, String> inParams, Boolean flagDebug) throws Exception {
 
         if(pipelineConfig.getEnableQuota()){
@@ -387,7 +417,7 @@ public class PipelineBizProcess implements IPipelineBiz {
 
         // check if permit only one run at a time
         if(null != pipeline.getFlagOneRun() && pipeline.getFlagOneRun()){
-            long count = pipelineDb.countPipelineRun(pipeline.getUserId(), pipeline.getProjectId(), pipeline.getPipelineId(), null, null, true);
+            long count = pipelineDb.countPipelineRun(pipeline.getUserId(), pipeline.getProjectId(), pipeline.getPipelineId(), null, null, true, true);
             if(count > 0){
                 String error = "run pending: permit only one run at a time";
                 logger.error(error);
@@ -470,7 +500,7 @@ public class PipelineBizProcess implements IPipelineBiz {
         Set<String> runningAgents = new HashSet<>();
 
         pipelineDb.listPipelineRun(userId, null, null, null,
-                null, true, null, null, null, null
+                null, true, true,null, null, null, null
         ).stream().forEach(pipelineRunRecord -> {
             PipelineRun pipelineRun = pipelineRunRecord.toPojo();
             List<PipelineStep> steps = pipelineRun.getPipeline().getSteps();
@@ -626,14 +656,14 @@ public class PipelineBizProcess implements IPipelineBiz {
 
     @Override
     public List<PipelineRunRecord> listPipelineRun(
-            Long userId, Long projectId, Long pipelineId, String name, String status, Boolean onlyRunning,
+            Long userId, Long projectId, Long pipelineId, String name, String status, Boolean onlyRunning, Boolean noPseudo,
             String orderField, String orderType, Integer pageNo, Integer pageSize) {
-        return pipelineDb.listPipelineRun(userId, projectId, pipelineId, name, status, onlyRunning, orderField, orderType, pageNo, pageSize);
+        return pipelineDb.listPipelineRun(userId, projectId, pipelineId, name, status, onlyRunning, noPseudo, orderField, orderType, pageNo, pageSize);
     }
 
     @Override
-    public long countPipelineRun(Long userId, Long projectId, Long pipelineId, String name, String status, Boolean onlyRunning) {
-        return pipelineDb.countPipelineRun(userId, projectId, pipelineId, name, status, onlyRunning);
+    public long countPipelineRun(Long userId, Long projectId, Long pipelineId, String name, String status, Boolean onlyRunning, Boolean noPseudo) {
+        return pipelineDb.countPipelineRun(userId, projectId, pipelineId, name, status, onlyRunning, noPseudo);
     }
 
     @Override

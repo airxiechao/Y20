@@ -5,6 +5,9 @@ export default {
   list({ name = '', orderField = '', orderType = '', pageNo = '', pageSize = '' }){
     return request().get(`${API_PROJECT_PREFIX}/monitor/list?name=${encodeURIComponent(name)}&pageNo=${pageNo}&pageSize=${pageSize}&orderField=${encodeURIComponent(orderField)}&orderType=${orderType}`)
   },
+  listMonitorMetric({ monitorId }){
+    return request().get(`${API_PROJECT_PREFIX}/monitor/metric/list?monitorId=${monitorId}`)
+  },
   get({ monitorId }){
     return request().get(`${API_PROJECT_PREFIX}/monitor/get?monitorId=${monitorId}`)
   },

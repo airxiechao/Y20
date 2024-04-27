@@ -1,14 +1,9 @@
 package com.airxiechao.y20.common.core.biz;
 
 import com.airxiechao.axcboot.core.biz.BizReg;
-import com.airxiechao.axcboot.util.ProxyUtil;
-import com.airxiechao.axcboot.util.lang.ImplReg;
 import com.airxiechao.y20.common.pojo.constant.meta.Meta;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.lang.reflect.InvocationTargetException;
-import java.util.function.Supplier;
 
 
 public class Biz extends BizReg {
@@ -19,13 +14,13 @@ public class Biz extends BizReg {
     public static Biz getInstance() {
         return instance;
     }
-    public static <T> T get(Class<T> interfaceCls){
-        return getBizImplProxy(()-> instance, interfaceCls);
+
+    public static <T> T get(Class<T> interfaceCls) {
+        return getBizImplProxy(() -> instance, interfaceCls);
     }
 
-    private Biz(){
+    private Biz() {
         super(Meta.getProjectPackageName());
-
         this.registerProcessIfExists();
     }
 }

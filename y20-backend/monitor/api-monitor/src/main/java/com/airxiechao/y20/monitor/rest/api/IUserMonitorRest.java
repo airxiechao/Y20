@@ -14,6 +14,14 @@ public interface IUserMonitorRest {
     @Auth(scope = EnumAccessScope.USER)
     Response list(Object exc);
 
+    @Get("/user/monitor/metric/list")
+    @Auth(scope = EnumAccessScope.USER)
+    Response listMonitorMetric(Object exc);
+
+    @Get("/user/monitor/agent/metric/list")
+    @Auth(scope = EnumAccessScope.USER)
+    Response listAgentMetric(Object exc);
+
     @Get("/user/monitor/get")
     @Auth(scope = EnumAccessScope.USER)
     Response get(Object exc);

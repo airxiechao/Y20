@@ -6,30 +6,23 @@ import com.airxiechao.axcboot.config.factory.ConfigFactory;
 import com.airxiechao.axcboot.core.rpc.RpcClientCaller;
 import com.airxiechao.axcboot.core.rpc.RpcReg;
 import com.airxiechao.axcboot.crypto.SslUtil;
-import com.airxiechao.axcboot.storage.fs.IFs;
 import com.airxiechao.axcboot.storage.fs.JavaResourceFs;
 import com.airxiechao.axcboot.util.IpUtil;
-import com.airxiechao.axcboot.util.StringUtil;
 import com.airxiechao.y20.agent.pojo.config.AgentClientConfig;
 import com.airxiechao.y20.agent.pojo.config.AgentClientJksConfig;
-import com.airxiechao.y20.agent.rpc.api.server.IAgentAgentServerRpc;
 import com.airxiechao.y20.agent.rpc.api.client.IAgentRpcClient;
+import com.airxiechao.y20.agent.rpc.api.server.IAgentAgentServerRpc;
 import com.airxiechao.y20.agent.rpc.param.RegisterAgentRpcParam;
+import com.airxiechao.y20.auth.pojo.exception.InvalidAccessTokenException;
+import com.airxiechao.y20.common.core.global.Global;
 import com.airxiechao.y20.common.git.GitUtil;
 import com.airxiechao.y20.common.pojo.constant.meta.Meta;
-import com.airxiechao.y20.common.core.global.Global;
 import com.airxiechao.y20.util.OsUtil;
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import io.netty.channel.ChannelHandlerContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.net.InetAddress;
-import java.net.UnknownHostException;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -64,7 +57,7 @@ public class AgentRpcClient extends RpcClient implements IAgentRpcClient {
                     boolean registered = false;
                     try {
                         registered = registerAgent(ctx);
-                        if(!registered){
+                        if (!registered) {
                             stop();
                         }
                     } catch (Exception e) {
@@ -76,12 +69,12 @@ public class AgentRpcClient extends RpcClient implements IAgentRpcClient {
                     logger.info("agent client disconnect");
                 });
 
-        try{
+        try {
             logger.info("config agent client to use ssl");
             this.useSsl(
                     SslUtil.buildKeyManagerFactory(new JavaResourceFs(), jksConfig.getClientJks(), jksConfig.getClientJksPassword()),
                     SslUtil.buildReloadableTrustManager(new JavaResourceFs(), jksConfig.getTrustJks(), jksConfig.getTrustJksPassword()));
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
 
@@ -91,13 +84,13 @@ public class AgentRpcClient extends RpcClient implements IAgentRpcClient {
         Global.getInstance().registerImpl(IAgentRpcClient.class, this);
     }
 
-    private void registerRpcHandlerIfExists(){
+    private void registerRpcHandlerIfExists() {
         RpcReg rpcReg = new RpcReg(Meta.getProjectPackageName(), this);
         rpcReg.registerHandlerIfExists(null);
     }
 
     @Override
-    public Response callServer(String type, Map payload){
+    public Response callServer(String type, Map payload) {
         // add auth token to request
         payload.put("auth", accessToken);
         return super.callServer(type, payload);
@@ -107,7 +100,7 @@ public class AgentRpcClient extends RpcClient implements IAgentRpcClient {
     public List<ChannelHandlerContext> getAllChannelHandlerContext() {
         List<ChannelHandlerContext> list = new ArrayList<>();
         ChannelHandlerContext ctx = super.getRpcContext().getContext();
-        if(null == ctx){
+        if (null == ctx) {
             return list;
         }
 
@@ -123,8 +116,13 @@ public class AgentRpcClient extends RpcClient implements IAgentRpcClient {
 
         Response resp = this.callMaster(ctx, IAgentAgentServerRpc.class).registerAgent(
                 new RegisterAgentRpcParam(null, this.agentId, version, localHost.getHostName(), OsUtil.getOs(), ip));
-
-        return resp.isSuccess();
+        if (resp.isSuccess()) {
+            return true;
+        } else if (resp.getMessage().equals(InvalidAccessTokenException.INVALID_ACCESS_TOKEN)){
+            return false;
+        } else {
+            throw new Exception(resp.getMessage());
+        }
     }
 
     @Override

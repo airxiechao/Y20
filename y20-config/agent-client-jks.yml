@@ -1,4 +1,0 @@
-clientJks: cert/agent-client-key.jks
-clientJksPassword: 
-trustJks: cert/agent-client-trust.jks
-trustJksPassword: 

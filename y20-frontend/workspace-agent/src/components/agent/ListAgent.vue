@@ -109,11 +109,9 @@
                       <q-item-section avatar>
                         <q-avatar icon="computer" class="q-mr-sm text-primary" size="lg" style="background: #ECF2FF;" />
                       </q-item-section>
-                      <q-item-section :class="{
-                          'cursor-pointer': !teamId
-                        }" @click="!teamId && onClickConfigAgent(props.row.agentId, props.row.active)">
+                      <q-item-section>
                         <q-item-label lines="1">
-                          <span class="title vertical-middle">
+                          <span class="title vertical-middle cursor-pointer" @click="onClickAgentMetric(props.row.agentId, props.row.active)">
                             {{props.row.agentId}}
                             <!-- <q-tooltip anchor="top left" self="bottom left" :offset="[0, 8]">{{ props.row.agentId }}</q-tooltip> -->
                           </span>
@@ -136,15 +134,21 @@
                         <q-btn flat dense round icon="more_vert">
                           <q-menu>
                             <q-list style="min-width: 100px">
+                              <q-item clickable v-close-popup @click="onClickAgentMetric(props.row.agentId)">
+                                <q-item-section>状态</q-item-section>
+                              </q-item>
+                              <q-item clickable v-close-popup @click="onClickOpenAgentPty(props.row.agentId, props.row.active)">
+                                <q-item-section>终端</q-item-section>
+                              </q-item>
+                              <q-separator />
                               <q-item v-if="!teamId" clickable v-close-popup @click="onClickConfigAgent(props.row.agentId, props.row.active)">
                                 <q-item-section>配置</q-item-section>
                               </q-item>
-                              <q-separator />
-                              <q-item clickable v-close-popup @click="onClickRestartAgent(props.row.agentId)">
-                                <q-item-section>重启服务</q-item-section>
-                              </q-item>
                               <q-item clickable v-close-popup @click="onClickUpgradeAgent(props.row.agentId)">
                                 <q-item-section>升级</q-item-section>
+                              </q-item>
+                              <q-item clickable v-close-popup @click="onClickRestartAgent(props.row.agentId)">
+                                <q-item-section>重启服务</q-item-section>
                               </q-item>
                               <q-separator />
                               <q-item clickable v-close-popup @click="onClickCleanAgent(props.row.agentId)">
@@ -282,6 +286,7 @@
 </i18n>
 
 <script>
+import { PAGE_NAME } from '@/page.config'
 import dayjs from 'dayjs'
 import duration from 'dayjs/plugin/duration'
 dayjs.extend(duration)
@@ -321,12 +326,19 @@ export default {
 
     const teamId = computed(() => store.state.workspace.teamId || '')
 
-    const pagination = ref({
-      sortBy: 'agentId',
-      descending: false,
-      page: 1,
-      rowsPerPage: 8,
-      rowsNumber: 0
+    const pagination = computed({
+      get: () => {
+        var state = store.state
+        for (const item of PAGE_NAME.split('-')) {
+          state = state[item]
+        }
+
+        return state.listAgent.pagination
+      },
+      set: (val) => {
+        var page = PAGE_NAME.replaceAll('-', '/')
+        store.commit(`${page}/updateListAgentPagination`, val)
+      },
     })
 
     const getLatestVersion = () => {
@@ -434,6 +446,10 @@ export default {
         })
       },
 
+      onClickAgentMetric(agentId){
+        router.push(`/workspace/agent/${agentId}/metric`)
+      },
+
       onClickConfigAgent(agentId, active){
         if(!active){
           qUtil.notifyError('节点已离线')
@@ -441,6 +457,15 @@ export default {
         }
 
         router.push(`/workspace/agent/${agentId}/config`)
+      },
+
+      onClickOpenAgentPty(agentId, active){
+        if(!active){
+          qUtil.notifyError('节点已离线')
+          return
+        }
+
+        router.push(`/workspace/agent/${agentId}/pty`)
       },
 
       onClickUpgradeAgent(agentId){

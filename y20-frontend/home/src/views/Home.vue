@@ -21,8 +21,8 @@
     </div>
     <q-toolbar class="page-home-toolbar">
       <q-toolbar-title class="text-bold">
-        <q-icon class="q-mr-sm vertical-middle" size="lg" :name="`img:/${FRONTEND_SERVICE_NAME}/static/img/icon-logo.png`" />
-        <span class="vertical-middle">鲲擎流水线 Y20</span>
+        <q-icon class="q-mr-sm vertical-middle" size="4rem" :name="`img:/icon-logo.png`" />
+        <span class="vertical-middle">鲲擎运维 Y20</span>
       </q-toolbar-title>
       <div class="gt-xs">
         <a href="https://github.com/airxiechao/Y20" class="q-mx-md" target="_blank">
@@ -74,12 +74,8 @@
               'text-center': true,
               'text-dark': true,
               'text-weight-bold': true,
-            }">分布式系统的运维流水线</div>
-            <div class="q-py-md q-mt-md text-grey-7 text-center" style="font-size: 16px; line-height: 36px;">
-              <span class="vertical-middle">
-                通过编排流水线实现流程的标准化、自动化！
-              </span>
-            </div>
+            }">分布式系统的自动化运维</div>
+            <div class="q-py-md text-grey-7 text-center" style="font-size: 16px; line-height: 36px;"></div>
             <div class="q-mt-sm q-mb-xl text-center">
               <q-btn flat class="q-px-lg q-ma-sm bg-primary text-white" size="lg" label="开始使用" @click="onClickStart"/>
               <q-btn flat class="q-px-lg q-ma-sm bg-white text-dark" size="lg" label="入门指南" type="a" href="/docs" />
@@ -252,10 +248,10 @@
                   <span class="vertical-middle">支持流水线的调试，流水线可以单步运行，和调试程序一样。</span>
                 </div>
                 <div>
-                  <span class="vertical-middle">当以调试模式启动，每个步骤需手动触发，结束后进入等待状态。</span>
+                  <span class="vertical-middle">流水线运行时，可以打开当前节点的远程终端和文件浏览器。</span>
                 </div>
                 <div>
-                  <span class="vertical-middle">执行中途，可以打开当前节点的远程终端和文件浏览器，进行远程操作。</span>
+                  <span class="vertical-middle">节点接入后，支持通过远程终端，进行远程操作。</span>
                 </div>
               </div>
             </div>
@@ -264,7 +260,7 @@
             <div class="text">
               <div class="text-h5">
                 <q-icon name="more_vert" class="vertical-middle q-mr-sm" />
-                <span class="vertical-middle">了解更多</span>
+                <span class="vertical-middle">更多功能</span>
               </div>
               <div class="q-mt-md q-pl-md q-gutter-sm text-grey-7">
                 <div>
@@ -283,7 +279,7 @@
       </div>
 
       <div class="sec price q-my-xl">
-        <div class="middle">
+        <div v-if="false" class="middle">
           <div class="row justify-center q-pb-md">
             <div class="text-h5 text-center">
               <div class="text-grey-7 text-subtitle2">配额 & 价格</div>
@@ -330,7 +326,7 @@
         <div class="info">
           <div class="row">
             <div class="col-12 col-md-3 q-pa-md">
-              <div class="q-pb-sm">© 2022 成都鲲擎软件科技有限公司</div>
+              <div class="q-pb-sm">© {{ new Date().getFullYear() }} 成都鲲擎软件科技有限公司</div>
               <div><a class="q-mr-sm" style="color: inherit;" target="_blank" href="https://beian.miit.gov.cn">蜀ICP备20023213号-2</a></div>
               <div>
                 <a class="q-mr-sm" style="color: inherit;" target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=51019002004441">
@@ -342,7 +338,7 @@
             <div class="col-12 col-md-3 q-pa-md">
               <div class="q-pb-sm">产品</div>
               <div>
-                <a style="color: inherit;" target="_blank" href="https://y20.work">鲲擎流水线</a>
+                <a style="color: inherit;" target="_blank" href="https://y20.work">鲲擎运维 Y20</a>
               </div>
               <!-- <div>
                 更新：{{LASTCOMMITDATETIME}}
@@ -458,11 +454,11 @@ $--max-width: 1280px !default;
     }
 
     .footer{
+      background-color: #f5f5f5;
       .info{
         line-height: 25px;
         max-width: $--max-width;
         margin: 0 auto;
-        border-top: 1px solid #ddd;
       }
     }
   }

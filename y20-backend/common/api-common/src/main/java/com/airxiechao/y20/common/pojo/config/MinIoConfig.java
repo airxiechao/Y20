@@ -1,8 +1,5 @@
 package com.airxiechao.y20.common.pojo.config;
 
-import com.airxiechao.axcboot.config.annotation.Config;
-
-@Config("minio.yml")
 public class MinIoConfig {
     private String endpoint;
     private String accessKey;

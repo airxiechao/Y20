@@ -8,6 +8,8 @@ import com.airxiechao.axcboot.util.MapBuilder;
 import com.airxiechao.axcboot.util.StringUtil;
 import com.airxiechao.y20.common.pojo.config.AuthCommonConfig;
 import com.airxiechao.y20.common.core.cache.RestServiceCache;
+import com.airxiechao.y20.common.pojo.config.CommonConfig;
+import com.airxiechao.y20.common.pojo.config.ConsulConfig;
 import com.ecwid.consul.v1.health.model.HealthService;
 
 import java.io.OutputStream;
@@ -21,7 +23,8 @@ public class ServiceTaggedRestClient extends AbstractRestClient {
         return instance;
     }
 
-    private static AuthCommonConfig authServiceConfig = ConfigFactory.get(AuthCommonConfig.class);
+    private static AuthCommonConfig authServiceConfig = ConfigFactory.get(CommonConfig.class).getAuth();
+    private static ConsulConfig consulConfig = ConfigFactory.get(CommonConfig.class).getConsul();
     private static final String SERVICE_NAME_PREFIX = "y20-backend-";
 
     public static <T> T get(Class<T> cls, String serviceTag){
@@ -50,7 +53,7 @@ public class ServiceTaggedRestClient extends AbstractRestClient {
         }
 
         serviceName = SERVICE_NAME_PREFIX+serviceName;
-        HealthService service = RestClientUtil.getServiceFromConsul(serviceName, serviceTag);
+        HealthService service = RestClientUtil.getServiceFromConsul(consulConfig.getHost(), consulConfig.getPort(), serviceName, serviceTag);
 
         String host = service.getNode().getAddress();
         int port = service.getService().getPort();

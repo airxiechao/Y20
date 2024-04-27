@@ -66,7 +66,7 @@
             </q-item-section> -->
             <q-item-section>令牌</q-item-section>
           </q-item>
-          <q-item clickable v-close-popup to='/user/billing'>
+          <q-item v-if="ENABLE_NAV_QUOTA" clickable v-close-popup to='/user/billing'>
             <!-- <q-item-section avatar>
               <q-icon name="bar_chart" size="sm" />
             </q-item-section> -->
@@ -121,6 +121,8 @@ export default {
     })
 
     return {
+      ENABLE_NAV_QUOTA: ENABLE_NAV_QUOTA,
+
       username,
 
       onClickQuit(){

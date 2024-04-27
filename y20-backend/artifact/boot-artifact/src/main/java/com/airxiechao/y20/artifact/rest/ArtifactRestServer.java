@@ -3,6 +3,8 @@ package com.airxiechao.y20.artifact.rest;
 import com.airxiechao.axcboot.communication.rest.server.RestServer;
 import com.airxiechao.axcboot.config.factory.ConfigFactory;
 import com.airxiechao.y20.artifact.pojo.config.ArtifactConfig;
+import com.airxiechao.y20.common.pojo.config.CommonConfig;
+import com.airxiechao.y20.common.pojo.config.ConsulConfig;
 import com.airxiechao.y20.common.pojo.constant.meta.Meta;
 import com.airxiechao.y20.common.core.pubsub.EventBus;
 import com.airxiechao.y20.common.core.rest.EnhancedRestUtil;
@@ -14,6 +16,7 @@ public class ArtifactRestServer extends RestServer {
 
     private static final Logger logger = LoggerFactory.getLogger(ArtifactRestServer.class);
     private static final ArtifactConfig config = ConfigFactory.get(ArtifactConfig.class);
+    private static final ConsulConfig consulConfig = ConfigFactory.get(CommonConfig.class).getConsul();
 
     public static final String NAME = config.getName();
     public static final int PORT = config.getPort();
@@ -31,7 +34,7 @@ public class ArtifactRestServer extends RestServer {
                 EnhancedRestUtil::validateAccessToken);
 
         // register consul
-        this.registerConsul(10, "y20-backend-");
+        this.registerConsul(consulConfig.getHost(), consulConfig.getPort(), 10, "y20-backend-");
 
         // register rest
         Rest rest = new Rest(Meta.getModulePackageName(this.getClass()), this);

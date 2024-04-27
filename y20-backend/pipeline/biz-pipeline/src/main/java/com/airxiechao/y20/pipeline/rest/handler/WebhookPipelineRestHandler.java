@@ -13,6 +13,7 @@ import com.airxiechao.y20.pipeline.db.record.PipelineWebhookTriggerRecord;
 import com.airxiechao.y20.pipeline.pojo.PipelineWebhookTrigger;
 import com.airxiechao.y20.pipeline.pojo.constant.EnumPipelineRunStatus;
 import com.airxiechao.y20.pipeline.pojo.constant.EnumPipelineWebhookTriggerEventType;
+import com.airxiechao.y20.pipeline.pojo.constant.EnumPipelineWebhookTriggerSourceType;
 import com.airxiechao.y20.pipeline.rest.api.IServicePipelineRunInstanceRest;
 import com.airxiechao.y20.pipeline.rest.api.IWebhookPipelineRest;
 import com.airxiechao.y20.pipeline.rest.param.CreatePipelineRunInstanceParam;
@@ -61,7 +62,16 @@ public class WebhookPipelineRestHandler implements IWebhookPipelineRest {
 
             switch (eventType){
                 case EnumPipelineWebhookTriggerEventType.PUSH:
-                    String message = getGitPushHeadCommitMessage(param);
+                    String message;
+                    switch (sourceType){
+                        case EnumPipelineWebhookTriggerSourceType.CURL:
+                            message = param.getString("message");
+                            break;
+                        default:
+                            message = getGitPushHeadCommitMessage(param);
+                            break;
+                    }
+
                     if(StringUtil.isBlank(message)){
                         return;
                     }

@@ -1,0 +1,4 @@
+address: {{influxdb.address}}
+token: {{{influxdb.token}}}
+bucket: {{influxdb.bucket}}
+organization: {{influxdb.organization}}

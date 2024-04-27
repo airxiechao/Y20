@@ -5,7 +5,7 @@
     <parent>
         <artifactId>Y-20</artifactId>
         <groupId>com.airxiechao.y20</groupId>
-        <version>1.0</version>
+        <version>1.2-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -27,6 +27,17 @@
             <artifactId>biz-artifact</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.airxiechao.y20</groupId>
+            <artifactId>biz-sms</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-cli</groupId>
+            <artifactId>commons-cli</artifactId>
+            <version>1.5.0</version>
+        </dependency>
+
     </dependencies>
 
     <profiles>
@@ -66,6 +77,54 @@
                                     <addClasspath>true</addClasspath>
                                     <classpathPrefix>lib/</classpathPrefix>
                                     <mainClass>com.airxiechao.y20.tool.CleanPipelineRunFileMain</mainClass>
+                                </manifest>
+                                <manifestEntries>
+                                    <Class-Path>../y20-config/</Class-Path>
+                                    <Multi-Release>true</Multi-Release>
+                                </manifestEntries>
+                            </archive>
+                        </configuration>
+                    </plugin>
+
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>send-monitor-alert-sms</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-dependency-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>copy-dependencies</id>
+                                <phase>prepare-package</phase>
+                                <goals>
+                                    <goal>copy-dependencies</goal>
+                                </goals>
+                                <configuration>
+                                    <outputDirectory>${project.build.directory}/lib</outputDirectory>
+                                    <overWriteReleases>false</overWriteReleases>
+                                    <overWriteSnapshots>false</overWriteSnapshots>
+                                    <overWriteIfNewer>true</overWriteIfNewer>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-jar-plugin</artifactId>
+                        <configuration>
+                            <finalName>send-monitor-alert-sms</finalName>
+                            <archive>
+                                <manifest>
+                                    <addClasspath>true</addClasspath>
+                                    <classpathPrefix>lib/</classpathPrefix>
+                                    <mainClass>com.airxiechao.y20.tool.SendMonitorAlertSmsMain</mainClass>
                                 </manifest>
                                 <manifestEntries>
                                     <Class-Path>../y20-config/</Class-Path>

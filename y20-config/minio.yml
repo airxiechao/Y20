@@ -1,7 +1,0 @@
-endpoint: 
-accessKey: 
-secretKey: 
-bucket: y20-artifact
-threadPoolCoreSize: 5
-threadPoolMaxSize: 10
-threadPoolQueueSize: 10

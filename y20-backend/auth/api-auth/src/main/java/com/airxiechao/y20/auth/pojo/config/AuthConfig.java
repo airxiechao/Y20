@@ -9,6 +9,7 @@ public class AuthConfig {
     private int port;
     private String accessTokenEncryptKey;
     private int numMinuteOfUserAccessToken;
+    private boolean enableSmsVerificationCode;
 
     public String getName() {
         return name;
@@ -40,5 +41,13 @@ public class AuthConfig {
 
     public void setNumMinuteOfUserAccessToken(int numMinuteOfUserAccessToken) {
         this.numMinuteOfUserAccessToken = numMinuteOfUserAccessToken;
+    }
+
+    public boolean isEnableSmsVerificationCode() {
+        return enableSmsVerificationCode;
+    }
+
+    public void setEnableSmsVerificationCode(boolean enableSmsVerificationCode) {
+        this.enableSmsVerificationCode = enableSmsVerificationCode;
     }
 }

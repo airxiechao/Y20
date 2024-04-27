@@ -87,7 +87,7 @@
                 v-model="monitor.actionType"
                 :options="monitorActionTypeOptions" 
                 :label="`动作类型 *`"
-                hint="监视对象发生错误时的动作"
+                hint="监视对象被发现异常时的触发动作类型"
                 emit-value 
                 map-options 
                 lazy-rules

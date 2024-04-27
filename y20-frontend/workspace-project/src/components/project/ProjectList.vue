@@ -668,7 +668,7 @@ export default {
       },
 
       onClickMonitor(projectId, monitorId){
-        router.push(`/project/${projectId}/monitor/${monitorId}`)
+        router.push(`/project/${projectId}/monitor/${monitorId}/metric`)
       },
     
     }

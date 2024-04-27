@@ -35,8 +35,8 @@ public interface IPipelineDb {
 
     boolean createPipelineStepRun(PipelineStepRunRecord stepRunRecord);
     List<PipelineStepRunRecord> listPipelineStepRun(Long pipelineRunId);
-    List<PipelineRunRecord> listPipelineRun(Long userId, Long projectId, Long pipelineId, String name, String status, Boolean onlyRunning, String orderField, String orderType, Integer pageNo, Integer pageSize);
-    long countPipelineRun(Long userId, Long projectId, Long pipelineId, String name, String status, Boolean onlyRunning);
+    List<PipelineRunRecord> listPipelineRun(Long userId, Long projectId, Long pipelineId, String name, String status, Boolean onlyRunning, Boolean noPseudo, String orderField, String orderType, Integer pageNo, Integer pageSize);
+    long countPipelineRun(Long userId, Long projectId, Long pipelineId, String name, String status, Boolean onlyRunning, Boolean noPseudo);
     long countPipelineRun(Long userId, Date beginTime, Date endTime);
 
     PipelineStepRunRecord getPipelineStepRun(Long pipelineRunId, int position);

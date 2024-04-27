@@ -35,16 +35,17 @@ module.exports = (env, argv) => {
       port,
       name,
     }),
-    new CopyWebpackPlugin({
-      patterns: [
-        {
-            from: path.join(__dirname, './src/assets/static'),
-            to: `${config.output.path}/static`
-        }
-      ]
-    }),
+    // new CopyWebpackPlugin({
+    //   patterns: [
+    //     {
+    //         from: path.join(__dirname, './src/assets/static'),
+    //         to: `${config.output.path}/static`
+    //     }
+    //   ]
+    // }),
     new Webpack.DefinePlugin({
       FRONTEND_SERVICE_NAME: JSON.stringify(frontendServiceName),
+      ENABLE_LOGIN_MOBILE: env.ENABLE_LOGIN_MOBILE !== undefined ? env.ENABLE_LOGIN_MOBILE == 'true' : true,
     }),
   ]
     

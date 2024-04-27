@@ -2,10 +2,10 @@ package com.airxiechao.y20.common.pojo.config;
 
 public class RedisConfig {
 
-    public String host;
-    public int port;
-    public String password;
-    public int maxPoolSize;
+    private String host;
+    private int port;
+    private String password;
+    private int maxPoolSize;
 
     public String getHost() {
         return host;

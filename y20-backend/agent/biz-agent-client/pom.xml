@@ -5,7 +5,7 @@
     <parent>
         <artifactId>agent</artifactId>
         <groupId>com.airxiechao.y20</groupId>
-        <version>1.0</version>
+        <version>1.2-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -30,6 +30,11 @@
         <dependency>
             <groupId>com.airxiechao.y20</groupId>
             <artifactId>api-agent</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.airxiechao.y20</groupId>
+            <artifactId>api-monitor</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>

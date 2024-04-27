@@ -99,7 +99,7 @@ public class WxPayBizProcess implements IWxPayBiz {
     }
 
     private String buildDescription(String billingPlan, Integer numMonth){
-        return String.format("配额：%s*%d月", billingPlan, numMonth);
+        return String.format("Y20配额：%s*%d月", billingPlan, numMonth);
     }
 
     private String buildOutTradeNo(Long userId, String billingPlan, Integer numMonth){

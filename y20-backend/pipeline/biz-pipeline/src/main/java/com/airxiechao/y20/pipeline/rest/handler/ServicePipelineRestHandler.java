@@ -69,7 +69,7 @@ public class ServicePipelineRestHandler implements IServicePipelineRest {
 
         long total = pipelineBiz.count(param.getUserId(), param.getProjectId(), null);
         long running = pipelineBiz.countPipelineRun(
-                param.getUserId(), param.getProjectId(), null, null, null, true
+                param.getUserId(), param.getProjectId(), null, null, null, true, true
         );
 
         PipelineCountVo pipelineCountVo = new PipelineCountVo(total, running);

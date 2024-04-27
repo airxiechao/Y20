@@ -1,0 +1,5 @@
+name: auth
+port: 8001
+accessTokenEncryptKey: y20-auth
+numMinuteOfUserAccessToken: 120
+enableSmsVerificationCode: false

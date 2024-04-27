@@ -98,7 +98,7 @@ public class QuotaBizProcess implements IQuotaBiz {
             );
         }else{
             Date beginTime = aggregatedRecord.getBeginTime();
-            Date endTime = new Date();
+            Date endTime = aggregatedRecord.getEndTime();
 
             quota = new Quota(
                     aggregatedRecord.getMaxAgent(),

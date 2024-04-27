@@ -1,7 +1,7 @@
 :root {
   // brand colors
-  --c-brand: #2a6099;
-  --c-brand-light: #2a6099;
+  --c-brand: #0d72dc;
+  --c-brand-light: #0d72dc;
 
   // background colors
   --c-bg: #ffffff;
@@ -24,7 +24,7 @@
   --c-border-dark: #dfe2e5;
 
   // custom container colors
-  --c-tip: #2a6099;
+  --c-tip: #0d72dc;
   --c-tip-bg: var(--c-bg-light);
   --c-tip-title: var(--c-text);
   --c-tip-text: var(--c-text);
@@ -134,8 +134,8 @@
 
 html.dark {
   // brand colors
-  --c-brand: #2a6099;
-  --c-brand-light: #2a6099;
+  --c-brand: #0d72dc;
+  --c-brand-light: #0d72dc;
 
   // background colors
   --c-bg: #22272e;
@@ -153,7 +153,7 @@ html.dark {
   --c-border-dark: #34404c;
 
   // custom container colors
-  --c-tip: #2a6099;
+  --c-tip: #0d72dc;
   --c-warning: #ceab00;
   --c-warning-bg: #7e755b;
   --c-warning-title: #ceac03;

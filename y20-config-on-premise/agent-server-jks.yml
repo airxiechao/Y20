@@ -1,0 +1,4 @@
+serverJks: cert/agent-server-key.jks
+serverJksPassword: 123456
+trustJks: cert/agent-server-trust.jks
+trustJksPassword: 123456

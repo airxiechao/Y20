@@ -31,6 +31,16 @@ public class AgentDbProcedure extends AbstractDbProcedure implements IAgentDb {
     }
 
     @Override
+    public AgentRecord getByAgentId(String agentId) {
+        SqlParams sqlParams = new SqlParamsBuilder()
+                .select("*")
+                .from(DbUtil.table(AgentRecord.class))
+                .where(DbUtil.column(AgentRecord.class, "agentId"), "=", agentId)
+                .build();
+        return this.dbManager.selectFirstBySql(sqlParams, AgentRecord.class);
+    }
+
+    @Override
     public AgentRecord getByClientId(String clientId) {
         SqlParams sqlParams = new SqlParamsBuilder()
                 .select("*")

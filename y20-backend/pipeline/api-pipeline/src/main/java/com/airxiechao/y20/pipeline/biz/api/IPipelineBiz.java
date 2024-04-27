@@ -60,6 +60,8 @@ public interface IPipelineBiz {
     // run
     PipelineRunRecord createPipelineRun(Long userId, Long projectId, Long pipelineId, String name, Map<String, String> inParams, Boolean flagDebug) throws Exception;
 
+    PipelineRunRecord createPipelineRunPty(Long userId, String agentId, Boolean flagDebug) throws Exception;
+
     PipelineRunRecord createPipelineRun(Pipeline pipeline, String name, Map<String, String> inParams, Boolean flagDebug) throws Exception;
 
     PipelineRunRecord getPipelineRun(Long userId, Long projectId, Long pipelineId, Long pipelineRunId);
@@ -82,10 +84,10 @@ public interface IPipelineBiz {
     PipelineRunDetailVo getPipelineRunVoDesensitized(Long userId, Long projectId, Long pipelineId, Long pipelineRunId);
 
     List<PipelineRunRecord> listPipelineRun(
-            Long userId, Long projectId, Long pipelineId, String name, String status, Boolean onlyRunning,
+            Long userId, Long projectId, Long pipelineId, String name, String status, Boolean onlyRunning, Boolean noPseudo,
             String orderField, String orderType, Integer pageNo, Integer pageSize);
 
-    long countPipelineRun(Long userId, Long projectId, Long pipelineId, String name, String status, Boolean onlyRunning);
+    long countPipelineRun(Long userId, Long projectId, Long pipelineId, String name, String status, Boolean onlyRunning, Boolean noPseudo);
     long countPipelineRun(Long userId, Date beginTime, Date endTime);
 
     boolean updatePipelineStepRunStatus(Long pipelineRunId, int position, String status, String error);

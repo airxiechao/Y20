@@ -7,6 +7,7 @@ import com.airxiechao.axcboot.config.annotation.Config;
 public class TemplateConfig {
     private String name;
     private int port;
+    private String templateIndexDir;
 
     public String getName() {
         return name;
@@ -24,4 +25,11 @@ public class TemplateConfig {
         this.port = port;
     }
 
+    public String getTemplateIndexDir() {
+        return templateIndexDir;
+    }
+
+    public void setTemplateIndexDir(String templateIndexDir) {
+        this.templateIndexDir = templateIndexDir;
+    }
 }

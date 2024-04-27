@@ -5,7 +5,7 @@
     <parent>
         <artifactId>monitor</artifactId>
         <groupId>com.airxiechao.y20</groupId>
-        <version>1.0</version>
+        <version>1.2-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 

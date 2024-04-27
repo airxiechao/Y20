@@ -83,7 +83,7 @@
                         <q-item-section avatar class="cursor-pointer">
                           <q-avatar icon="monitor" class="q-mr-sm text-primary" size="lg" style="background: #ECF2FF;" />
                         </q-item-section>
-                        <q-item-section class="title cursor-pointer" @click="onClickEditMonitor(props.row.monitorId)">
+                        <q-item-section class="title cursor-pointer" @click="onClickMonitorMetric(props.row.monitorId)">
                           <q-item-label>
                             <span>{{ props.row.name }}</span>
                           </q-item-label>
@@ -91,7 +91,8 @@
                             <q-badge v-if="props.row.status == 'OK'" color="green" class="q-mr-xs">正常</q-badge >
                             <q-badge v-else-if="props.row.status == 'ERROR'" color="red" class="q-mr-xs">异常</q-badge >
                             <q-badge v-else color="grey" class="q-mr-xs">未知</q-badge >
-
+                          </q-item-label>
+                          <q-item-label caption>
                             <span class="vertical-middle q-mr-xs">{{ props.row.type }}</span>
                             <template v-if="props.row.lastUpdateTime">
                               <q-icon class="vertical-middle" name="update" />
@@ -103,6 +104,9 @@
                           <q-btn color="grey" flat round icon="more_vert">
                             <q-menu anchor="bottom right" self="top right">
                               <q-list style="min-width: 100px">
+                                <q-item clickable v-close-popup @click="onClickMonitorMetric(props.row.monitorId)">
+                                  <q-item-section>状态</q-item-section>
+                                </q-item>
                                 <q-item clickable v-close-popup @click="onClickEditMonitor(props.row.monitorId)">
                                   <q-item-section>编辑</q-item-section>
                                 </q-item>
@@ -284,6 +288,10 @@ export default {
 
       onClickCreateMonitor(){
         router.push(`/project/${projectId}/monitor/create`)
+      },
+
+      onClickMonitorMetric(monitorId){
+        router.push(`/project/${projectId}/monitor/${monitorId}/metric`)
       },
 
       onClickEditMonitor(monitorId){

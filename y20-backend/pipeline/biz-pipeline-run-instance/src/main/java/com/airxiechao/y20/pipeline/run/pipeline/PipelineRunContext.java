@@ -4,6 +4,7 @@ import com.airxiechao.axcboot.communication.common.Response;
 import com.airxiechao.axcboot.config.factory.ConfigFactory;
 import com.airxiechao.axcboot.crypto.AesUtil;
 import com.airxiechao.axcboot.util.StringUtil;
+import com.airxiechao.y20.common.pojo.config.CommonConfig;
 import com.airxiechao.y20.common.pojo.config.VariableCommonConfig;
 import com.airxiechao.y20.common.core.biz.Biz;
 import com.airxiechao.y20.common.core.rest.ServiceRestClient;
@@ -19,7 +20,7 @@ import com.airxiechao.y20.project.rest.param.GetProjectBasicParam;
 
 public class PipelineRunContext extends AbstractPipelineRunContext {
 
-    private static final VariableCommonConfig variableCommonConfig = ConfigFactory.get(VariableCommonConfig.class);
+    private static final VariableCommonConfig variableCommonConfig = ConfigFactory.get(CommonConfig.class).getVariable();
 
     private IProjectBiz projectBiz = Biz.get(IProjectBiz.class);
 

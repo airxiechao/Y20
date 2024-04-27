@@ -222,10 +222,10 @@ export default {
     })
 
     const payTypes = ref([
-      {label: '微信', value: 'WXPAY'},
+      // {label: '微信', value: 'WXPAY'},
       {label: '支付宝', value: 'ALIPAY'},
     ])
-    const payType = ref('WXPAY')
+    const payType = ref('ALIPAY')
 
     const priceLoading = ref(false)
     const orderLoading = ref(false)

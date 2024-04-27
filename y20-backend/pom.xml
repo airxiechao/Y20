@@ -7,12 +7,11 @@
     <groupId>com.airxiechao.y20</groupId>
     <artifactId>Y-20</artifactId>
     <packaging>pom</packaging>
-    <version>1.0</version>
+    <version>1.2-SNAPSHOT</version>
     <modules>
         <module>common</module>
         <module>agent</module>
         <module>util</module>
-        <module>sql</module>
         <module>test</module>
         <module>artifact</module>
         <module>auth</module>
@@ -31,6 +30,9 @@
         <module>ip</module>
         <module>monitor</module>
         <module>scriptlib</module>
+        <module>migrate</module>
+        <module>allinone</module>
+        <module>allinone-on-premise</module>
     </modules>
 
     <properties>
@@ -44,7 +46,7 @@
         <dependency>
             <groupId>io.github.airxiechao</groupId>
             <artifactId>axcboot</artifactId>
-            <version>0.41</version>
+            <version>0.42-SNAPSHOT</version>
         </dependency>
     </dependencies>
 

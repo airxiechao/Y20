@@ -65,7 +65,7 @@
           </q-item>
           
         </q-list>
-        <div v-if="username && !teamId" class="quota-card q-ma-sm">
+        <div v-if="username && !teamId && ENABLE_NAV_QUOTA" class="quota-card q-ma-sm">
           <q-list dense>
             <q-item-label header>
               <router-link class="text-grey" :to="`/user/billing`">当前配额</router-link>
@@ -195,6 +195,8 @@ export default {
     })
 
     return {
+      ENABLE_NAV_QUOTA: ENABLE_NAV_QUOTA,
+      
       $q,
       link,
       username,

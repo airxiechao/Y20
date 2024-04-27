@@ -1,0 +1,20 @@
+auth: 8001
+manmachinetest: 8002
+sms: 8003
+email: 8004
+log: 8005
+artifact: 8006
+cron: 8007
+quota: 8008
+template: 8009
+project: 8010
+pipeline: 8011
+pipeline-run-instance: 8012
+agent: 8013
+agent-server: 8014
+activity: 8015
+pay: 8016
+ip: 8017
+monitor: 8018
+scriptlib: 8019
+

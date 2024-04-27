@@ -6,6 +6,7 @@ import com.airxiechao.axcboot.storage.db.sql.DbManager;
 import com.airxiechao.axcboot.storage.fs.IFs;
 import com.airxiechao.axcboot.storage.fs.JavaResourceFs;
 import com.airxiechao.y20.artifact.fs.MinIoFsFactory;
+import com.airxiechao.y20.common.core.db.DbManagerUtil;
 import com.airxiechao.y20.pipeline.db.api.IPipelineDb;
 import com.airxiechao.y20.pipeline.db.record.PipelineRunRecord;
 import org.slf4j.Logger;
@@ -23,7 +24,7 @@ public class CleanPipelineRunFileMain {
         IFs minioFs = MinIoFsFactory.getInstance().getFs();
 
         String pipelineDbConfigFile = IPipelineDb.class.getAnnotation(IDb.class).value();
-        DbManager pipelineDbManager = new DbManager(new JavaResourceFs(), pipelineDbConfigFile);
+        DbManager pipelineDbManager = DbManagerUtil.createDbManager(new JavaResourceFs(), pipelineDbConfigFile);
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 

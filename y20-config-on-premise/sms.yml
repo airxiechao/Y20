@@ -1,0 +1,3 @@
+name: sms
+port: 8003
+verificationCodeTokenEncryptKey: 12345678

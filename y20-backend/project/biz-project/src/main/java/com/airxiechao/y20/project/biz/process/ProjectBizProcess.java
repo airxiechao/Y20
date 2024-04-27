@@ -4,6 +4,7 @@ import com.airxiechao.axcboot.communication.common.Response;
 import com.airxiechao.axcboot.config.factory.ConfigFactory;
 import com.airxiechao.axcboot.crypto.AesUtil;
 import com.airxiechao.y20.common.core.rest.ServiceRestClient;
+import com.airxiechao.y20.common.pojo.config.CommonConfig;
 import com.airxiechao.y20.common.pojo.config.VariableCommonConfig;
 import com.airxiechao.y20.common.core.db.Db;
 import com.airxiechao.y20.pipeline.pojo.PipelineVariable;
@@ -29,7 +30,7 @@ public class ProjectBizProcess implements IProjectBiz {
     private static final Logger logger = LoggerFactory.getLogger(ProjectBizProcess.class);
     private IProjectDb projectDb = Db.get(IProjectDb.class);
 
-    private VariableCommonConfig variableCommonConfig = ConfigFactory.get(VariableCommonConfig.class);
+    private VariableCommonConfig variableCommonConfig = ConfigFactory.get(CommonConfig.class).getVariable();
 
     @Override
     public List<ProjectRecord> list(Long userId, String name, String orderField, String orderType, Integer pageNo, Integer pageSize) {

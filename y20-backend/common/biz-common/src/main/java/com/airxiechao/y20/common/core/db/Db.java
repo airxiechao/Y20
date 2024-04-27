@@ -42,7 +42,7 @@ public class Db extends DbReg {
                 if(dbManagerMap.containsKey(configFilePath)){
                     return dbManagerMap.get(configFilePath);
                 }else{
-                    DbManager dbManager = new DbManager(new JavaResourceFs(), configFilePath);
+                    DbManager dbManager = DbManagerUtil.createDbManager(new JavaResourceFs(), configFilePath);
                     dbManagerMap.put(configFilePath, dbManager);
                     return dbManager;
                 }

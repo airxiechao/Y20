@@ -4,9 +4,9 @@ import com.airxiechao.axcboot.communication.common.annotation.Required;
 
 public class SignupParam {
     @Required private String username;
-    @Required private String mobile;
-    @Required private String verificationCode;
-    @Required private String verificationCodeToken;
+    private String mobile;
+    private String verificationCode;
+    private String verificationCodeToken;
     @Required private String password;
 
     public String getUsername() {

@@ -5,6 +5,7 @@ import com.airxiechao.y20.agent.pojo.Agent;
 import java.util.Date;
 
 public class AgentVo {
+    protected Long userId;
     protected String agentId;
     protected String clientId;
     protected String version;
@@ -20,6 +21,7 @@ public class AgentVo {
     }
 
     public AgentVo(Agent agent, boolean active) {
+        this.userId = agent.getUserId();
         this.agentId = agent.getAgentId();
         this.clientId = agent.getClientId();
         this.version = agent.getVersion();
@@ -30,6 +32,14 @@ public class AgentVo {
         this.flagUpgrading = agent.getFlagUpgrading();
         this.flagRestarting = agent.getFlagRestarting();
         this.lastHeartbeatTime = agent.getLastHeartbeatTime();
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public String getAgentId() {

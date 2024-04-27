@@ -1,11 +1,12 @@
 package com.airxiechao.y20.agent.biz.process;
 
-import com.airxiechao.axcboot.util.StringUtil;
+import com.airxiechao.axcboot.config.factory.ConfigFactory;
 import com.airxiechao.y20.agent.biz.api.IAgentBiz;
 import com.airxiechao.y20.agent.db.api.IAgentDb;
 import com.airxiechao.y20.agent.db.record.AgentRecord;
 import com.airxiechao.y20.agent.db.record.AgentVersionRecord;
 import com.airxiechao.y20.common.core.db.Db;
+import com.airxiechao.y20.common.pojo.config.CommonConfig;
 
 import java.util.Date;
 import java.util.List;
@@ -13,12 +14,17 @@ import java.util.List;
 import static com.airxiechao.y20.agent.pojo.constant.EnumAgentStatus.STATUS_ONLINE;
 
 public class AgentBizProcess implements IAgentBiz {
-
+    private static final CommonConfig commonConfig = ConfigFactory.get(CommonConfig.class);
     private IAgentDb agentDb = Db.get(IAgentDb.class);
 
     @Override
     public AgentRecord getByUserIdAndAgentId(Long userId, String agentId) {
         return agentDb.getByUserIdAndAgentId(userId, agentId);
+    }
+
+    @Override
+    public AgentRecord getByAgentId(String agentId) {
+        return agentDb.getByAgentId(agentId);
     }
 
     @Override
@@ -106,7 +112,15 @@ public class AgentBizProcess implements IAgentBiz {
 
     @Override
     public AgentVersionRecord getLatestVersion() {
-        return agentDb.getLatestVersion();
+        AgentVersionRecord record = agentDb.getLatestVersion();
+        if(null != record) {
+            record.setDownloadWinUrl(String.format("%s%s", commonConfig.getServer().getUrl(), record.getDownloadWinUrl()));
+            record.setDownloadLinuxUrl(String.format("%s%s", commonConfig.getServer().getUrl(), record.getDownloadLinuxUrl()));
+            record.setDownloadWinUpgraderUrl(String.format("%s%s", commonConfig.getServer().getUrl(), record.getDownloadWinUpgraderUrl()));
+            record.setDownloadLinuxUpgraderUrl(String.format("%s%s", commonConfig.getServer().getUrl(), record.getDownloadLinuxUpgraderUrl()));
+        }
+
+        return record;
     }
 
 }

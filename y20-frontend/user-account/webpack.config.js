@@ -45,6 +45,8 @@ module.exports = (env, argv) => {
     }),
     new Webpack.DefinePlugin({
       FRONTEND_SERVICE_NAME: JSON.stringify(frontendServiceName),
+      ENABLE_ACCOUNT_MOBILE: env.ENABLE_ACCOUNT_MOBILE !== undefined ? env.ENABLE_ACCOUNT_MOBILE == 'true' : true,
+      ENABLE_ACCOUNT_EMAIL: env.ENABLE_ACCOUNT_EMAIL !== undefined ? env.ENABLE_ACCOUNT_EMAIL == 'true' : true,
     }),
   ]
     

@@ -289,7 +289,7 @@ public class PipelineDbProcedure extends AbstractDbProcedure implements IPipelin
 
     @Override
     public List<PipelineRunRecord> listPipelineRun(
-            Long userId, Long projectId, Long pipelineId,  String name, String status, Boolean onlyRunning,
+            Long userId, Long projectId, Long pipelineId,  String name, String status, Boolean onlyRunning, Boolean noPseudo,
             String orderField, String orderType, Integer pageNo, Integer pageSize) {
         SqlParamsBuilder sqlParamsBuilder = new SqlParamsBuilder()
                 .select("*")
@@ -320,6 +320,13 @@ public class PipelineDbProcedure extends AbstractDbProcedure implements IPipelin
             );
         }
 
+        if(null != noPseudo && noPseudo){
+            sqlParamsBuilder.whereGroup(new SqlParamsBuilder.SqlWhereTripleGroup()
+                    .and(DbUtil.column(PipelineRunRecord.class, "projectId"), "!=", 0)
+                    .and(DbUtil.column(PipelineRunRecord.class, "pipelineId"), "!=", 0)
+            );
+        }
+
         if(!StringUtil.isBlank(orderField) && !StringUtil.isBlank(orderType)){
             sqlParamsBuilder.order(DbUtil.column(PipelineRunRecord.class, orderField), orderType);
         }
@@ -334,7 +341,7 @@ public class PipelineDbProcedure extends AbstractDbProcedure implements IPipelin
     }
 
     @Override
-    public long countPipelineRun(Long userId, Long projectId, Long pipelineId, String name, String status, Boolean onlyRunning) {
+    public long countPipelineRun(Long userId, Long projectId, Long pipelineId, String name, String status, Boolean onlyRunning, Boolean noPseudo) {
         SqlParamsBuilder sqlParamsBuilder = new SqlParamsBuilder()
                 .select("*")
                 .from(DbUtil.table(PipelineRunRecord.class))
@@ -361,6 +368,13 @@ public class PipelineDbProcedure extends AbstractDbProcedure implements IPipelin
             sqlParamsBuilder.whereGroup(new SqlParamsBuilder.SqlWhereTripleGroup()
                     .and(DbUtil.column(PipelineRunRecord.class, "status"), "!=", EnumPipelineRunStatus.STATUS_FAILED)
                     .and(DbUtil.column(PipelineRunRecord.class, "status"), "!=", EnumPipelineRunStatus.STATUS_PASSED)
+            );
+        }
+
+        if(null != noPseudo && noPseudo){
+            sqlParamsBuilder.whereGroup(new SqlParamsBuilder.SqlWhereTripleGroup()
+                    .and(DbUtil.column(PipelineRunRecord.class, "projectId"), "!=", 0)
+                    .and(DbUtil.column(PipelineRunRecord.class, "pipelineId"), "!=", 0)
             );
         }
 

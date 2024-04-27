@@ -8,8 +8,8 @@
         <q-btn flat round dense icon="menu" @click="toggleLeftDrawerOpen" />
         <q-toolbar-title>
           <a class="text-dark text-bold" href="/nav/workspace">
-            <q-icon class="q-mr-sm vertical-middle" size="md" :name="`img:/${FRONTEND_SERVICE_NAME}/static/img/icon-logo.png`" />
-            <span class="vertical-middle">鲲擎流水线</span>
+            <q-icon class="q-mr-sm vertical-middle" size="3rem" :name="`img:/icon-logo.png`" />
+            <span class="vertical-middle">鲲擎运维</span>
           </a>
           <div class="vertical-middle text-subtitle2 text-grey q-ml-md gt-xs" style="display: inline-block;">
             <slot name="header"></slot>

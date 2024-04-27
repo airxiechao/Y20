@@ -8,6 +8,8 @@ import com.airxiechao.y20.auth.rest.api.IServiceAuthRest;
 import com.airxiechao.y20.auth.rest.param.ValidateAccessTokenParam;
 import com.airxiechao.y20.common.core.rest.Rest;
 import com.airxiechao.y20.common.core.rest.ServiceRestClient;
+import com.airxiechao.y20.common.pojo.config.CommonConfig;
+import com.airxiechao.y20.common.pojo.config.ConsulConfig;
 import com.airxiechao.y20.common.pojo.constant.meta.Meta;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,6 +18,7 @@ public class ActivityRestServer extends RestServer {
     private static final Logger logger = LoggerFactory.getLogger(ActivityRestServer.class);
 
     private static final ActivityConfig config = ConfigFactory.get(ActivityConfig.class);
+    private static final ConsulConfig consulConfig = ConfigFactory.get(CommonConfig.class).getConsul();
     public static final String NAME = config.getName();
     public static final int PORT = config.getPort();
 
@@ -39,7 +42,7 @@ public class ActivityRestServer extends RestServer {
                 });
 
         // consul
-        this.registerConsul(10, "y20-backend-");
+        this.registerConsul(consulConfig.getHost(), consulConfig.getPort(), 10, "y20-backend-");
 
         // rest
         Rest rest = new Rest(Meta.getModulePackageName(this.getClass()), this);

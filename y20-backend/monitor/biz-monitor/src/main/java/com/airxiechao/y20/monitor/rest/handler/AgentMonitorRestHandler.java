@@ -1,17 +1,25 @@
 package com.airxiechao.y20.monitor.rest.handler;
 
 import com.airxiechao.axcboot.communication.common.Response;
+import com.airxiechao.y20.agent.pojo.constant.EnumAgentStatus;
+import com.airxiechao.y20.agent.pojo.vo.AgentVo;
+import com.airxiechao.y20.agent.rest.api.IServiceAgentRest;
+import com.airxiechao.y20.agent.rest.param.GetAgentParam;
+import com.airxiechao.y20.agent.rest.param.UpdateAgentParam;
 import com.airxiechao.y20.common.core.biz.Biz;
 import com.airxiechao.y20.common.core.rest.EnhancedRestUtil;
 import com.airxiechao.y20.common.core.rest.ServiceRestClient;
 import com.airxiechao.y20.monitor.biz.api.IMonitorBiz;
 import com.airxiechao.y20.monitor.db.record.MonitorRecord;
+import com.airxiechao.y20.monitor.pojo.AgentMetric;
 import com.airxiechao.y20.monitor.pojo.Monitor;
+import com.airxiechao.y20.monitor.pojo.MonitorMetric;
 import com.airxiechao.y20.monitor.pojo.MonitorPipelineActionParam;
 import com.airxiechao.y20.monitor.pojo.constant.EnumMonitorActionType;
 import com.airxiechao.y20.monitor.pojo.constant.EnumMonitorStatus;
 import com.airxiechao.y20.monitor.rest.api.IAgentMonitorRest;
 import com.airxiechao.y20.monitor.rest.param.ListMonitorParam;
+import com.airxiechao.y20.monitor.rest.param.UpdateMonitorAgentStatusParam;
 import com.airxiechao.y20.monitor.rest.param.UpdateMonitorStatusParam;
 import com.airxiechao.y20.pipeline.pojo.vo.PipelineBasicVo;
 import com.airxiechao.y20.pipeline.rest.api.IServicePipelineRest;
@@ -26,6 +34,7 @@ import org.slf4j.LoggerFactory;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+
 
 public class AgentMonitorRestHandler implements IAgentMonitorRest {
 
@@ -84,6 +93,18 @@ public class AgentMonitorRestHandler implements IAgentMonitorRest {
             return new Response().error();
         }
 
+        // 添加监控指标
+        if(null != param.getTimestamp()) {
+            MonitorMetric monitorMetric = new MonitorMetric();
+            monitorMetric.setUserId(param.getUserId());
+            monitorMetric.setProjectId(param.getProjectId());
+            monitorMetric.setMonitorId(param.getMonitorId());
+            monitorMetric.setCpuUsage(param.getCpuUsage());
+            monitorMetric.setMemoryBytes(param.getMemoryBytes());
+            monitorMetric.setTimestamp(param.getTimestamp());
+            monitorBiz.createMonitorMetric(monitorMetric);
+        }
+
         // 状态转变为错误时，执行动作
         if (!EnumMonitorStatus.ERROR.equals(oldMonitor.getStatus()) && EnumMonitorStatus.ERROR.equals(param.getStatus())) {
             if(EnumMonitorActionType.PIPELINE.equals(oldMonitor.getActionType())){
@@ -94,6 +115,60 @@ public class AgentMonitorRestHandler implements IAgentMonitorRest {
                     triggerPipeline(oldMonitor.getName(), pipelineActionParam.getPipelineId(), pipelineActionParam.getInParams());
                 }
             }
+        }
+
+        return new Response();
+    }
+
+    @Override
+    public Response updateAgentStatus(Object exc) {
+        HttpServerExchange exchange = (HttpServerExchange) exc;
+
+        UpdateMonitorAgentStatusParam param = null;
+        try {
+            param = EnhancedRestUtil.rawJsonDataWithHeader(exchange, UpdateMonitorAgentStatusParam.class, false);
+        } catch (Exception e) {
+            logger.error("parse rest param error", e);
+            return new Response().error(e.getMessage());
+        }
+
+        // 更新主机状态
+        Response<AgentVo> agentResp = ServiceRestClient.get(IServiceAgentRest.class).getAgent(
+                new GetAgentParam(param.getUserId(), param.getAgentId()));
+        if(agentResp.isSuccess()){
+            AgentVo agentVo = agentResp.getData();
+            if(!agentVo.getActive()) {
+                Response updateResp = ServiceRestClient.get(IServiceAgentRest.class).updateAgent(
+                        new UpdateAgentParam(
+                                agentVo.getUserId(),
+                                agentVo.getAgentId(),
+                                agentVo.getClientId(),
+                                agentVo.getVersion(),
+                                agentVo.getIp(),
+                                agentVo.getHostName(),
+                                agentVo.getOs(),
+                                EnumAgentStatus.STATUS_ONLINE
+                        ));
+                if (!updateResp.isSuccess()) {
+                    logger.error("update agent status error");
+                }
+            }
+        }else{
+            logger.error("get agent error");
+        }
+
+
+        // 添加主机监控指标
+        if(null != param.getTimestamp()) {
+            AgentMetric agentMetric = new AgentMetric();
+            agentMetric.setUserId(param.getUserId());
+            agentMetric.setAgentId(param.getAgentId());
+            agentMetric.setCpuLoad(param.getCpuLoad());
+            agentMetric.setMemoryAvailableBytes(param.getMemoryAvailableBytes());
+            agentMetric.setMemoryTotalBytes(param.getMemoryTotalBytes());
+            agentMetric.setFilesystem(param.getFilesystem());
+            agentMetric.setTimestamp(param.getTimestamp());
+            monitorBiz.createAgentMetric(agentMetric);
         }
 
         return new Response();

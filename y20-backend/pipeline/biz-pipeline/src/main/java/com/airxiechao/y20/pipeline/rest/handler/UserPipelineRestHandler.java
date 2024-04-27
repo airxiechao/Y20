@@ -28,6 +28,7 @@ import com.airxiechao.y20.pipeline.rest.api.IServicePipelineRunInstanceRest;
 import com.airxiechao.y20.pipeline.rest.api.IServiceTerminalRunInstanceRest;
 import com.airxiechao.y20.pipeline.rest.param.*;
 import com.airxiechao.y20.pipeline.rest.api.IUserPipelineRest;
+import com.airxiechao.y20.pipeline.scheduler.PtyCleanScheduler;
 import com.airxiechao.y20.project.rest.api.IServiceProjectRest;
 import com.airxiechao.y20.project.rest.param.ServiceExistProjectParam;
 import com.airxiechao.y20.template.rest.api.IServiceTemplateRest;
@@ -767,6 +768,78 @@ public class UserPipelineRestHandler implements IUserPipelineRest {
     }
 
     @Override
+    public Response createPipelineRunPty(Object exc) {
+        HttpServerExchange exchange = (HttpServerExchange)exc;
+
+        CreatePipelineRunPtyParam param;
+        try {
+            param = EnhancedRestUtil.rawJsonDataWithHeader(exchange, CreatePipelineRunPtyParam.class, true);
+        } catch (Exception e) {
+            return new Response().error(e.getMessage());
+        }
+
+        // create run record
+        PipelineRunRecord pipelineRunRecord;
+        try {
+            pipelineRunRecord = pipelineBiz.createPipelineRunPty(
+                    param.getUserId(), param.getAgentId(), true);
+
+            if(null == pipelineRunRecord){
+                throw new Exception("create pipeline run error");
+            }
+        } catch (NoEnoughQuotaException e) {
+            Response errResp = new Response();
+            errResp.setCode(EnumRespCode.ERROR_NO_ENOUGH_QUOTA);
+            errResp.setMessage(e.getMessage());
+            return errResp;
+        } catch (OnlyOneRunException e) {
+            Response errResp = new Response();
+            errResp.setCode(EnumRespCode.ERROR_ONLY_ONE_RUN);
+            errResp.setMessage(e.getMessage());
+            return errResp;
+        } catch (Exception e) {
+            return new Response().error(e.getMessage());
+        }
+
+        // create pty run instance
+        Response createRunInstanceResp = ServiceRestClient.get(IServicePipelineRunInstanceRest.class).createPipelineRunInstance(
+                new CreatePipelineRunInstanceParam(pipelineRunRecord.getId()));
+        if(!createRunInstanceResp.isSuccess()){
+            pipelineBiz.updatePipelineRunStatus(pipelineRunRecord.getId(), EnumPipelineRunStatus.STATUS_FAILED, createRunInstanceResp.getMessage(), null);
+            return new Response().error("create pipeline run instance error");
+        }
+
+        // stop pty run instance after
+        String runInstanceUuid = (String)createRunInstanceResp.getData();
+        PtyCleanScheduler.getInstance().schedule(runInstanceUuid, () -> {
+            // get run instance status
+            PipelineRunRecord newPipelineRunRecord = pipelineBiz.getPipelineRun(
+                    pipelineRunRecord.getUserId(),
+                    pipelineRunRecord.getProjectId(),
+                    pipelineRunRecord.getPipelineId(),
+                    pipelineRunRecord.getId()
+            );
+            if(null == newPipelineRunRecord || Arrays.asList(
+                    EnumPipelineRunStatus.STATUS_FAILED, EnumPipelineRunStatus.STATUS_PASSED
+            ).contains(newPipelineRunRecord.getStatus())){
+                return;
+            }
+
+            // stop run instance
+            Response stopRunInstanceResp = ServicePipelineRunInstanceRestClient
+                    .get(IServicePipelineRunInstanceRest.class, newPipelineRunRecord.getInstanceUuid())
+                    .stopPipelineRunInstance(
+                            new StopPipelineRunInstanceParam(newPipelineRunRecord.getInstanceUuid()));
+            if(!stopRunInstanceResp.isSuccess()){
+                throw new RuntimeException(String.format("stop pipeline run instance [%s] error: %s",
+                        newPipelineRunRecord.getInstanceUuid(), stopRunInstanceResp.getMessage()));
+            }
+        });
+
+        return new Response().data(pipelineRunRecord.getId());
+    }
+
+    @Override
     public Response startPipelineRun(Object exc) {
         HttpServerExchange exchange = (HttpServerExchange)exc;
 
@@ -841,12 +914,19 @@ public class UserPipelineRestHandler implements IUserPipelineRest {
         }
 
         // stop run instance
+        String runInstanceUuid = pipelineRunRecord.getInstanceUuid();
         Response stopRunInstanceResp = ServicePipelineRunInstanceRestClient
-                .get(IServicePipelineRunInstanceRest.class, pipelineRunRecord.getInstanceUuid())
+                .get(IServicePipelineRunInstanceRest.class, runInstanceUuid)
                 .stopPipelineRunInstance(
-                        new StopPipelineRunInstanceParam(pipelineRunRecord.getInstanceUuid()));
+                        new StopPipelineRunInstanceParam(runInstanceUuid));
         if(!stopRunInstanceResp.isSuccess()){
             return new Response().error("stop pipeline run instance error");
+        }
+
+        // remove from pty clean scheduler
+        boolean isPty = param.getProjectId() == 0 && param.getPipelineId() == 0;
+        if(isPty){
+            PtyCleanScheduler.getInstance().cancel(runInstanceUuid);
         }
 
         return new Response();
@@ -906,6 +986,7 @@ public class UserPipelineRestHandler implements IUserPipelineRest {
                 param.getName(),
                 param.getStatus(),
                 null,
+                null,
                 param.getOrderField(),
                 param.getOrderType(),
                 param.getPageNo(),
@@ -919,6 +1000,7 @@ public class UserPipelineRestHandler implements IUserPipelineRest {
                 param.getPipelineId(),
                 param.getName(),
                 param.getStatus(),
+                null,
                 null
         );
 
@@ -947,6 +1029,7 @@ public class UserPipelineRestHandler implements IUserPipelineRest {
                 null,
                 null,
                 null,
+                true,
                 true,
                 "beginTime",
                 OrderType.DESC,

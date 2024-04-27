@@ -1,12 +1,11 @@
 package com.airxiechao.y20.common.core.db;
 
-import com.airxiechao.axcboot.config.factory.ConfigFactory;
 import com.airxiechao.axcboot.core.annotation.IMongoDb;
 import com.airxiechao.axcboot.core.db.mongo.MongoDbReg;
 import com.airxiechao.axcboot.storage.db.mongodb.MongoDbManager;
+import com.airxiechao.axcboot.storage.fs.JavaResourceFs;
 import com.airxiechao.axcboot.util.AnnotationUtil;
 import com.airxiechao.axcboot.util.StringUtil;
-import com.airxiechao.y20.common.pojo.config.MongoDbConfig;
 import com.airxiechao.y20.common.pojo.constant.meta.Meta;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,13 +41,7 @@ public class MongoDb extends MongoDbReg {
                 if(dbMap.containsKey(configFilePath)){
                     return dbMap.get(configFilePath);
                 }else{
-
-                    MongoDbConfig config = ConfigFactory.get(MongoDbConfig.class, configFilePath);
-                    MongoDbManager dbManager = new MongoDbManager(
-                            config.getHost(), config.getPort(),
-                            config.getUsername(), config.getPassword(),
-                            config.getDatabase());
-
+                    MongoDbManager dbManager = MongoDbManagerUtil.createMongoDbManager(new JavaResourceFs(), configFilePath);
                     dbMap.put(configFilePath, dbManager);
                     return dbManager;
                 }

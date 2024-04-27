@@ -78,6 +78,7 @@
         </q-item>
 
         <q-item
+          v-if="ENABLE_NAV_QUOTA"
           clickable
           v-ripple
           :active="link == 'billing'"
@@ -132,6 +133,8 @@ export default {
     })
 
     return {
+      ENABLE_NAV_QUOTA: ENABLE_NAV_QUOTA,
+      
       link,
       username,
     }

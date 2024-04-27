@@ -38,6 +38,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import static com.airxiechao.y20.agent.pojo.constant.EnumAgentStatus.STATUS_OFFLINE;
+
 public class UserAgentRestHandler implements IUserAgentRest {
 
     private static final Logger logger = LoggerFactory.getLogger(UserAgentRestHandler.class);
@@ -173,6 +175,17 @@ public class UserAgentRestHandler implements IUserAgentRest {
                         AccessTokenRecord accessTokenRecord = accessTokenResp.getData();
                         accessTokenName = accessTokenRecord.getName();
                         accessTokenEndTime = accessTokenRecord.getEndTime();
+                    } else {
+                        agentBiz.updateClient(
+                                agent.getUserId(),
+                                agent.getAgentId(),
+                                null,
+                                null,
+                                null,
+                                null,
+                                null,
+                                STATUS_OFFLINE
+                        );
                     }
                 } catch (Exception e) {
                     logger.error("get agent client detail error", e);

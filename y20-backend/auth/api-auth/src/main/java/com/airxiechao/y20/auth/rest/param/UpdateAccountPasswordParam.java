@@ -5,8 +5,8 @@ import com.airxiechao.axcboot.communication.common.annotation.Required;
 public class UpdateAccountPasswordParam {
     @Required private Long userId;
     @Required private String password;
-    @Required private String verificationCodeToken;
-    @Required private String verificationCode;
+    private String verificationCodeToken;
+    private String verificationCode;
 
     public Long getUserId() {
         return userId;

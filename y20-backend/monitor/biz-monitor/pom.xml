@@ -5,7 +5,7 @@
     <parent>
         <artifactId>monitor</artifactId>
         <groupId>com.airxiechao.y20</groupId>
-        <version>1.0</version>
+        <version>1.2-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -31,6 +31,11 @@
             <groupId>com.airxiechao.y20</groupId>
             <artifactId>api-pipeline</artifactId>
             <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.influxdb</groupId>
+            <artifactId>influxdb-client-java</artifactId>
+            <version>6.6.0</version>
         </dependency>
     </dependencies>
 </project>

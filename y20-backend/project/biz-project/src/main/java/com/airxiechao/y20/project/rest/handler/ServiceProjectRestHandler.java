@@ -30,12 +30,18 @@ public class ServiceProjectRestHandler implements IServiceProjectRest {
             return new Response().error(e.getMessage());
         }
 
-        ProjectRecord record = projectBiz.getById(param.getUserId(), param.getProjectId());
-        if(null == record){
-            return new Response().error("no project");
-        }
+        if(param.getProjectId() != 0) {
+            ProjectRecord record = projectBiz.getById(param.getUserId(), param.getProjectId());
+            if (null == record) {
+                return new Response().error("no project");
+            }
 
-        return new Response().data(record.toPojo());
+            return new Response().data(record.toPojo());
+        }else{
+            Project emptyProject = new Project();
+            emptyProject.setProjectId(0L);
+            return new Response().data(emptyProject);
+        }
     }
 
     @Override

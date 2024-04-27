@@ -10,34 +10,35 @@
           </q-toolbar>
         </div>
         <div class="q-pa-sm page-content">
-          <q-table
-            flat
-            class="list-project-variable-table"
-            :rows="rows"
-            :columns="columns"
-            :loading="loading"
-            :pagination="{ rowsPerPage: 10 }"
-            :rows-per-page-options="[5, 10, 20, 50]"
-            row-key="name"
-          >
-            <template v-slot:top>
-              <div class="page-heading">项目全局变量</div>
-            </template>
-            <template v-slot:body="props">
-              <q-tr :props="props">
-                <q-td class="cursor-pointer" @click="onClickVariable(props.row.name)">
-                  <span>{{ props.row.name }}</span>
-                </q-td>
-                <q-td class="cursor-pointer" @click="onClickVariable(props.row.name)">
-                  <q-badge v-if="props.row.kind == 'SECRET'" color="orange">机密</q-badge>
-                  <span v-else>{{ props.row.value }}</span>
-                </q-td>
-                <q-td>
-                  <q-btn color="negative" flat dense icon="delete" @click="onClickDeleteVairable(props.row.name)" />
-                </q-td>
-              </q-tr>
-            </template>
-          </q-table>
+          <q-card flat class="list-project-variable-card q-pa-md">
+            <div class="page-heading q-pb-md">项目全局变量</div>
+            <q-table
+              flat
+              class="list-project-variable-table"
+              :rows="rows"
+              :columns="columns"
+              :loading="loading"
+              :pagination="{ rowsPerPage: 10 }"
+              :rows-per-page-options="[5, 10, 20, 50]"
+              row-key="name"
+            >
+              <template v-slot:body="props">
+                <q-tr :props="props">
+                  <q-td class="cursor-pointer" @click="onClickVariable(props.row.name)">
+                    <span>{{ props.row.name }}</span>
+                  </q-td>
+                  <q-td class="cursor-pointer" @click="onClickVariable(props.row.name)">
+                    <q-badge v-if="props.row.kind == 'SECRET'" color="orange">机密</q-badge>
+                    <span v-else>{{ props.row.value }}</span>
+                  </q-td>
+                  <q-td>
+                    <q-btn color="negative" flat dense icon="delete" @click="onClickDeleteVairable(props.row.name)" />
+                  </q-td>
+                </q-tr>
+              </template>
+            </q-table>
+          </q-card>
+
         </div>
       </div>
     </template>
@@ -49,8 +50,8 @@
 
 <style lang="scss">
 .list-project-variable{
-  &-table{
-    
+  &-card{
+    padding-top: 12px;
   }
 }
 </style>

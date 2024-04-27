@@ -39,7 +39,7 @@
         v-model="trigger.tag"
         :label="`匹配标签 *`"
         prefix="#y20-"
-        hint="事件中的文字信息（比如：Push 事件的 commit 信息）含有标签（#y20-...）才会启动流水线。"
+        hint="仅当触发事件的内容（比如：git push 事件的 commit 信息，或 curl post请求体的 message 字段）含有标签（#y20-...）才会启动流水线。"
         lazy-rules
         :rules="[
           (val) => (val && val.length > 0) || '请输入匹配标签',
@@ -98,6 +98,10 @@ const sourceTypeOptions = [
   {
     label: "Gitee",
     value: "GITEE",
+  },
+  {
+    label: "CURL",
+    value: "CURL",
   },
 ];
 

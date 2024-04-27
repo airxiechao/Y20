@@ -21,4 +21,7 @@ public interface IAgentMonitorRest {
     @Auth(scope = EnumAccessScope.AGENT)
     Response updateStatus(Object exc);
 
+    @Post("/agent/monitor/agent/status/update")
+    @Auth(scope = EnumAccessScope.AGENT)
+    Response updateAgentStatus(Object exc);
 }

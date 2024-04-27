@@ -4,6 +4,7 @@ import com.airxiechao.axcboot.core.annotation.IDb;
 import com.airxiechao.y20.monitor.db.record.MonitorRecord;
 
 import java.util.List;
+import java.util.Map;
 
 @IDb("mybatis-y20-monitor.xml")
 public interface IMonitorDb {

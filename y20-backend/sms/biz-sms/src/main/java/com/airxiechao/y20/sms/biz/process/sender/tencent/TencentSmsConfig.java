@@ -8,7 +8,8 @@ public class TencentSmsConfig {
     private String secretKey;
     private String sdkAppId;
     private String signName;
-    private String templateId;
+    private String verificationCodeTemplateId;
+    private String monitorAlertTemplateId;
 
     public String getSecretId() {
         return secretId;
@@ -42,11 +43,19 @@ public class TencentSmsConfig {
         this.signName = signName;
     }
 
-    public String getTemplateId() {
-        return templateId;
+    public String getVerificationCodeTemplateId() {
+        return verificationCodeTemplateId;
     }
 
-    public void setTemplateId(String templateId) {
-        this.templateId = templateId;
+    public void setVerificationCodeTemplateId(String verificationCodeTemplateId) {
+        this.verificationCodeTemplateId = verificationCodeTemplateId;
+    }
+
+    public String getMonitorAlertTemplateId() {
+        return monitorAlertTemplateId;
+    }
+
+    public void setMonitorAlertTemplateId(String monitorAlertTemplateId) {
+        this.monitorAlertTemplateId = monitorAlertTemplateId;
     }
 }

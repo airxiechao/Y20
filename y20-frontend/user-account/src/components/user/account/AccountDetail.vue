@@ -41,7 +41,7 @@
 
               <q-separator spaced />
 
-              <q-item>
+              <q-item v-if="ENABLE_ACCOUNT_MOBILE">
                 <q-item-section avatar>
                   <q-icon name="phone_android" size="md" />
                 </q-item-section>
@@ -57,9 +57,9 @@
 
               </q-item>
               
-              <q-separator spaced />
+              <q-separator v-if="ENABLE_ACCOUNT_MOBILE" spaced />
 
-              <q-item>
+              <q-item v-if="ENABLE_ACCOUNT_EMAIL">
                 <q-item-section avatar>
                   <q-icon name="email" size="md" />
                 </q-item-section>
@@ -75,7 +75,7 @@
 
               </q-item>
 
-              <q-separator spaced />
+              <q-separator v-if="ENABLE_ACCOUNT_EMAIL" spaced />
 
               <q-item>
                 <q-item-section avatar>
@@ -133,6 +133,9 @@ export default {
     })
 
     return {
+      ENABLE_ACCOUNT_MOBILE: ENABLE_ACCOUNT_MOBILE,
+      ENABLE_ACCOUNT_EMAIL: ENABLE_ACCOUNT_EMAIL,
+
       account,
 
       onClickUpdatePassword(){

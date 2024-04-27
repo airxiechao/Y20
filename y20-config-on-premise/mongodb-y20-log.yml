@@ -1,0 +1,5 @@
+host: {{mongodb.host}}
+port: {{mongodb.port}}
+username: {{mongodb.username}}
+password: {{mongodb.password}}
+database: y20_pipeline_run_log

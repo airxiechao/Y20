@@ -12,6 +12,7 @@ import com.airxiechao.y20.agent.rest.api.IServiceAgentServerRest;
 import com.airxiechao.y20.agent.rest.param.CountAgentParam;
 import com.airxiechao.y20.agent.rest.param.GetAgentParam;
 import com.airxiechao.y20.agent.rest.param.IsAgentActiveParam;
+import com.airxiechao.y20.agent.rest.param.UpdateAgentParam;
 import com.airxiechao.y20.common.core.biz.Biz;
 import com.airxiechao.y20.common.core.rest.ServiceAgentServerRestClient;
 import io.undertow.server.HttpServerExchange;
@@ -36,21 +37,22 @@ public class ServiceAgentRestHandler implements IServiceAgentRest {
         }
 
         AgentRecord agentRecord = agentBiz.getByUserIdAndAgentId(param.getUserId(), param.getAgentId());
-        if(null == agentRecord){
+        if (null == agentRecord) {
             return new Response().error("no agent");
         }
+
         // agent vo
         AgentVo agentVo;
         Agent agent = agentRecord.toPojo();
-        if(EnumAgentStatus.STATUS_OFFLINE.equals(agent.getStatus())){
+        if (EnumAgentStatus.STATUS_OFFLINE.equals(agent.getStatus())) {
             agentVo = new AgentVo(agent, false);
-        }else{
+        } else {
             // check agent real status
-            try{
+            try {
                 Response activeResp = ServiceAgentServerRestClient.get(IServiceAgentServerRest.class, agent.getClientId()).isAgentActive(
                         new IsAgentActiveParam(agent.getClientId()));
                 agentVo = new AgentVo(agent, activeResp.isSuccess());
-            }catch (Exception e){
+            } catch (Exception e) {
                 agentVo = new AgentVo(agent, false);
             }
         }
@@ -72,5 +74,39 @@ public class ServiceAgentRestHandler implements IServiceAgentRest {
 
         Long count = agentBiz.count(param.getUserId(), null);
         return new Response<Long>().data(count);
+    }
+
+    @Override
+    public Response updateAgent(Object exc) {
+        HttpServerExchange exchange = (HttpServerExchange) exc;
+
+        UpdateAgentParam param = null;
+        try {
+            param = RestUtil.rawJsonData(exchange, UpdateAgentParam.class);
+        } catch (Exception e) {
+            logger.error("parse rest param error", e);
+            return new Response().error(e.getMessage());
+        }
+
+        AgentRecord agentRecord = agentBiz.getByUserIdAndAgentId(param.getUserId(), param.getAgentId());
+        if (null == agentRecord) {
+            return new Response().error("no agent");
+        }
+
+        boolean updated = agentBiz.updateClient(
+                param.getUserId(),
+                param.getAgentId(),
+                param.getClientId(),
+                param.getVersion(),
+                param.getIp(),
+                param.getHostName(),
+                param.getOs(),
+                param.getStatus()
+        );
+        if (!updated) {
+            return new Response().error("update agent error");
+        }
+
+        return new Response();
     }
 }

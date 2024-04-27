@@ -11,17 +11,17 @@ public class AgentServerBoot {
 
     public static void main(String[] args) {
         // rest server
-        AgentServerRestServer agentRestServer = AgentServerRestServer.getInstance();
+        AgentServerRestServer agentServerRestServer = AgentServerRestServer.getInstance();
 
         // rpc server
         AgentRpcServer agentRpcServer = AgentRpcServer.getInstance();
 
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-            agentRestServer.stop();
+            agentServerRestServer.stop();
             agentRpcServer.stop();
         }));
 
-        agentRestServer.start();
+        agentServerRestServer.start();
         agentRpcServer.start();
 
     }

@@ -3,6 +3,7 @@ package com.airxiechao.y20.auth.rest.handler;
 import com.airxiechao.axcboot.communication.common.PageData;
 import com.airxiechao.axcboot.communication.common.Response;
 import com.airxiechao.axcboot.communication.rest.util.RestUtil;
+import com.airxiechao.axcboot.config.factory.ConfigFactory;
 import com.airxiechao.axcboot.util.StringUtil;
 import com.airxiechao.y20.auth.biz.api.IAccessTokenBiz;
 import com.airxiechao.y20.auth.biz.api.ITwoFactorBiz;
@@ -12,6 +13,7 @@ import com.airxiechao.y20.auth.cache.LoginByUsernameFailLimitCache;
 import com.airxiechao.y20.auth.db.record.AccessTokenRecord;
 import com.airxiechao.y20.auth.db.record.UserRecord;
 import com.airxiechao.y20.auth.pojo.TwoFactorPrincipal;
+import com.airxiechao.y20.auth.pojo.config.AuthConfig;
 import com.airxiechao.y20.auth.pojo.vo.AccessTokenVo;
 import com.airxiechao.y20.auth.rest.param.*;
 import com.airxiechao.y20.auth.pojo.vo.LoginVo;
@@ -35,6 +37,7 @@ import java.util.stream.Collectors;
 public class UserAuthRestHandler implements IUserAuthRest {
 
     private static final Logger logger = LoggerFactory.getLogger(UserAuthRestHandler.class);
+    private static AuthConfig authConfig = ConfigFactory.get(AuthConfig.class);
     private IUserBiz userBiz = Biz.get(IUserBiz.class);
     private IAccessTokenBiz accessTokenBiz = Biz.get(IAccessTokenBiz.class);
     private ITwoFactorBiz twoFactorBiz = Biz.get(ITwoFactorBiz.class);
@@ -199,12 +202,21 @@ public class UserAuthRestHandler implements IUserAuthRest {
 
         SignupParam param = RestUtil.rawJsonData(exchange, SignupParam.class);
 
-        // check verification code
-        Response resp = ServiceRestClient.get(IServiceSmsRest.class).checkVerificationCode(
-                new CheckSmsVerificationCodeParam(param.getVerificationCodeToken(), param.getMobile(), param.getVerificationCode())
-        );
-        if(!resp.isSuccess()){
-            return new Response().error("check verification code fail");
+        if(authConfig.isEnableSmsVerificationCode()) {
+            // check verification code
+            if(StringUtil.isBlank(param.getVerificationCodeToken()) ||
+                    StringUtil.isBlank(param.getMobile()) ||
+                    StringUtil.isBlank(param.getVerificationCode())
+            ){
+                return new Response().error("check verification code fail");
+            }
+
+            Response resp = ServiceRestClient.get(IServiceSmsRest.class).checkVerificationCode(
+                    new CheckSmsVerificationCodeParam(param.getVerificationCodeToken(), param.getMobile(), param.getVerificationCode())
+            );
+            if (!resp.isSuccess()) {
+                return new Response().error("check verification code fail");
+            }
         }
 
         // check username exists

@@ -4,10 +4,13 @@ import com.airxiechao.axcboot.communication.common.PageData;
 import com.airxiechao.axcboot.communication.common.Response;
 import com.airxiechao.axcboot.communication.rest.util.RestUtil;
 import com.airxiechao.axcboot.process.transaction.TransactionPipeline;
+import com.airxiechao.axcboot.util.StringUtil;
 import com.airxiechao.y20.artifact.rest.api.IServiceArtifactRest;
 import com.airxiechao.y20.artifact.rest.param.ServiceCopyTemplateFileToParam;
 import com.airxiechao.y20.artifact.rest.param.ServiceRemoveTemplateFileParam;
+import com.airxiechao.y20.auth.pojo.AccessPrincipal;
 import com.airxiechao.y20.common.core.biz.Biz;
+import com.airxiechao.y20.common.core.pubsub.EventBus;
 import com.airxiechao.y20.common.core.rest.EnhancedRestUtil;
 import com.airxiechao.y20.common.core.rest.ServiceRestClient;
 import com.airxiechao.y20.pipeline.rest.api.IServicePipelineRest;
@@ -18,6 +21,8 @@ import com.airxiechao.y20.project.rest.param.ServiceExistProjectParam;
 import com.airxiechao.y20.template.biz.api.ITemplateBiz;
 import com.airxiechao.y20.template.db.record.TemplateRecord;
 import com.airxiechao.y20.template.pojo.Template;
+import com.airxiechao.y20.template.pojo.constant.EnumTemplateActionType;
+import com.airxiechao.y20.template.pojo.pubsub.event.EventTemplateActivity;
 import com.airxiechao.y20.template.pojo.vo.TemplateBasicVo;
 import com.airxiechao.y20.template.rest.api.IUserTemplateRest;
 import com.airxiechao.y20.template.rest.param.*;
@@ -74,6 +79,17 @@ public class UserTemplateRestHandler implements IUserTemplateRest {
         }
 
         Template template = record.toPojo();
+
+        // 记录点击日志
+        try {
+            AccessPrincipal accessPrincipal = EnhancedRestUtil.extractAccessPrincipal(exchange);
+            Long userId = accessPrincipal.getUserId();
+            EventBus.getInstance().publish(
+                    new EventTemplateActivity(userId, param.getTemplateId(), EnumTemplateActionType.CLICK, null));
+        } catch (Exception e) {
+
+        }
+
         return new Response().data(template);
     }
 
@@ -99,6 +115,18 @@ public class UserTemplateRestHandler implements IUserTemplateRest {
         ).stream().map(record -> new TemplateBasicVo(record)).collect(Collectors.toList());
 
         long count = templateBiz.count(null, param.getName());
+
+        // 记录搜索日志
+        try {
+            AccessPrincipal accessPrincipal = EnhancedRestUtil.extractAccessPrincipal(exchange);
+            Long userId = accessPrincipal.getUserId();
+            if(!StringUtil.isBlank(param.getName())) {
+                EventBus.getInstance().publish(
+                        new EventTemplateActivity(userId, null, EnumTemplateActionType.SEARCH, param.getName()));
+            }
+        } catch (Exception e) {
+
+        }
 
         return new Response().data(new PageData(
                 param.getPageNo(),
@@ -301,6 +329,14 @@ public class UserTemplateRestHandler implements IUserTemplateRest {
         templateBiz.updateNumApply(record);
 
         Long pipelineId = (Long)resp.getData().get(TRANSACTION_STORE_PIPELINE_ID);
+
+        // 记录应用日志
+        try {
+            EventBus.getInstance().publish(
+                    new EventTemplateActivity(param.getUserId(), param.getTemplateId(), EnumTemplateActionType.APPLY, null));
+        }catch (Exception e){
+
+        }
 
         return new Response().data(pipelineId);
     }

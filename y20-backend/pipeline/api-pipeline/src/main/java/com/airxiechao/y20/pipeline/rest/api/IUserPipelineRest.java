@@ -120,6 +120,10 @@ public interface IUserPipelineRest {
     @Auth(scope = EnumAccessScope.USER)
     Response createPipelineRun(Object exc);
 
+    @Post("/user/pipeline/run/create/pty")
+    @Auth(scope = EnumAccessScope.USER)
+    Response createPipelineRunPty(Object exc);
+
     @Post("/user/pipeline/run/start")
     @Auth(scope = EnumAccessScope.USER)
     Response startPipelineRun(Object exc);

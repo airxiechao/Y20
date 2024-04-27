@@ -3,6 +3,7 @@ package com.airxiechao.y20.agent.server.rpc.handler;
 import com.airxiechao.axcboot.communication.common.Response;
 import com.airxiechao.axcboot.communication.rest.util.RestClientUtil;
 import com.airxiechao.axcboot.communication.rpc.common.RpcExchange;
+import com.airxiechao.axcboot.config.factory.ConfigFactory;
 import com.airxiechao.axcboot.util.StringUtil;
 import com.airxiechao.y20.agent.rpc.api.server.IAgentAgentServerRpc;
 import com.airxiechao.y20.agent.rpc.api.server.IAgentRpcClientRegister;
@@ -11,6 +12,8 @@ import com.airxiechao.y20.agent.rpc.param.RegisterAgentRpcParam;
 import com.airxiechao.y20.common.core.cache.RestServiceCache;
 import com.airxiechao.y20.common.core.global.Global;
 import com.airxiechao.y20.common.core.rpc.EnhancedRpcUtil;
+import com.airxiechao.y20.common.pojo.config.CommonConfig;
+import com.airxiechao.y20.common.pojo.config.ConsulConfig;
 import com.ecwid.consul.v1.health.model.HealthService;
 import io.netty.channel.ChannelHandlerContext;
 import org.slf4j.Logger;
@@ -21,6 +24,7 @@ import java.util.Map;
 public class AgentAgentServerRpcHandler implements IAgentAgentServerRpc {
 
     private static final Logger logger = LoggerFactory.getLogger(AgentAgentServerRpcHandler.class);
+    private static ConsulConfig consulConfig = ConfigFactory.get(CommonConfig.class).getConsul();
     private static final String SERVICE_NAME_PREFIX = "y20-backend-";
 
     private IAgentRpcClientRegister clientRegister = Global.get(IAgentRpcClientRegister.class);
@@ -78,7 +82,7 @@ public class AgentAgentServerRpcHandler implements IAgentAgentServerRpc {
         String consulServiceName = SERVICE_NAME_PREFIX+serviceName;
         HealthService service = null;
         try {
-            service = RestClientUtil.getServiceFromConsul(consulServiceName, null);
+            service = RestClientUtil.getServiceFromConsul(consulConfig.getHost(), consulConfig.getPort(), consulServiceName, null);
         } catch (Exception e) {
             return new Response().error(e.getMessage());
         }

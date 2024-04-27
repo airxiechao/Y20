@@ -1,9 +1,11 @@
 package com.airxiechao.y20.auth.rest.handler;
 
 import com.airxiechao.axcboot.communication.common.Response;
+import com.airxiechao.axcboot.config.factory.ConfigFactory;
 import com.airxiechao.axcboot.util.StringUtil;
 import com.airxiechao.y20.auth.biz.api.IUserBiz;
 import com.airxiechao.y20.auth.db.record.UserRecord;
+import com.airxiechao.y20.auth.pojo.config.AuthConfig;
 import com.airxiechao.y20.auth.pojo.vo.AccountVo;
 import com.airxiechao.y20.auth.pojo.vo.TwoFactorSecretVo;
 import com.airxiechao.y20.auth.rest.api.IUserAccountRest;
@@ -22,6 +24,7 @@ import org.slf4j.LoggerFactory;
 public class UserAccountRestHandler implements IUserAccountRest {
 
     private static final Logger logger = LoggerFactory.getLogger(UserAccountRestHandler.class);
+    private static AuthConfig authConfig = ConfigFactory.get(AuthConfig.class);
     private IUserBiz userBiz = Biz.get(IUserBiz.class);
 
     @Override
@@ -140,13 +143,21 @@ public class UserAccountRestHandler implements IUserAccountRest {
             return new Response().error("no user");
         }
 
-        // check verification code
-        Response resp = ServiceRestClient.get(IServiceSmsRest.class).checkVerificationCode(
-                new CheckSmsVerificationCodeParam(param.getVerificationCodeToken(), userRecord.getMobile(), param.getVerificationCode())
-        );
+        if(authConfig.isEnableSmsVerificationCode()) {
+            // check verification code
+            if(StringUtil.isBlank(param.getVerificationCodeToken()) ||
+                StringUtil.isBlank(param.getVerificationCode())
+            ){
+                return new Response().error("check verification code fail");
+            }
 
-        if(!resp.isSuccess()){
-            return new Response().error("check verification code fail");
+            Response resp = ServiceRestClient.get(IServiceSmsRest.class).checkVerificationCode(
+                    new CheckSmsVerificationCodeParam(param.getVerificationCodeToken(), userRecord.getMobile(), param.getVerificationCode())
+            );
+
+            if (!resp.isSuccess()) {
+                return new Response().error("check verification code fail");
+            }
         }
 
         try {

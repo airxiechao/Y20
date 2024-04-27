@@ -3,6 +3,7 @@ import { PAGE_NAME } from '@/page.config'
 
 import MonitorList from '@/components/monitor/MonitorList'
 import MonitorSingle from '@/components/monitor/MonitorSingle'
+import MonitorMetric from '@/components/monitor/MonitorMetric'
 
 const routes = [
   {
@@ -25,6 +26,10 @@ const routes = [
       {
         path: ':monitorId',
         component: MonitorSingle,
+      },
+      {
+        path: ':monitorId/metric',
+        component: MonitorMetric,
       },
     ],
   }

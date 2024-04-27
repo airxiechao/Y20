@@ -29,9 +29,9 @@ const store = window.store = createStore({
     },
     setTitle(state, { title }){
       if(title){
-        document.title = title + ' - Y20'
+        document.title = title + ' - 鲲擎运维'
       }else{
-        document.title = '鲲擎流水线'
+        document.title = '鲲擎运维 Y20'
       }
     },
   },

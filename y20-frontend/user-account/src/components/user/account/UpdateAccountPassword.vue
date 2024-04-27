@@ -41,6 +41,7 @@
               />
 
               <q-input
+                v-if="ENABLE_ACCOUNT_MOBILE"
                 outlined
                 v-model="verificationCode"
                 :label="`${$t('label-verification-code')} *`"
@@ -113,6 +114,8 @@ export default {
     provide('verificationCodeToken', verificationCodeToken)
 
     return {
+      ENABLE_ACCOUNT_MOBILE: ENABLE_ACCOUNT_MOBILE,
+      
       password,
       password2,
       verificationCodeToken,

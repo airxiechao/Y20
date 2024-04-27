@@ -9,6 +9,7 @@ import java.util.List;
 @IDb("mybatis-y20-agent.xml")
 public interface IAgentDb {
     AgentRecord getByUserIdAndAgentId(Long userId, String agentId);
+    AgentRecord getByAgentId(String agentId);
     AgentRecord getByClientId(String clientId);
     List<AgentRecord> list(
             Long userId,

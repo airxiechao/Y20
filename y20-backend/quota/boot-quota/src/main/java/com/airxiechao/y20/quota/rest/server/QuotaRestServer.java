@@ -4,6 +4,8 @@ import com.airxiechao.axcboot.communication.rest.server.RestServer;
 import com.airxiechao.axcboot.config.factory.ConfigFactory;
 import com.airxiechao.y20.common.core.rest.EnhancedRestUtil;
 import com.airxiechao.y20.common.core.rest.Rest;
+import com.airxiechao.y20.common.pojo.config.CommonConfig;
+import com.airxiechao.y20.common.pojo.config.ConsulConfig;
 import com.airxiechao.y20.common.pojo.constant.meta.Meta;
 import com.airxiechao.y20.quota.pojo.config.QuotaConfig;
 import org.slf4j.Logger;
@@ -13,6 +15,7 @@ public class QuotaRestServer extends RestServer {
 
     private static final Logger logger = LoggerFactory.getLogger(QuotaRestServer.class);
     private static final QuotaConfig config = ConfigFactory.get(QuotaConfig.class);
+    private static final ConsulConfig consulConfig = ConfigFactory.get(CommonConfig.class).getConsul();
 
     public static final String NAME = config.getName();
     public static final int PORT = config.getPort();
@@ -30,7 +33,7 @@ public class QuotaRestServer extends RestServer {
                 EnhancedRestUtil::validateAccessToken);
 
         // register consul
-        this.registerConsul(10, "y20-backend-");
+        this.registerConsul(consulConfig.getHost(), consulConfig.getPort(), 10, "y20-backend-");
 
         // register rest and ws
         Rest rest = new Rest(Meta.getModulePackageName(this.getClass()), this);

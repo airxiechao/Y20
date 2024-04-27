@@ -1,8 +1,5 @@
 package com.airxiechao.y20.common.pojo.config;
 
-import com.airxiechao.axcboot.config.annotation.Config;
-
-@Config("variable-common.yml")
 public class VariableCommonConfig {
     private String secretVariableEncryptKey;
 

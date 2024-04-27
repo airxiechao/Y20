@@ -17,6 +17,18 @@ public class AgentVersionRecord {
     @Column(length = 500) private String downloadLinuxUpgraderUrl;
     private Date releaseTime;
 
+    public AgentVersionRecord() {
+    }
+
+    public AgentVersionRecord(String version, String downloadWinUrl, String downloadLinuxUrl, String downloadWinUpgraderUrl, String downloadLinuxUpgraderUrl, Date releaseTime) {
+        this.version = version;
+        this.downloadWinUrl = downloadWinUrl;
+        this.downloadLinuxUrl = downloadLinuxUrl;
+        this.downloadWinUpgraderUrl = downloadWinUpgraderUrl;
+        this.downloadLinuxUpgraderUrl = downloadLinuxUpgraderUrl;
+        this.releaseTime = releaseTime;
+    }
+
     public Long getId() {
         return id;
     }
