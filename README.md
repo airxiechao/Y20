@@ -1,6 +1,6 @@
-# 鲲擎流水线（Y20）
+# 鲲擎运维（Y20）
 
-[y20.work](https://y20.work) 是一款针对分布式系统的 CI/CD 流水线。通过编排流水线实现流程的标准化、自动化！
+[y20.work](https://y20.work) 是一款针对分布式系统的 CI/CD 流水线。通过编排流水线实现运维的标准化、自动化！
 
 
 ## 安装方法
@@ -38,8 +38,10 @@
 
 
 ### 4. 前端启动
-前端的配置文件是 `y20-gateway-on-premise/conf/init.conf`，修改如下配置：
+前端的配置文件 `y20-gateway-on-premise/conf/init.conf`，修改如下配置：
 - static_dir 指向 `y20-frontend-on-premise`目录的绝对路径
+
+配置文件 `y20-gateway-on-premise/conf/server.common.conf` 中修改 dns 指向本地的 consul dns 服务  
 
 将 Openresty 的 `nginx/conf` 链接到 `y20-gateway-on-premise/conf`，然后重新加载 Openresty `openresty -s reload`
 
