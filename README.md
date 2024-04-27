@@ -31,6 +31,7 @@
 - rabbitmq 配置
 - minio 配置
 - mysql 配置
+- mongodb 配置
 - influxdb 配置
 
 进入 `y20-backend-on-premise/allinone-on-premise`，启动后端 `java -jar boot-allinone-on-premise.jar`
